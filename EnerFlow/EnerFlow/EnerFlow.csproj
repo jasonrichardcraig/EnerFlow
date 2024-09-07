@@ -12,7 +12,109 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Images\EF_Icon.ico" />
+    <None Remove="Images\Alarms_16x16.png" />
+    <None Remove="Images\Alarms_24x24.png" />
+    <None Remove="Images\Analyses_16x16.png" />
+    <None Remove="Images\Analyses_24x24.png" />
+    <None Remove="Images\Back.png" />
+    <None Remove="Images\Channels_16x216.png" />
+    <None Remove="Images\Channels_24x24.png" />
+    <None Remove="Images\Data Transfer_16x16.png" />
+    <None Remove="Images\Data Transfer_24x24.png" />
+    <None Remove="Images\Devices_16x16.png" />
+    <None Remove="Images\Devices_24x24.png" />
+    <None Remove="Images\EF_Icon.png" />
+    <None Remove="Images\EF_Logo.png" />
+    <None Remove="Images\Events_16x16.png" />
+    <None Remove="Images\Events_24x24.png" />
+    <None Remove="Images\Facilities_16x16.png" />
+    <None Remove="Images\Facilities_24x24.png" />
+    <None Remove="Images\Forward.png" />
+    <None Remove="Images\Home.png" />
+    <None Remove="Images\Maps_16x16.png" />
+    <None Remove="Images\Maps_24x24.png" />
+    <None Remove="Images\Meters_16x16.png" />
+    <None Remove="Images\Meters_24x24.png" />
+    <None Remove="Images\Notifications_16x16.png" />
+    <None Remove="Images\Notifications_24x24.png" />
+    <None Remove="Images\Pump_16x16.png" />
+    <None Remove="Images\Pump_24x24.png" />
+    <None Remove="Images\Refresh.png" />
+    <None Remove="Images\Reports_16x16.png" />
+    <None Remove="Images\Reports_24x24.png" />
+    <None Remove="Images\Runs_16x16.png" />
+    <None Remove="Images\Runs_24x24.png" />
+    <None Remove="Images\Scheduler_16x16.png" />
+    <None Remove="Images\Scheduler_24x24.png" />
+    <None Remove="Images\Schematics_16x16.png" />
+    <None Remove="Images\Schematics_24x24.png" />
+    <None Remove="Images\Settings.png" />
+    <None Remove="Images\Tags_16x16.png" />
+    <None Remove="Images\Tags_24x24.png" />
+    <None Remove="Images\Tanks_16x16.png" />
+    <None Remove="Images\Tanks_24x24.png" />
+    <None Remove="Images\Tests_16x16.png" />
+    <None Remove="Images\Tests_24x24.png" />
+    <None Remove="Images\Tickets_16x16.png" />
+    <None Remove="Images\Tickets_24x24.png" />
+    <None Remove="Images\Tools.png" />
+    <None Remove="Images\Visualizations_16x16.png" />
+    <None Remove="Images\Visualizations_24x24.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\EF_Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Alarms_16x16.png" />
+    <Resource Include="Images\Alarms_24x24.png" />
+    <Resource Include="Images\Analyses_16x16.png" />
+    <Resource Include="Images\Analyses_24x24.png" />
+    <Resource Include="Images\Back.png" />
+    <Resource Include="Images\Channels_16x216.png" />
+    <Resource Include="Images\Channels_24x24.png" />
+    <Resource Include="Images\Data Transfer_16x16.png" />
+    <Resource Include="Images\Data Transfer_24x24.png" />
+    <Resource Include="Images\Devices_16x16.png" />
+    <Resource Include="Images\Devices_24x24.png" />
+    <Resource Include="Images\EF_Icon.png" />
+    <SplashScreen Include="Images\EF_Logo.png" />
+    <Resource Include="Images\Events_16x16.png" />
+    <Resource Include="Images\Events_24x24.png" />
+    <Resource Include="Images\Facilities_16x16.png" />
+    <Resource Include="Images\Facilities_24x24.png" />
+    <Resource Include="Images\Forward.png" />
+    <Resource Include="Images\Home.png" />
+    <Resource Include="Images\Maps_16x16.png" />
+    <Resource Include="Images\Maps_24x24.png" />
+    <Resource Include="Images\Meters_16x16.png" />
+    <Resource Include="Images\Meters_24x24.png" />
+    <Resource Include="Images\Notifications_16x16.png" />
+    <Resource Include="Images\Notifications_24x24.png" />
+    <Resource Include="Images\Pump_16x16.png" />
+    <Resource Include="Images\Pump_24x24.png" />
+    <Resource Include="Images\Refresh.png" />
+    <Resource Include="Images\Reports_16x16.png" />
+    <Resource Include="Images\Reports_24x24.png" />
+    <Resource Include="Images\Runs_16x16.png" />
+    <Resource Include="Images\Runs_24x24.png" />
+    <Resource Include="Images\Scheduler_16x16.png" />
+    <Resource Include="Images\Scheduler_24x24.png" />
+    <Resource Include="Images\Schematics_16x16.png" />
+    <Resource Include="Images\Schematics_24x24.png" />
+    <Resource Include="Images\Settings.png" />
+    <Resource Include="Images\Tags_16x16.png" />
+    <Resource Include="Images\Tags_24x24.png" />
+    <Resource Include="Images\Tanks_16x16.png" />
+    <Resource Include="Images\Tanks_24x24.png" />
+    <Resource Include="Images\Tests_16x16.png" />
+    <Resource Include="Images\Tests_24x24.png" />
+    <Resource Include="Images\Tickets_16x16.png" />
+    <Resource Include="Images\Tickets_24x24.png" />
+    <Resource Include="Images\Tools.png" />
+    <Resource Include="Images\Visualizations_16x16.png" />
+    <Resource Include="Images\Visualizations_24x24.png" />
   </ItemGroup>
 
 </Project>
