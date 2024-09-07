@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Title>EnerWorx</Title>
+    <ApplicationIcon>Images\EF_Icon.ico</ApplicationIcon>
+    <Description>An all in one SCADA, HMI, Measurement, Field Data Capture &amp; P&amp;ID / Metering Schematic system</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Images\EF_Icon.ico" />
+  </ItemGroup>
 
 </Project>
