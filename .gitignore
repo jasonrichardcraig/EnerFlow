@@ -194,6 +194,3 @@ _pkginfo.txt
 
 # Visual Studio cache files
 *.cache
-/EnerFlow/EnerFlow/obj
-/EnerFlow/EnerFlow/bin
-/EnerFlow/EnerFlow/obj
