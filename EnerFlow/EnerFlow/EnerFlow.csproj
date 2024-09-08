@@ -176,4 +176,9 @@
     <Resource Include="Images\Visualizations_24x24.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

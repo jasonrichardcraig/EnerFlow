@@ -1,0 +1,1 @@
+Scaffold-DbContext 'Data Source=(local);Initial Catalog=EnerFlow;TrustServerCertificate=True;Integrated Security=true' Microsoft.EntityFrameworkCore.SqlServer -ContextDir Data -OutputDir Models
