@@ -14,15 +14,27 @@
   <ItemGroup>
     <None Remove="Images\Alarms_16x16.png" />
     <None Remove="Images\Alarms_24x24.png" />
+    <None Remove="Images\AlignObjectsBottom.png" />
+    <None Remove="Images\AlignObjectsCenteredHorizontal.png" />
+    <None Remove="Images\AlignObjectsCenteredVertical.png" />
+    <None Remove="Images\AlignObjectsLeft.png" />
+    <None Remove="Images\AlignObjectsRight.png" />
+    <None Remove="Images\AlignObjectsTop.png" />
     <None Remove="Images\Analyses_16x16.png" />
     <None Remove="Images\Analyses_24x24.png" />
     <None Remove="Images\Back.png" />
+    <None Remove="Images\BringForward.png" />
+    <None Remove="Images\BringToFront.png" />
     <None Remove="Images\Channels_16x216.png" />
     <None Remove="Images\Channels_24x24.png" />
+    <None Remove="Images\Copy.png" />
+    <None Remove="Images\Cut.png" />
     <None Remove="Images\Data Transfer_16x16.png" />
     <None Remove="Images\Data Transfer_24x24.png" />
     <None Remove="Images\Devices_16x16.png" />
     <None Remove="Images\Devices_24x24.png" />
+    <None Remove="Images\DistributeObjectsHorizontal.png" />
+    <None Remove="Images\DistributeObjectsVertical.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
     <None Remove="Images\Events_16x16.png" />
@@ -30,6 +42,8 @@
     <None Remove="Images\Facilities_16x16.png" />
     <None Remove="Images\Facilities_24x24.png" />
     <None Remove="Images\Forward.png" />
+    <None Remove="Images\GenericDocument.png" />
+    <None Remove="Images\Group.png" />
     <None Remove="Images\Home.png" />
     <None Remove="Images\Maps_16x16.png" />
     <None Remove="Images\Maps_24x24.png" />
@@ -37,6 +51,10 @@
     <None Remove="Images\Meters_24x24.png" />
     <None Remove="Images\Notifications_16x16.png" />
     <None Remove="Images\Notifications_24x24.png" />
+    <None Remove="Images\OpenFolder.png" />
+    <None Remove="Images\Paste.png" />
+    <None Remove="Images\PasteBig.png" />
+    <None Remove="Images\Print.png" />
     <None Remove="Images\Pump_16x16.png" />
     <None Remove="Images\Pump_24x24.png" />
     <None Remove="Images\Refresh.png" />
@@ -44,10 +62,13 @@
     <None Remove="Images\Reports_24x24.png" />
     <None Remove="Images\Runs_16x16.png" />
     <None Remove="Images\Runs_24x24.png" />
+    <None Remove="Images\Save.png" />
     <None Remove="Images\Scheduler_16x16.png" />
     <None Remove="Images\Scheduler_24x24.png" />
     <None Remove="Images\Schematics_16x16.png" />
     <None Remove="Images\Schematics_24x24.png" />
+    <None Remove="Images\SendBackward.png" />
+    <None Remove="Images\SendToBack.png" />
     <None Remove="Images\Settings.png" />
     <None Remove="Images\Tags_16x16.png" />
     <None Remove="Images\Tags_24x24.png" />
@@ -58,11 +79,24 @@
     <None Remove="Images\Tickets_16x16.png" />
     <None Remove="Images\Tickets_24x24.png" />
     <None Remove="Images\Tools.png" />
+    <None Remove="Images\Ungroup.png" />
     <None Remove="Images\Visualizations_16x16.png" />
     <None Remove="Images\Visualizations_24x24.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\AlignObjectsBottom.png" />
+    <Resource Include="Images\AlignObjectsCenteredHorizontal.png" />
+    <Resource Include="Images\AlignObjectsCenteredVertical.png" />
+    <Resource Include="Images\AlignObjectsLeft.png" />
+    <Resource Include="Images\AlignObjectsRight.png" />
+    <Resource Include="Images\AlignObjectsTop.png" />
+    <Resource Include="Images\BringForward.png" />
+    <Resource Include="Images\BringToFront.png" />
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Cut.png" />
+    <Resource Include="Images\DistributeObjectsHorizontal.png" />
+    <Resource Include="Images\DistributeObjectsVertical.png" />
     <Resource Include="Images\EF_Icon.ico" />
   </ItemGroup>
 
@@ -79,6 +113,16 @@
     <Resource Include="Images\Devices_16x16.png" />
     <Resource Include="Images\Devices_24x24.png" />
     <Resource Include="Images\EF_Icon.png" />
+    <Resource Include="Images\GenericDocument.png" />
+    <Resource Include="Images\Group.png" />
+    <Resource Include="Images\OpenFolder.png" />
+    <Resource Include="Images\Paste.png" />
+    <Resource Include="Images\PasteBig.png" />
+    <Resource Include="Images\Print.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\SendBackward.png" />
+    <Resource Include="Images\SendToBack.png" />
+    <Resource Include="Images\Ungroup.png" />
     <SplashScreen Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />
