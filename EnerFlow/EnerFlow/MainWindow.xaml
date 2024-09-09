@@ -6,7 +6,7 @@
         xmlns:ribbon="clr-namespace:System.Windows.Controls.Ribbon;assembly=System.Windows.Controls.Ribbon"
         xmlns:local="clr-namespace:EnerFlow"
         mc:Ignorable="d"
-        Title="EnerFlow" Height="450" Width="800" Icon="Images\EF_Icon.png">
+        Title="EnerFlow" Height="450" Width="800" Icon="Images\EF_Icon.png" Loaded="Window_Loaded">
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -25,7 +25,7 @@
                 </ribbon:RibbonQuickAccessToolBar>
             </ribbon:Ribbon.QuickAccessToolBar>
             <ribbon:Ribbon.ApplicationMenu>
-                <ribbon:RibbonApplicationMenu SmallImageSource="Images\Alarms_16x16.png">
+                <ribbon:RibbonApplicationMenu SmallImageSource="Images\EF_Icon.png">
                     <ribbon:RibbonApplicationMenuItem Header="Hello _Ribbon"
                                                       x:Name="MenuItem1"
                                                       ImageSource="Images\Alarms_24x24.png"/>

@@ -22,44 +22,74 @@
     <None Remove="Images\AlignObjectsTop.png" />
     <None Remove="Images\Analyses_16x16.png" />
     <None Remove="Images\Analyses_24x24.png" />
+    <None Remove="Images\Area.png" />
     <None Remove="Images\Back.png" />
     <None Remove="Images\BringForward.png" />
     <None Remove="Images\BringToFront.png" />
     <None Remove="Images\Channels_16x216.png" />
     <None Remove="Images\Channels_24x24.png" />
+    <None Remove="Images\Company_16x16.png" />
+    <None Remove="Images\Company_24x24.png" />
+    <None Remove="Images\ConeMeter_48x48.png" />
     <None Remove="Images\Copy.png" />
+    <None Remove="Images\CoriolisMeter_48x48.png" />
     <None Remove="Images\Cut.png" />
     <None Remove="Images\Data Transfer_16x16.png" />
     <None Remove="Images\Data Transfer_24x24.png" />
+    <None Remove="Images\Database_16x16.png" />
+    <None Remove="Images\Database_24x24.png" />
+    <None Remove="Images\DataServiceAlertIcon.png" />
+    <None Remove="Images\Delete.png" />
     <None Remove="Images\Devices_16x16.png" />
     <None Remove="Images\Devices_24x24.png" />
+    <None Remove="Images\Disconnect_16x16.png" />
+    <None Remove="Images\Disconnect_24x24.png" />
     <None Remove="Images\DistributeObjectsHorizontal.png" />
     <None Remove="Images\DistributeObjectsVertical.png" />
+    <None Remove="Images\District.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
     <None Remove="Images\Events_16x16.png" />
     <None Remove="Images\Events_24x24.png" />
+    <None Remove="Images\Exceptions.png" />
+    <None Remove="Images\Exceptions_White.png" />
     <None Remove="Images\Facilities_16x16.png" />
     <None Remove="Images\Facilities_24x24.png" />
+    <None Remove="Images\Field.png" />
+    <None Remove="Images\Filter.png" />
     <None Remove="Images\Forward.png" />
     <None Remove="Images\GenericDocument.png" />
     <None Remove="Images\Group.png" />
     <None Remove="Images\Home.png" />
+    <None Remove="Images\Key_16x16.png" />
+    <None Remove="Images\Key_24x24.png" />
+    <None Remove="Images\Login_16x16.png" />
+    <None Remove="Images\Login_24x24.png" />
     <None Remove="Images\Maps_16x16.png" />
     <None Remove="Images\Maps_24x24.png" />
     <None Remove="Images\Meters_16x16.png" />
     <None Remove="Images\Meters_24x24.png" />
+    <None Remove="Images\NotConnected.png" />
     <None Remove="Images\Notifications_16x16.png" />
     <None Remove="Images\Notifications_24x24.png" />
     <None Remove="Images\OpenFolder.png" />
+    <None Remove="Images\OrificeMeter_16x16_White.png" />
+    <None Remove="Images\OrificeMeter_24x24.png" />
+    <None Remove="Images\OrificeMeter_24x24_White.png" />
+    <None Remove="Images\OrificeMeter_48x48.png" />
     <None Remove="Images\Paste.png" />
     <None Remove="Images\PasteBig.png" />
+    <None Remove="Images\PositiveDisplacementMeter_48x48.png" />
     <None Remove="Images\Print.png" />
+    <None Remove="Images\Properties.png" />
+    <None Remove="Images\Properties_White.png" />
     <None Remove="Images\Pump_16x16.png" />
     <None Remove="Images\Pump_24x24.png" />
     <None Remove="Images\Refresh.png" />
+    <None Remove="Images\Region.png" />
     <None Remove="Images\Reports_16x16.png" />
     <None Remove="Images\Reports_24x24.png" />
+    <None Remove="Images\Root.png" />
     <None Remove="Images\Runs_16x16.png" />
     <None Remove="Images\Runs_24x24.png" />
     <None Remove="Images\Save.png" />
@@ -69,6 +99,8 @@
     <None Remove="Images\Schematics_24x24.png" />
     <None Remove="Images\SendBackward.png" />
     <None Remove="Images\SendToBack.png" />
+    <None Remove="Images\Server_16x16.png" />
+    <None Remove="Images\Server_24x24.png" />
     <None Remove="Images\Settings.png" />
     <None Remove="Images\Tags_16x16.png" />
     <None Remove="Images\Tags_24x24.png" />
@@ -79,9 +111,17 @@
     <None Remove="Images\Tickets_16x16.png" />
     <None Remove="Images\Tickets_24x24.png" />
     <None Remove="Images\Tools.png" />
+    <None Remove="Images\TurbineMeter_48x48.png" />
+    <None Remove="Images\UltrasonicMeter_48x48.png" />
     <None Remove="Images\Ungroup.png" />
+    <None Remove="Images\Unlinked_16x16.png" />
+    <None Remove="Images\Unlinked_24x24.png" />
+    <None Remove="Images\User_16x16.png" />
+    <None Remove="Images\User_24x24.png" />
     <None Remove="Images\Visualizations_16x16.png" />
     <None Remove="Images\Visualizations_24x24.png" />
+    <None Remove="Images\Wells_16x16.png" />
+    <None Remove="Images\Wells_24x24.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -97,6 +137,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -106,12 +147,24 @@
     <Resource Include="Images\AlignObjectsLeft.png" />
     <Resource Include="Images\AlignObjectsRight.png" />
     <Resource Include="Images\AlignObjectsTop.png" />
+    <Resource Include="Images\Area.png" />
     <Resource Include="Images\BringForward.png" />
     <Resource Include="Images\BringToFront.png" />
+    <Resource Include="Images\Company_16x16.png" />
+    <Resource Include="Images\Company_24x24.png" />
+    <Resource Include="Images\ConeMeter_48x48.png" />
     <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\CoriolisMeter_48x48.png" />
     <Resource Include="Images\Cut.png" />
+    <Resource Include="Images\Database_16x16.png" />
+    <Resource Include="Images\Database_24x24.png" />
+    <Resource Include="Images\DataServiceAlertIcon.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Disconnect_16x16.png" />
+    <Resource Include="Images\Disconnect_24x24.png" />
     <Resource Include="Images\DistributeObjectsHorizontal.png" />
     <Resource Include="Images\DistributeObjectsVertical.png" />
+    <Resource Include="Images\District.png" />
     <Resource Include="Images\EF_Icon.ico" />
   </ItemGroup>
 
@@ -128,17 +181,39 @@
     <Resource Include="Images\Devices_16x16.png" />
     <Resource Include="Images\Devices_24x24.png" />
     <Resource Include="Images\EF_Icon.png" />
+    <Resource Include="Images\Exceptions.png" />
+    <Resource Include="Images\Exceptions_White.png" />
+    <Resource Include="Images\Field.png" />
+    <Resource Include="Images\Filter.png" />
     <Resource Include="Images\GenericDocument.png" />
     <Resource Include="Images\Group.png" />
+    <Resource Include="Images\Key_16x16.png" />
+    <Resource Include="Images\Key_24x24.png" />
+    <Resource Include="Images\Login_16x16.png" />
+    <Resource Include="Images\Login_24x24.png" />
+    <Resource Include="Images\NotConnected.png" />
     <Resource Include="Images\OpenFolder.png" />
+    <Resource Include="Images\OrificeMeter_16x16_White.png" />
+    <Resource Include="Images\OrificeMeter_24x24.png" />
+    <Resource Include="Images\OrificeMeter_24x24_White.png" />
+    <Resource Include="Images\OrificeMeter_48x48.png" />
     <Resource Include="Images\Paste.png" />
     <Resource Include="Images\PasteBig.png" />
+    <Resource Include="Images\PositiveDisplacementMeter_48x48.png" />
     <Resource Include="Images\Print.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\Properties_White.png" />
+    <Resource Include="Images\Region.png" />
+    <Resource Include="Images\Root.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\SendBackward.png" />
     <Resource Include="Images\SendToBack.png" />
+    <Resource Include="Images\Server_16x16.png" />
+    <Resource Include="Images\Server_24x24.png" />
+    <Resource Include="Images\TurbineMeter_48x48.png" />
+    <Resource Include="Images\UltrasonicMeter_48x48.png" />
     <Resource Include="Images\Ungroup.png" />
-    <SplashScreen Include="Images\EF_Logo.png" />
+    <Resource Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />
     <Resource Include="Images\Facilities_16x16.png" />
@@ -172,8 +247,14 @@
     <Resource Include="Images\Tickets_16x16.png" />
     <Resource Include="Images\Tickets_24x24.png" />
     <Resource Include="Images\Tools.png" />
+    <Resource Include="Images\Unlinked_16x16.png" />
+    <Resource Include="Images\Unlinked_24x24.png" />
+    <Resource Include="Images\User_16x16.png" />
+    <Resource Include="Images\User_24x24.png" />
     <Resource Include="Images\Visualizations_16x16.png" />
     <Resource Include="Images\Visualizations_24x24.png" />
+    <Resource Include="Images\Wells_16x16.png" />
+    <Resource Include="Images\Wells_24x24.png" />
   </ItemGroup>
 
   <ItemGroup>
