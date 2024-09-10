@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NetTopologySuite.Geometries;
 
 namespace EnerFlow.Models;
 
@@ -15,11 +16,9 @@ public partial class Facility
 
     public string? UniqueFacilityIdentifier { get; set; }
 
-    public string? Location { get; set; }
+    public string? LocationName { get; set; }
 
-    public double? Latitude { get; set; }
-
-    public double? Longitude { get; set; }
+    public Geometry? Location { get; set; }
 
     public string? OperatorCode { get; set; }
 
@@ -63,7 +62,9 @@ public partial class Facility
 
     public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
 
-    public virtual Tank? Tank { get; set; }
+    public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
+
+    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
 
     public virtual ICollection<Ticket> TicketDestinationFacilities { get; set; } = new List<Ticket>();
 

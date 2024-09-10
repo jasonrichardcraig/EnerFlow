@@ -26,9 +26,15 @@ public partial class Hierarchy
 
     public virtual ICollection<RunSheet> RunSheets { get; set; } = new List<RunSheet>();
 
+    public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
+
     public virtual ICollection<SerialChannelTag> SerialChannelTags { get; set; } = new List<SerialChannelTag>();
 
+    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
+
     public virtual ICollection<TcpIpChannelTag> TcpIpChannelTags { get; set; } = new List<TcpIpChannelTag>();
+
+    public virtual ICollection<Well> Wells { get; set; } = new List<Well>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

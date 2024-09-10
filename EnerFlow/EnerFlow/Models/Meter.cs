@@ -7,7 +7,7 @@ public partial class Meter
 {
     public int Id { get; set; }
 
-    public int? FacilityId { get; set; }
+    public int HierarchyId { get; set; }
 
     public int? MeterRunTagId { get; set; }
 
@@ -22,6 +22,14 @@ public partial class Meter
     public int? MeterPurposeId { get; set; }
 
     public int? FluidTypeId { get; set; }
+
+    public int? WellId { get; set; }
+
+    public int? SatelliteId { get; set; }
+
+    public int? FacilityId { get; set; }
+
+    public DateTime DateTimeCreated { get; set; }
 
     public virtual ICollection<DailyGasFlowRecord> DailyGasFlowRecords { get; set; } = new List<DailyGasFlowRecord>();
 
@@ -49,5 +57,17 @@ public partial class Meter
 
     public virtual ICollection<RunSheetMeter> RunSheetMeters { get; set; } = new List<RunSheetMeter>();
 
+    public virtual Satellite? Satellite { get; set; }
+
+    public virtual ICollection<SatelliteFlowRun> SatelliteFlowRunGasMeters { get; set; } = new List<SatelliteFlowRun>();
+
+    public virtual ICollection<SatelliteFlowRun> SatelliteFlowRunOilMeters { get; set; } = new List<SatelliteFlowRun>();
+
+    public virtual ICollection<SatelliteFlowRun> SatelliteFlowRunWaterMeters { get; set; } = new List<SatelliteFlowRun>();
+
+    public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
+
     public virtual ICollection<UltrasonicDiagnosticHistory> UltrasonicDiagnosticHistories { get; set; } = new List<UltrasonicDiagnosticHistory>();
+
+    public virtual Well? Well { get; set; }
 }

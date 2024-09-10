@@ -7,6 +7,10 @@ public partial class Equipment
 {
     public int Id { get; set; }
 
+    public int? WellId { get; set; }
+
+    public int? SatelliteId { get; set; }
+
     public int? FacilityId { get; set; }
 
     public int? EquipmentTypeId { get; set; }
@@ -22,4 +26,8 @@ public partial class Equipment
     public virtual EquipmentType? EquipmentType { get; set; }
 
     public virtual Facility? Facility { get; set; }
+
+    public virtual Satellite? Satellite { get; set; }
+
+    public virtual Well? Well { get; set; }
 }

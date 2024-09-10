@@ -115,6 +115,8 @@
     <None Remove="Images\Tickets_16x16.png" />
     <None Remove="Images\Tickets_24x24.png" />
     <None Remove="Images\Tools.png" />
+    <None Remove="Images\Tools_16x16.png" />
+    <None Remove="Images\Tools_24x24.png" />
     <None Remove="Images\TurbineMeter_48x48.png" />
     <None Remove="Images\UltrasonicMeter_48x48.png" />
     <None Remove="Images\Ungroup.png" />
@@ -126,9 +128,25 @@
     <None Remove="Images\Visualizations_24x24.png" />
     <None Remove="Images\Wells_16x16.png" />
     <None Remove="Images\Wells_24x24.png" />
+    <None Remove="WebView\css\Map.css" />
+    <None Remove="WebView\js\Map.js" />
+    <None Remove="WebView\Map.html" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="WebView\css\Map.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\js\Map.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\Map.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BusyIndicators" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -143,6 +161,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2739.15" />
     <PackageReference Include="ProjNET4GeoAPI" Version="1.4.1" />
   </ItemGroup>
 
@@ -220,6 +239,8 @@
     <Resource Include="Images\SendToBack.png" />
     <Resource Include="Images\Server_16x16.png" />
     <Resource Include="Images\Server_24x24.png" />
+    <Resource Include="Images\Tools_16x16.png" />
+    <Resource Include="Images\Tools_24x24.png" />
     <Resource Include="Images\TurbineMeter_48x48.png" />
     <Resource Include="Images\UltrasonicMeter_48x48.png" />
     <Resource Include="Images\Ungroup.png" />

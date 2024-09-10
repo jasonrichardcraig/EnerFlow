@@ -4,5 +4,7 @@ Scaffold-DbContext 'Data Source=(local);Initial Catalog=EnerFlow;TrustServerCert
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string connectionString = Properties.Settings.Default.DatabaseConnectionString;
-        optionsBuilder.UseSqlServer(connectionString, x => x.UseHierarchyId());
+        optionsBuilder.UseSqlServer(connectionString, x => x
+                .UseNetTopologySuite()
+                .UseHierarchyId());
     }

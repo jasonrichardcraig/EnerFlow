@@ -7,7 +7,7 @@ public partial class Tank
 {
     public int Id { get; set; }
 
-    public int FacilityId { get; set; }
+    public int HierarchyId { get; set; }
 
     public int TankTypeId { get; set; }
 
@@ -19,13 +19,25 @@ public partial class Tank
 
     public double TankFactor { get; set; }
 
+    public int? WellId { get; set; }
+
+    public int? SatelliteId { get; set; }
+
+    public int? FacilityId { get; set; }
+
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual Facility IdNavigation { get; set; } = null!;
+    public virtual Facility? Facility { get; set; }
+
+    public virtual Hierarchy Hierarchy { get; set; } = null!;
 
     public virtual ICollection<RunSheetTank> RunSheetTanks { get; set; } = new List<RunSheetTank>();
+
+    public virtual Satellite? Satellite { get; set; }
 
     public virtual ICollection<TankDailyTransaction> TankDailyTransactions { get; set; } = new List<TankDailyTransaction>();
 
     public virtual TankType TankType { get; set; } = null!;
+
+    public virtual Well? Well { get; set; }
 }

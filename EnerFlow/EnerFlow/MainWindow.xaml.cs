@@ -11,7 +11,7 @@ namespace EnerFlow
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -62,6 +62,8 @@ namespace EnerFlow
                             Close();
                         }
 
+                        MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
+
                     }
                     catch (Exception ex)
                     {
@@ -72,5 +74,19 @@ namespace EnerFlow
             });
         }
 
+        private void MapWebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+
+        }
+
+        private void MapWebView_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BusyIndicator.IsBusy = true;
+        }
     }
 }
