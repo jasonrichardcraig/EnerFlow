@@ -79,6 +79,8 @@
     <None Remove="Images\OrificeMeter_48x48.png" />
     <None Remove="Images\Paste.png" />
     <None Remove="Images\PasteBig.png" />
+    <None Remove="Images\Pipeline_16x16.png" />
+    <None Remove="Images\Pipeline_24x24.png" />
     <None Remove="Images\PositiveDisplacementMeter_48x48.png" />
     <None Remove="Images\Print.png" />
     <None Remove="Images\Properties.png" />
@@ -92,6 +94,8 @@
     <None Remove="Images\Root.png" />
     <None Remove="Images\Runs_16x16.png" />
     <None Remove="Images\Runs_24x24.png" />
+    <None Remove="Images\Satellite_16x16.png" />
+    <None Remove="Images\Satellite_24x24.png" />
     <None Remove="Images\Save.png" />
     <None Remove="Images\Scheduler_16x16.png" />
     <None Remove="Images\Scheduler_24x24.png" />
@@ -133,11 +137,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Abstractions" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.HierarchyId" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="ProjNET4GeoAPI" Version="1.4.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -199,12 +205,16 @@
     <Resource Include="Images\OrificeMeter_48x48.png" />
     <Resource Include="Images\Paste.png" />
     <Resource Include="Images\PasteBig.png" />
+    <Resource Include="Images\Pipeline_16x16.png" />
+    <Resource Include="Images\Pipeline_24x24.png" />
     <Resource Include="Images\PositiveDisplacementMeter_48x48.png" />
     <Resource Include="Images\Print.png" />
     <Resource Include="Images\Properties.png" />
     <Resource Include="Images\Properties_White.png" />
     <Resource Include="Images\Region.png" />
     <Resource Include="Images\Root.png" />
+    <Resource Include="Images\Satellite_16x16.png" />
+    <Resource Include="Images\Satellite_24x24.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\SendBackward.png" />
     <Resource Include="Images\SendToBack.png" />
@@ -258,8 +268,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
