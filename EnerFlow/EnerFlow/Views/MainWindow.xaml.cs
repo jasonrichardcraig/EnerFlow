@@ -103,7 +103,7 @@ namespace EnerFlow.Views
 
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
-                        mainViewModel.RootHierarchy = dataService.GetRootHierarchy();
+                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(dataService, dataService.GetRootHierarchy());
 
                         mainViewModel.UserName = currentWindowsUsername;
 

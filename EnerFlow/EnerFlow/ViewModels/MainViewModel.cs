@@ -5,7 +5,7 @@ namespace EnerFlow.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private bool _isBusy;
-        private Hierarchy? _rootHierarchy;
+        private HierarchyViewModel? _rootHierarchyViewModel;
         private string _userName = string.Empty; // Initialize _userName to avoid CS8618
         private string _server = string.Empty; // Added Server property
         private string _database = string.Empty; // Added Database property
@@ -23,14 +23,14 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public Hierarchy? RootHierarchy
+        public HierarchyViewModel? RootHierarchyViewModel
         {
-            get { return _rootHierarchy; }
+            get { return _rootHierarchyViewModel; }
             set
             {
-                if (_rootHierarchy != value)
+                if (_rootHierarchyViewModel != value)
                 {
-                    _rootHierarchy = value;
+                    _rootHierarchyViewModel = value;
                     OnPropertyChanged();
                 }
             }
