@@ -1,4 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:selectors="clr-namespace:EnerFlow.Selectors"
                     xmlns:converters="clr-namespace:EnerFlow.Converters"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -32,5 +33,7 @@
             <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}"></DatePicker>
         </StackPanel>
     </DataTemplate>
-    
+
+    <selectors:HierarchyTreeViewItemTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector"/>
+
 </ResourceDictionary>

@@ -2,6 +2,7 @@
 using EnerFlow.Implementations;
 using EnerFlow.Interfaces;
 using EnerFlow.ViewModels;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -33,13 +34,17 @@ namespace EnerFlow.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var dataService = App.ServiceProvider?.GetService<IDataService>();
+            var currentWindowsUsername = string.Empty;
+            var server = string.Empty;
+            var database = string.Empty;
+
             MainViewModel mainViewModel = (MainViewModel)DataContext;
 
             Task.Run(() =>
             {
                 try
                 {
-                    var dataService = App.ServiceProvider?.GetService<IDataService>();
 
                     if (dataService == null)
                     {
@@ -48,7 +53,13 @@ namespace EnerFlow.Views
 
                     dataService.Context = new EnerFlowContext();
 
-                    var currentWindowsUsername = Environment.UserName;
+                    var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString);
+
+                    server = sqlConnectionStringBuilder.DataSource;
+
+                    database = sqlConnectionStringBuilder.InitialCatalog;
+
+                    currentWindowsUsername = Environment.UserName;
 
                     var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
 
@@ -81,7 +92,20 @@ namespace EnerFlow.Views
                 {
                     try
                     {
+                        if (dataService == null)
+                        {
+                            throw new InvalidOperationException("Failed to resolve IDataService.");
+                        }
+
+                        mainViewModel.Server = server;
+
+                        mainViewModel.Database = database;
+
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
+
+                        mainViewModel.RootHierarchy = dataService.GetRootHierarchy();
+
+                        mainViewModel.UserName = currentWindowsUsername;
 
                         mainViewModel.IsBusy = false;
 

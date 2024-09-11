@@ -58,7 +58,7 @@
                     </Button>
                     <Separator/>
                 </ToolBar>
-                <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0">
+                <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding RootHierarchy}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
 
                 </TreeView>
                 <GridSplitter Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5"/>
@@ -73,13 +73,25 @@
                     </TabItem>
                 </TabControl>
                 <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                    <StatusBarItem>
-                        <TextBlock Text="User:"/>
+                    <StatusBarItem ToolTip="User Name">
+                        <Image Source="/Images/User_16x16.png"/>
                     </StatusBarItem>
                     <StatusBarItem>
-                        <Hyperlink>
-                            <TextBlock Text="{Binding UserFullName}"/>
-                        </Hyperlink>
+                        <TextBlock Text="{Binding UserName}"/>
+                    </StatusBarItem>
+                    <Separator/>
+                    <StatusBarItem ToolTip="Server">
+                        <Image Source="/Images/Server_16x16.png"/>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock Text="{Binding Server}"/>
+                    </StatusBarItem>
+                    <Separator/>
+                    <StatusBarItem ToolTip="Database">
+                        <Image Source="/Images/Database_16x16.png"/>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock Text="{Binding Database}"/>
                     </StatusBarItem>
                 </StatusBar>
             </Grid>
