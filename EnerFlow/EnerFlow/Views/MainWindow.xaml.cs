@@ -3,10 +3,11 @@ using EnerFlow.Implementations;
 using EnerFlow.Interfaces;
 using EnerFlow.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls.Ribbon;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-namespace EnerFlow
+namespace EnerFlow.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,44 +26,64 @@ namespace EnerFlow
             InitializeComponent();
 
             DataContext = mainViewModel;
+
+            mainViewModel.IsBusy = true;
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            MainViewModel mainViewModel = (MainViewModel)DataContext;
+
             Task.Run(() =>
             {
-                Thread.Sleep(0);
+                try
+                {
+                    var dataService = App.ServiceProvider?.GetService<IDataService>();
+
+                    if (dataService == null)
+                    {
+                        throw new InvalidOperationException("Failed to resolve IDataService.");
+                    }
+
+                    dataService.Context = new EnerFlowContext();
+
+                    var currentWindowsUsername = Environment.UserName;
+
+                    var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
+
+                    // Check if the user exists
+                    if (currentUser == null)
+                    {
+                        throw new Exception("User does not exist in the database.");
+                    }
+
+                    // Check if the user has access
+                    if (!Security.SecurityChecker.HasAccess(currentUser))
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show("You do not have access to this application.", "Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            Close();
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Close();
+                    });
+                }
+
                 Dispatcher.Invoke(() =>
                 {
                     try
                     {
-                        var dataService = App.ServiceProvider?.GetService<IDataService>();
-
-                        if (dataService == null)
-                        {
-                            throw new InvalidOperationException("Failed to resolve IDataService.");
-                        }
-
-                        dataService.Context = new EnerFlowContext();
-
-                        var currentWindowsUsername = Environment.UserName;
-
-                        var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
-
-                        // Check if the user exists
-                        if (currentUser == null)
-                        {
-                            throw new Exception("User does not exist in the database.");
-                        }
-
-                        // Check if the user has access
-                        if (!Security.SecurityChecker.HasAccess(currentUser))
-                        {
-                            MessageBox.Show("You do not have access to this application.", "Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            Close();
-                        }
-
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
+
+                        mainViewModel.IsBusy = false;
 
                     }
                     catch (Exception ex)
@@ -86,6 +107,7 @@ namespace EnerFlow
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            MapWebView.Visibility = Visibility.Collapsed;
             BusyIndicator.IsBusy = true;
         }
     }
