@@ -14,7 +14,7 @@
         RunSheets = 9,
         ContextTags = 10,
         SerialChannelTags = 11,
-        TcpIpChannelTags = 12,
+        IpChannelTags = 12,
         DeviceTags = 13,
         AnalogIoTags = 14,
         DigitalIoTags = 15,
