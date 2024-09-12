@@ -1,4 +1,4 @@
-Scaffold-DbContext 'Data Source=(local);Initial Catalog=EnerFlow;TrustServerCertificate=True;Integrated Security=true' Microsoft.EntityFrameworkCore.SqlServer -ContextDir Data -OutputDir Models
+Scaffold-DbContext 'Data Source=(local);Initial Catalog=EnerFlow;TrustServerCertificate=True;Integrated Security=true' Microsoft.EntityFrameworkCore.SqlServer -ContextDir Data -OutputDir Models -Force
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

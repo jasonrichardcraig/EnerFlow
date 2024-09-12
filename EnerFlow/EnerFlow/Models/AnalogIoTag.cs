@@ -27,6 +27,10 @@ public partial class AnalogIoTag
 
     public string? WriteAddress { get; set; }
 
+    public bool? IsCalculated { get; set; }
+
+    public string? Code { get; set; }
+
     public double? UnscaledMinimum { get; set; }
 
     public double? UnscaledMaximum { get; set; }
@@ -85,7 +89,23 @@ public partial class AnalogIoTag
 
     public int? UnitId { get; set; }
 
+    public int? TagValueEnumerationId { get; set; }
+
+    public bool? IsBadQuality { get; set; }
+
+    public double? ManualData { get; set; }
+
+    public double? Value { get; set; }
+
+    public DateTime DateTimeCreated { get; set; }
+
+    public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+
+    public virtual ICollection<AnalogIoTagValueHistory> AnalogIoTagValueHistories { get; set; } = new List<AnalogIoTagValueHistory>();
+
     public virtual DeviceTag? Device { get; set; }
+
+    public virtual Hierarchy Hierarchy { get; set; } = null!;
 
     public virtual AlarmPriority? HighAlarmPriority { get; set; }
 
@@ -94,6 +114,8 @@ public partial class AnalogIoTag
     public virtual AlarmPriority? LowAlarmPriority { get; set; }
 
     public virtual AlarmPriority? LowLowAlarmPriority { get; set; }
+
+    public virtual TagValueEnumeration? TagValueEnumeration { get; set; }
 
     public virtual Unit? Unit { get; set; }
 }

@@ -32,6 +32,8 @@ public partial class Facility
 
     public DateTime? DateTimeCreated { get; set; }
 
+    public virtual ICollection<Compressor> Compressors { get; set; } = new List<Compressor>();
+
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
 
     public virtual ICollection<FacilityDailyActivity> FacilityDailyActivityActivityFacilities { get; set; } = new List<FacilityDailyActivity>();

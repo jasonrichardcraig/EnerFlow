@@ -12,9 +12,15 @@ public partial class Hierarchy
 
     public string Name { get; set; } = null!;
 
+    public string? Description { get; set; }
+
     public byte NodeTypeId { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
+
+    public virtual ICollection<AnalogIoTag> AnalogIoTags { get; set; } = new List<AnalogIoTag>();
+
+    public virtual ICollection<ContextTag> ContextTags { get; set; } = new List<ContextTag>();
 
     public virtual ICollection<DeviceTag> DeviceTags { get; set; } = new List<DeviceTag>();
 
@@ -30,7 +36,7 @@ public partial class Hierarchy
 
     public virtual ICollection<SerialChannelTag> SerialChannelTags { get; set; } = new List<SerialChannelTag>();
 
-    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
+    public virtual ICollection<StringTag> StringTags { get; set; } = new List<StringTag>();
 
     public virtual ICollection<TcpIpChannelTag> TcpIpChannelTags { get; set; } = new List<TcpIpChannelTag>();
 
