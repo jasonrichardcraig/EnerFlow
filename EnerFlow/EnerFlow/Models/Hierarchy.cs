@@ -14,6 +14,10 @@ public partial class Hierarchy
 
     public string? Description { get; set; }
 
+    public bool IsDisabled { get; set; }
+
+    public bool IsHidden { get; set; }
+
     public byte NodeTypeId { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
@@ -24,9 +28,15 @@ public partial class Hierarchy
 
     public virtual ICollection<DeviceTag> DeviceTags { get; set; } = new List<DeviceTag>();
 
+    public virtual ICollection<Diagram> Diagrams { get; set; } = new List<Diagram>();
+
     public virtual ICollection<DigitalIoTag> DigitalIoTags { get; set; } = new List<DigitalIoTag>();
 
+    public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+
     public virtual ICollection<Facility> Facilities { get; set; } = new List<Facility>();
+
+    public virtual ICollection<IpChannelTag> IpChannelTags { get; set; } = new List<IpChannelTag>();
 
     public virtual NodeType NodeType { get; set; } = null!;
 
@@ -34,11 +44,11 @@ public partial class Hierarchy
 
     public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
 
+    public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
+
     public virtual ICollection<SerialChannelTag> SerialChannelTags { get; set; } = new List<SerialChannelTag>();
 
     public virtual ICollection<StringTag> StringTags { get; set; } = new List<StringTag>();
-
-    public virtual ICollection<TcpIpChannelTag> TcpIpChannelTags { get; set; } = new List<TcpIpChannelTag>();
 
     public virtual ICollection<Well> Wells { get; set; } = new List<Well>();
 

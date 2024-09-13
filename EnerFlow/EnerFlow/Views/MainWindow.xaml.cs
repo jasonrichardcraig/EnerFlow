@@ -3,6 +3,7 @@ using EnerFlow.Implementations;
 using EnerFlow.Interfaces;
 using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -63,6 +64,33 @@ namespace EnerFlow.Views
 
                     var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
 
+                    dataService.Context.SavingChanges += (sender, e) =>
+                    {
+                        mainViewModel.IsBusy = true;
+                        //foreach (var entry in dataService.Context.ChangeTracker.Entries())
+                        //{
+                        //    if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                        //    {
+                        //        entry.Property("ModifiedBy").CurrentValue = currentWindowsUsername;
+                        //        entry.Property("ModifiedDate").CurrentValue = DateTime.Now;
+                        //    }
+                        //}
+                    };
+
+                    dataService.Context.SavedChanges += (sender, e) =>
+                    {
+                        mainViewModel.IsBusy = false;
+
+                        //foreach (var entry in dataService.Context.ChangeTracker.Entries())
+                        //{
+                        //    if (entry.State == EntityState.Added)
+                        //    {
+                        //        entry.Property("CreatedBy").CurrentValue = currentWindowsUsername;
+                        //        entry.Property("CreatedDate").CurrentValue = DateTime.Now;
+                        //    }
+                        //}
+                    };
+
                     // Check if the user exists
                     if (currentUser == null)
                     {
@@ -97,15 +125,17 @@ namespace EnerFlow.Views
                             throw new InvalidOperationException("Failed to resolve IDataService.");
                         }
 
+                        HierarchyViewModel? parentHierarchyViewModel = null;
+
+                        mainViewModel.UserName = currentWindowsUsername;
+
                         mainViewModel.Server = server;
 
                         mainViewModel.Database = database;
 
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
-                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(dataService, dataService.GetRootHierarchy());
-
-                        mainViewModel.UserName = currentWindowsUsername;
+                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(parentHierarchyViewModel!, dataService, mainViewModel, dataService.GetRootHierarchy());
 
                         mainViewModel.IsBusy = false;
 

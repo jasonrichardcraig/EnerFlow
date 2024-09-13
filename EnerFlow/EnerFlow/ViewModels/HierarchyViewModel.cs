@@ -1,18 +1,31 @@
-﻿using EnerFlow.Interfaces;
+﻿using EnerFlow.Commands;
+using EnerFlow.Interfaces;
 using EnerFlow.Models;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
 {
-    public class HierarchyViewModel
+    public class HierarchyViewModel : ViewModelBase, IDisposable
     {
+        private bool _isLoaded = false;
         private readonly IDataService _dataService;
+        private readonly MainViewModel _mainViewModel;
+        private readonly HierarchyViewModel _parentHierarchyViewModel;
+        private readonly ObservableCollection<HierarchyViewModel> _children = new ObservableCollection<HierarchyViewModel>();
         private Hierarchy _hierarchy = null!;
 
-        public HierarchyViewModel(IDataService dataService, Hierarchy hierarchy)
+        public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, IDataService dataService, MainViewModel mainViewModel, Hierarchy hierarchy)
         {
+            _parentHierarchyViewModel = parentHierarchyViewModel;
             _dataService = dataService;
+            _mainViewModel = mainViewModel;
             _hierarchy = hierarchy;
+
+            RefreshCommand = new RelayCommand(ExecuteRefreshCommand);
+
+            _children.CollectionChanged += Children_CollectionChanged;
 
         }
 
@@ -20,13 +33,90 @@ namespace EnerFlow.ViewModels
 
         public string Name { get => _hierarchy.Name; }
 
-        public IEnumerable<HierarchyViewModel> Children
+        public bool IsDisabled
         {
-            get
+            get => _hierarchy.IsDisabled;
+            set
             {
-                return _dataService.GetChildren(_hierarchy).Select(h => new HierarchyViewModel(_dataService, h));
+                if (_hierarchy.IsDisabled != value)
+                {
+                    _hierarchy.IsDisabled = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
             }
         }
 
+        public ICommand RefreshCommand { get; }
+
+        public ObservableCollection<HierarchyViewModel> Children
+        {
+            get
+            {
+                if (!_isLoaded)
+                {
+                    LoadChildren();
+                    _isLoaded = true;
+                }
+
+                return _children;
+            }
+        }
+
+        public void LoadChildren()
+        {
+            var showHiddenItems = _mainViewModel.ShowHiddenItems;
+            var hierarchies = _dataService.GetChildren(_hierarchy).Where(h => !h.IsHidden || showHiddenItems).ToList();
+
+            foreach (var hierarchy in hierarchies)
+            {
+                _children.Add(new HierarchyViewModel(this, _dataService, _mainViewModel, hierarchy));
+            }
+
+        }
+
+        private void Children_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Reset:
+                    if (sender is ObservableCollection<HierarchyViewModel> children)
+                    {
+                        foreach (var child in children)
+                        {
+                            child.Dispose();
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems != null)
+                    {
+                        foreach (HierarchyViewModel child in e.OldItems)
+                        {
+                            child.Dispose();
+                        }
+                    }
+                    break;
+            }
+
+        }
+        private void ExecuteRefreshCommand(object? parameter)
+        {
+            if (_mainViewModel.RootHierarchyViewModel != null)
+            {
+                _mainViewModel.RootHierarchyViewModel.Children.Clear();
+                _mainViewModel.RootHierarchyViewModel.LoadChildren();
+            }
+        }
+
+        public void Dispose()
+        {
+            _children.CollectionChanged -= Children_CollectionChanged;
+
+            foreach (var child in _children)
+            {
+                child.Dispose();
+            }
+        }
     }
 }

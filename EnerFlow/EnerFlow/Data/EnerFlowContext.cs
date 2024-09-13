@@ -58,9 +58,13 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<DeviceType> DeviceTypes { get; set; }
 
+    public virtual DbSet<Diagram> Diagrams { get; set; }
+
     public virtual DbSet<DigitalIoTag> DigitalIoTags { get; set; }
 
     public virtual DbSet<DigitalIoTagHistory> DigitalIoTagHistories { get; set; }
+
+    public virtual DbSet<Document> Documents { get; set; }
 
     public virtual DbSet<Equipment> Equipment { get; set; }
 
@@ -112,6 +116,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<HourlyLiquidFlowRecord> HourlyLiquidFlowRecords { get; set; }
 
+    public virtual DbSet<IpChannelTag> IpChannelTags { get; set; }
+
     public virtual DbSet<LinearMeterCalculationMode> LinearMeterCalculationModes { get; set; }
 
     public virtual DbSet<LinearMeterCalculationUnitType> LinearMeterCalculationUnitTypes { get; set; }
@@ -135,6 +141,12 @@ public partial class EnerFlowContext : DbContext
     public virtual DbSet<MeterEvent> MeterEvents { get; set; }
 
     public virtual DbSet<MeterEventType> MeterEventTypes { get; set; }
+
+    public virtual DbSet<MeterException> MeterExceptions { get; set; }
+
+    public virtual DbSet<MeterExceptionResolutionType> MeterExceptionResolutionTypes { get; set; }
+
+    public virtual DbSet<MeterExceptionType> MeterExceptionTypes { get; set; }
 
     public virtual DbSet<MeterExportType> MeterExportTypes { get; set; }
 
@@ -188,6 +200,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<SaturationCondition> SaturationConditions { get; set; }
 
+    public virtual DbSet<Screen> Screens { get; set; }
+
     public virtual DbSet<SerialChannelTag> SerialChannelTags { get; set; }
 
     public virtual DbSet<SignalType> SignalTypes { get; set; }
@@ -211,8 +225,6 @@ public partial class EnerFlowContext : DbContext
     public virtual DbSet<TankType> TankTypes { get; set; }
 
     public virtual DbSet<TapType> TapTypes { get; set; }
-
-    public virtual DbSet<TcpIpChannelTag> TcpIpChannelTags { get; set; }
 
     public virtual DbSet<Ticket> Tickets { get; set; }
 
@@ -885,11 +897,11 @@ public partial class EnerFlowContext : DbContext
 
             entity.HasOne(d => d.Channel).WithMany(p => p.DeviceTags)
                 .HasForeignKey(d => d.ChannelId)
-                .HasConstraintName("FK_DeviceTags_SerialChannelTags");
+                .HasConstraintName("FK_DeviceTags_IpChannelTags");
 
             entity.HasOne(d => d.ChannelNavigation).WithMany(p => p.DeviceTags)
                 .HasForeignKey(d => d.ChannelId)
-                .HasConstraintName("FK_DeviceTags_TcpIpChannelTags");
+                .HasConstraintName("FK_DeviceTags_SerialChannelTags");
 
             entity.HasOne(d => d.DeviceType).WithMany(p => p.DeviceTags)
                 .HasForeignKey(d => d.DeviceTypeId)
@@ -918,6 +930,20 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(64)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Diagram>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DiagramXml).HasColumnType("xml");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Diagrams)
+                .HasForeignKey(d => d.HierarchyId)
+                .HasConstraintName("FK_Diagrams_Hierarchy");
         });
 
         modelBuilder.Entity<DigitalIoTag>(entity =>
@@ -974,6 +1000,19 @@ public partial class EnerFlowContext : DbContext
                 .HasForeignKey(d => d.DigitalIoTagId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DigitalIoTagHistory_DigitalIoTags");
+        });
+
+        modelBuilder.Entity<Document>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.HierarchyId)
+                .HasConstraintName("FK_Documents_Hierarchy");
         });
 
         modelBuilder.Entity<Equipment>(entity =>
@@ -1635,6 +1674,20 @@ public partial class EnerFlowContext : DbContext
                 .HasForeignKey(d => d.MeterId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_HourlyLiquidFlowRecords_Meters");
+        });
+
+        modelBuilder.Entity<IpChannelTag>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.HostName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.IpChannelTags)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TcpIpChannelTags_Hierarchy");
         });
 
         modelBuilder.Entity<LinearMeterCalculationMode>(entity =>
@@ -2429,6 +2482,58 @@ public partial class EnerFlowContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<MeterException>(entity =>
+        {
+            entity.HasKey(e => new { e.MeterId, e.TimeStamp, e.MeterExceptionTypeId });
+
+            entity.Property(e => e.MeterId).HasColumnName("MeterID");
+            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.MeterExceptionTypeId).HasColumnName("MeterExceptionTypeID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.MeterExceptionResolutionTypeId).HasColumnName("MeterExceptionResolutionTypeID");
+            entity.Property(e => e.ResolvedByUserId).HasColumnName("ResolvedByUserID");
+
+            entity.HasOne(d => d.MeterExceptionResolutionType).WithMany(p => p.MeterExceptions)
+                .HasForeignKey(d => d.MeterExceptionResolutionTypeId)
+                .HasConstraintName("FK_MeterExceptions_MeterExceptionResolutionTypes");
+
+            entity.HasOne(d => d.MeterExceptionType).WithMany(p => p.MeterExceptions)
+                .HasForeignKey(d => d.MeterExceptionTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MeterExceptions_MeterExceptionTypes");
+
+            entity.HasOne(d => d.Meter).WithMany(p => p.MeterExceptions)
+                .HasForeignKey(d => d.MeterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MeterExceptions_Meters");
+
+            entity.HasOne(d => d.ResolvedByUser).WithMany(p => p.MeterExceptions)
+                .HasForeignKey(d => d.ResolvedByUserId)
+                .HasConstraintName("FK_MeterExceptions_Users");
+        });
+
+        modelBuilder.Entity<MeterExceptionResolutionType>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<MeterExceptionType>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<MeterExportType>(entity =>
         {
             entity.Property(e => e.Id)
@@ -2963,6 +3068,20 @@ public partial class EnerFlowContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Screen>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.ScreenXml).HasColumnType("xml");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Screens)
+                .HasForeignKey(d => d.HierarchyId)
+                .HasConstraintName("FK_Screens_Hierarchy");
+        });
+
         modelBuilder.Entity<SerialChannelTag>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
@@ -3164,23 +3283,6 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<TcpIpChannelTag>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
-            entity.Property(e => e.HostName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Hierarchy).WithMany(p => p.TcpIpChannelTags)
-                .HasForeignKey(d => d.HierarchyId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TcpIpChannelTags_Hierarchy");
         });
 
         modelBuilder.Entity<Ticket>(entity =>

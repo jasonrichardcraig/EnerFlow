@@ -9,7 +9,7 @@ public partial class DigitalIoTagHistory
 
     public DateTime TimeStamp { get; set; }
 
-    public bool? Value { get; set; }
+    public bool Value { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
 

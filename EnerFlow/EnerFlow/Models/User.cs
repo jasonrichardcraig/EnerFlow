@@ -21,6 +21,8 @@ public partial class User
 
     public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
+    public virtual ICollection<MeterException> MeterExceptions { get; set; } = new List<MeterException>();
+
     public virtual ICollection<Hierarchy> Hierarchies { get; set; } = new List<Hierarchy>();
 
     public virtual ICollection<Role> Roles { get; set; } = new List<Role>();

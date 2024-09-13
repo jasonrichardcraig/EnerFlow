@@ -11,8 +11,6 @@ public partial class DeviceTag
 
     public int? ChannelId { get; set; }
 
-    public bool IsEnabled { get; set; }
-
     public string IpendPoint { get; set; } = null!;
 
     public int InterPollDelay { get; set; }
@@ -35,9 +33,9 @@ public partial class DeviceTag
 
     public virtual ICollection<AnalogIoTag> AnalogIoTags { get; set; } = new List<AnalogIoTag>();
 
-    public virtual SerialChannelTag? Channel { get; set; }
+    public virtual IpChannelTag? Channel { get; set; }
 
-    public virtual TcpIpChannelTag? ChannelNavigation { get; set; }
+    public virtual SerialChannelTag? ChannelNavigation { get; set; }
 
     public virtual DeviceType DeviceType { get; set; } = null!;
 

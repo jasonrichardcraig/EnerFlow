@@ -47,6 +47,8 @@ public partial class Meter
 
     public virtual ICollection<MeterEvent> MeterEvents { get; set; } = new List<MeterEvent>();
 
+    public virtual ICollection<MeterException> MeterExceptions { get; set; } = new List<MeterException>();
+
     public virtual MeterPurpose? MeterPurpose { get; set; }
 
     public virtual MeterRunTag? MeterRunTag { get; set; }

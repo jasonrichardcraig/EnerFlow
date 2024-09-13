@@ -5,6 +5,7 @@ namespace EnerFlow.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private bool _isBusy;
+        private bool _showHiddenItems;
         private HierarchyViewModel? _rootHierarchyViewModel;
         private string _userName = string.Empty; // Initialize _userName to avoid CS8618
         private string _server = string.Empty; // Added Server property
@@ -70,6 +71,18 @@ namespace EnerFlow.ViewModels
                 if (_database != value)
                 {
                     _database = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool ShowHiddenItems // Added ShowHiddenItems property
+        {
+            get { return _showHiddenItems; }
+            set
+            {
+                if (_showHiddenItems != value)
+                {
+                    _showHiddenItems = value;
                     OnPropertyChanged();
                 }
             }

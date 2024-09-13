@@ -15,8 +15,6 @@ public partial class MeterRunTag
 
     public string MeterDescription { get; set; } = null!;
 
-    public bool IsDisabled { get; set; }
-
     public DateTime LastPollDateTime { get; set; }
 
     public DateTime LastExportDateTime { get; set; }

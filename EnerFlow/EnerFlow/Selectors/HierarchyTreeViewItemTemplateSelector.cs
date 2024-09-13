@@ -10,6 +10,12 @@ namespace EnerFlow.Selectors
     /// </summary>
     internal class HierarchyTreeViewItemTemplateSelector : DataTemplateSelector
     {
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Root node type.
+        /// </summary>
+        public DataTemplate? RootTemplate { get; set; }
+
         /// <summary>
         /// Gets or sets the DataTemplate for the Company node type.
         /// </summary>
@@ -42,6 +48,7 @@ namespace EnerFlow.Selectors
 
             return (HierarchyNodeType)hierarchyViewModel.Hierarchy.NodeTypeId switch
             {
+                HierarchyNodeType.Root => RootTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.Company => CompanyTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.District => DistrictTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.Area => AreaTemplate ?? base.SelectTemplate(item, container),
