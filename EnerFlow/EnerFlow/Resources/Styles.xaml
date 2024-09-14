@@ -42,7 +42,7 @@
         <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Root.png">
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Company" Command="{Binding AddCommand}">
+                    <MenuItem Header="Add Company" Command="{Binding AddNewItemCommand}" CommandParameter="Company">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Company_16x16.png"/>
                         </MenuItem.Icon>
@@ -64,9 +64,14 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add District" Command="{Binding AddCommand}">
+                    <MenuItem Header="Add District" Command="{Binding AddCommand}" CommandParameter="District">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/District.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Delete Company" Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
@@ -141,7 +146,7 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="SerialChannelTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+    <HierarchicalDataTemplate x:Key="SerialPortChannelTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/SerialPortChannelTag_16x16.png"/>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
@@ -209,7 +214,20 @@
                                                      CompanyTemplate="{StaticResource CompanyTreeViewItemDataTemplate}"
                                                      DistrictTemplate="{StaticResource DistrictTreeViewItemDataTemplate}"
                                                      AreaTemplate="{StaticResource AreaTreeViewItemDataTemplate}"
-                                                     FieldTemplate="{StaticResource FieldTreeViewItemDataTemplate}">
+                                                     FieldTemplate="{StaticResource FieldTreeViewItemDataTemplate}"
+                                                     FacilityTemplate="{StaticResource FacilityTreeViewItemDataTemplate}"
+                                                     SatelliteTemplate="{StaticResource SatelliteTreeViewItemDataTemplate}"
+                                                     RunSheetTemplate="{StaticResource RunSheetTreeViewItemDataTemplate}"
+                                                     ContextTagTemplate="{StaticResource ContextTagTreeViewItemDataTemplate}"
+                                                     SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTreeViewItemDataTemplate}"
+                                                     IpChannelTagTemplate="{StaticResource IpChannelTagTreeViewItemDataTemplate}"
+                                                     DeviceTagTemplate="{StaticResource DeviceTagTreeViewItemDataTemplate}"
+                                                     AnalogIoTagTemplate="{StaticResource AnalogIoTagTreeViewItemDataTemplate}"
+                                                     DigitalIoTagTemplate="{StaticResource DigitalIoTagTreeViewItemDataTemplate}"
+                                                     StringIoTagTemplate="{StaticResource StringIoTagTreeViewItemDataTemplate}"
+                                                     ScreenTemplate="{StaticResource ScreenTreeViewItemDataTemplate}"
+                                                     DiagramTemplate="{StaticResource DiagramTreeViewItemDataTemplate}"
+                                                     DocumentTemplate="{StaticResource DocumentTreeViewItemDataTemplate}">
 
     </selectors:HierarchyTreeViewItemTemplateSelector>
 

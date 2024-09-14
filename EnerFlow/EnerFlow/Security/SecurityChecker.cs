@@ -23,5 +23,26 @@ namespace EnerFlow.Security
 
             return hasRequiredRole;
         }
+
+        public static bool HasModifyTreeItemPermission(User user) 
+        {
+            // Check if the account is disabled
+            if (user.AccountDisabled)
+            {
+                return false;
+            }
+
+            // Check if the user is a system administrator
+            if (user.IsSystemAdministrator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
     }
 }

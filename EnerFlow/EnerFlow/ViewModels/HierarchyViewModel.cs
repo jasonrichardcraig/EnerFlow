@@ -4,6 +4,7 @@ using EnerFlow.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using EnerFlow.Enums;
 
 namespace EnerFlow.ViewModels
 {
@@ -24,6 +25,10 @@ namespace EnerFlow.ViewModels
             _hierarchy = hierarchy;
 
             RefreshCommand = new RelayCommand(ExecuteRefreshCommand);
+
+            AddNewItemCommand = new RelayCommand(ExecuteAddNewItemCommand, CanExecuteAddNewItemCommand);
+
+            DeleteItemCommand = new RelayCommand(ExecuteDeleteItemCommand, CanExecuteDeleteItemCommand);
 
             _children.CollectionChanged += Children_CollectionChanged;
 
@@ -49,6 +54,10 @@ namespace EnerFlow.ViewModels
 
         public ICommand RefreshCommand { get; }
 
+        public ICommand AddNewItemCommand { get; }
+
+        public ICommand DeleteItemCommand { get; }
+
         public ObservableCollection<HierarchyViewModel> Children
         {
             get
@@ -65,14 +74,10 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-            var showHiddenItems = _mainViewModel.ShowHiddenItems;
-            var hierarchies = _dataService.GetChildren(_hierarchy).Where(h => !h.IsHidden || showHiddenItems).ToList();
-
-            foreach (var hierarchy in hierarchies)
+            foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
             {
                 _children.Add(new HierarchyViewModel(this, _dataService, _mainViewModel, hierarchy));
             }
-
         }
 
         private void Children_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -100,6 +105,29 @@ namespace EnerFlow.ViewModels
             }
 
         }
+
+        private bool CanExecuteAddNewItemCommand(object? arg)
+        {
+            return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
+        }
+
+        private void ExecuteAddNewItemCommand(object? obj)
+        {
+            if (obj is string itemType)
+            {
+                switch(itemType)
+                {
+                    case nameof(HierarchyNodeType.Company):
+                        _dataService.AddHierarchyNode(_hierarchy);
+                        break;
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Invalid argument type", nameof(obj));
+            }
+        }
+
         private void ExecuteRefreshCommand(object? parameter)
         {
             if (_mainViewModel.RootHierarchyViewModel != null)
@@ -107,6 +135,16 @@ namespace EnerFlow.ViewModels
                 _mainViewModel.RootHierarchyViewModel.Children.Clear();
                 _mainViewModel.RootHierarchyViewModel.LoadChildren();
             }
+        }
+
+        private bool CanExecuteDeleteItemCommand(object? arg)
+        {
+            return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
+        }
+
+        private void ExecuteDeleteItemCommand(object? obj)
+        {
+            throw new NotImplementedException();
         }
 
         public void Dispose()

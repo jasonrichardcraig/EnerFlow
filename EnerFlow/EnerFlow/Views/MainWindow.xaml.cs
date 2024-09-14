@@ -54,16 +54,6 @@ namespace EnerFlow.Views
 
                     dataService.Context = new EnerFlowContext();
 
-                    var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString);
-
-                    server = sqlConnectionStringBuilder.DataSource;
-
-                    database = sqlConnectionStringBuilder.InitialCatalog;
-
-                    currentWindowsUsername = Environment.UserName;
-
-                    var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
-
                     dataService.Context.SavingChanges += (sender, e) =>
                     {
                         mainViewModel.IsBusy = true;
@@ -91,11 +81,24 @@ namespace EnerFlow.Views
                         //}
                     };
 
+
+                    var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString);
+
+                    server = sqlConnectionStringBuilder.DataSource;
+
+                    database = sqlConnectionStringBuilder.InitialCatalog;
+
+                    currentWindowsUsername = Environment.UserName;
+
+                    var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
+
                     // Check if the user exists
                     if (currentUser == null)
                     {
                         throw new Exception("User does not exist in the database.");
                     }
+
+                    mainViewModel.UserViewModel = new UserViewModel(currentUser);
 
                     // Check if the user has access
                     if (!Security.SecurityChecker.HasAccess(currentUser))
@@ -106,6 +109,7 @@ namespace EnerFlow.Views
                             Close();
                         });
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -126,8 +130,6 @@ namespace EnerFlow.Views
                         }
 
                         HierarchyViewModel? parentHierarchyViewModel = null;
-
-                        mainViewModel.UserName = currentWindowsUsername;
 
                         mainViewModel.Server = server;
 

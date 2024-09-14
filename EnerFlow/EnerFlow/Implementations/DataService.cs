@@ -19,5 +19,10 @@ namespace EnerFlow.Implementations
             return Context.Hierarchies.FirstOrDefault(h => h.Node == HierarchyId.GetRoot())!;
         }
 
+        public void AddHierarchyNode(Hierarchy hierarchy)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

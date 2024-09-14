@@ -76,7 +76,7 @@
                         <Image Source="/Images/User_16x16.png"/>
                     </StatusBarItem>
                     <StatusBarItem>
-                        <TextBlock Text="{Binding UserName}"/>
+                        <TextBlock Text="{Binding UserViewModel.UserName}"/>
                     </StatusBarItem>
                     <Separator/>
                     <StatusBarItem ToolTip="Server">

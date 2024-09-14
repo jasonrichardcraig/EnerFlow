@@ -1,4 +1,5 @@
 ﻿using EnerFlow.Data;
+using EnerFlow.Enums;
 using EnerFlow.Models;
 
 namespace EnerFlow.Interfaces
@@ -7,6 +8,7 @@ namespace EnerFlow.Interfaces
     {
         EnerFlowContext Context { get; set; }
 
+        void AddHierarchyNode(Hierarchy hierarchy);
         IEnumerable<Hierarchy> GetChildren(Hierarchy hierarchy);
         Hierarchy GetRootHierarchy();
     }
