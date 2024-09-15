@@ -1,14 +1,9 @@
 ﻿using EnerFlow.Data;
-using EnerFlow.Implementations;
-using EnerFlow.Interfaces;
+using EnerFlow.Services;
 using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls.Ribbon;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace EnerFlow.Views
 {
     /// <summary>
@@ -25,8 +20,14 @@ namespace EnerFlow.Views
                 throw new InvalidOperationException("Failed to resolve MainViewModel.");
             }
 
-            InitializeComponent();
+            var dialogService = App.ServiceProvider?.GetService<IDialogService>();
+            if (dialogService == null)
+            {
+                throw new InvalidOperationException("Failed to resolve DialogService.");
+            }
+            //mainViewModel.DialogService = dialogService!;
 
+            InitializeComponent();
             DataContext = mainViewModel;
 
             mainViewModel.IsBusy = true;
@@ -166,5 +167,6 @@ namespace EnerFlow.Views
             MapWebView.Visibility = Visibility.Collapsed;
             BusyIndicator.IsBusy = true;
         }
+
     }
 }

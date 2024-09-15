@@ -1,9 +1,8 @@
 ﻿using EnerFlow.Data;
 using EnerFlow.Models;
-using EnerFlow.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnerFlow.Implementations
+namespace EnerFlow.Services
 {
     public class DataService : IDataService
     {

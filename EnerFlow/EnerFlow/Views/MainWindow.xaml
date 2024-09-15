@@ -58,8 +58,21 @@
                     </Button>
                     <Separator/>
                 </ToolBar>
-                <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding RootHierarchyViewModel, Converter={StaticResource RootTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
-                </TreeView>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="128" Height="*"/>
+                        <RowDefinition MinHeight="128" Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TreeView x:Name="NavigationTreeView" Grid.Row="0" ItemsSource="{Binding RootHierarchyViewModel, Converter={StaticResource RootTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
+                    </TreeView>
+                    <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                    <TabControl x:Name="NavigationTabControl" Grid.Row="1">
+                        <TabItem HeaderTemplate="{StaticResource MetersTabHeaderDataTemplate}">
+                            <ListView>
+                            </ListView>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
                 <GridSplitter Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5"/>
                 <TabControl Grid.Row="2" Grid.Column="1">
                     <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}">

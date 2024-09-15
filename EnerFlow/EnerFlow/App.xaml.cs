@@ -1,5 +1,4 @@
-﻿using EnerFlow.Implementations;
-using EnerFlow.Interfaces;
+﻿using EnerFlow.Services;
 using EnerFlow.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
@@ -39,6 +38,9 @@ namespace EnerFlow
         {
             // Register the IDataService and its implementation
             services.AddSingleton<IDataService, DataService>();
+
+            // Register the IDialogService and its implementation
+            services.AddSingleton<IDialogService, DialogService>();
 
             // Register the MainViewModel
             services.AddTransient<MainViewModel>();

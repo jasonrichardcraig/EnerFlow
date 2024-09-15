@@ -1,5 +1,5 @@
 ﻿using EnerFlow.Commands;
-using EnerFlow.Interfaces;
+using EnerFlow.Services;
 using EnerFlow.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -74,7 +74,7 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-            foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
+            foreach (var hierarchy in _dataService.GetChildren(_hierarchy).ToArray())
             {
                 _children.Add(new HierarchyViewModel(this, _dataService, _mainViewModel, hierarchy));
             }
@@ -115,10 +115,14 @@ namespace EnerFlow.ViewModels
         {
             if (obj is string itemType)
             {
-                switch(itemType)
+                switch (itemType)
                 {
                     case nameof(HierarchyNodeType.Company):
-                        _dataService.AddHierarchyNode(_hierarchy);
+                        if (_mainViewModel.DialogService != null)
+                        {
+                            _mainViewModel.DialogService.ShowNewCompanyDialog(this, _dataService, _mainViewModel, null!);
+                            _dataService.AddHierarchyNode(_hierarchy);
+                        }
                         break;
                 }
             }

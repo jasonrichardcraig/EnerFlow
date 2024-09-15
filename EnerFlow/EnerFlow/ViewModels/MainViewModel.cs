@@ -1,16 +1,24 @@
 ﻿using EnerFlow.Models;
+using EnerFlow.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EnerFlow.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         private bool _isBusy;
-        private bool _showHiddenItems;
+        private DialogService? _dialogService;
         private HierarchyViewModel? _rootHierarchyViewModel;
         private UserViewModel? _userViewModel; // Added UserViewModel property
         private string _userName = string.Empty; // Initialize _userName to avoid CS8618
         private string _server = string.Empty; // Added Server property
         private string _database = string.Empty; // Added Database property
+
+
+        public MainViewModel()
+        {
+
+        }
 
         public bool IsBusy
         {
@@ -20,6 +28,19 @@ namespace EnerFlow.ViewModels
                 if (_isBusy != value)
                 {
                     _isBusy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public DialogService? DialogService
+        {
+            get { return _dialogService; }
+            set
+            {
+                if (_dialogService != value)
+                {
+                    _dialogService = value;
                     OnPropertyChanged();
                 }
             }
@@ -72,18 +93,6 @@ namespace EnerFlow.ViewModels
                 if (_database != value)
                 {
                     _database = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public bool ShowHiddenItems // Added ShowHiddenItems property
-        {
-            get { return _showHiddenItems; }
-            set
-            {
-                if (_showHiddenItems != value)
-                {
-                    _showHiddenItems = value;
                     OnPropertyChanged();
                 }
             }

@@ -2,7 +2,7 @@
 using EnerFlow.Enums;
 using EnerFlow.Models;
 
-namespace EnerFlow.Interfaces
+namespace EnerFlow.Services
 {
     public interface IDataService
     {
