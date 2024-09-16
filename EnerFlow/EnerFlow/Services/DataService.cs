@@ -1,6 +1,7 @@
 ﻿using EnerFlow.Data;
 using EnerFlow.Enums;
 using EnerFlow.Models;
+using EnerFlow.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
 
@@ -62,11 +63,58 @@ namespace EnerFlow.Services
             Context.SaveChanges();
         }
 
-        public void DeleteCompanyHierarchyNode(Hierarchy companyHierarchy)
+        public void DeleteHierarchyNode(Hierarchy hierarchy)
         {
             try
             {
-                Context.Hierarchies.Remove(companyHierarchy);
+                var hierarchyId = hierarchy.Id;
+
+                switch ((HierarchyNodeType)hierarchy.NodeTypeId)
+                {
+                    case HierarchyNodeType.Satellite:
+                        Context.Satellites.Remove(Context.Satellites.First(s => s.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.Well:
+                        Context.Wells.Remove(Context.Wells.First(w => w.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.RunSheet:
+                        Context.RunSheets.Remove(Context.RunSheets.First(r => r.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.ContextTag:
+                        Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.SerialPortChannelTag:
+                        Context.SerialChannelTags.Remove(Context.SerialChannelTags.First(s => s.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.IpChannelTag:
+                        Context.IpChannelTags.Remove(Context.IpChannelTags.First(i => i.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.DeviceTag:
+                        Context.DeviceTags.Remove(Context.DeviceTags.First(d => d.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.AnalogIoTag:
+                        Context.AnalogIoTags.Remove(Context.AnalogIoTags.First(a => a.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.DigitalIoTag:
+                        Context.DigitalIoTags.Remove(Context.DigitalIoTags.First(d => d.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.StringIoTag:
+                        Context.StringTags.Remove(Context.StringTags.First(s => s.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.Screen:
+                        Context.Screens.Remove(Context.Screens.First(s => s.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.Diagram:
+                        Context.Diagrams.Remove(Context.Diagrams.First(d => d.HierarchyId == hierarchyId));
+                        break;
+                    case HierarchyNodeType.Document:
+                        Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
+                        break;
+                }
+
+                Context.Hierarchies.Remove(hierarchy);
+                Context.SaveChanges();
+
             }
             catch (Exception ex)
             {

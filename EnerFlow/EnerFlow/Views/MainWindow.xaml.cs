@@ -30,21 +30,27 @@ namespace EnerFlow.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var dataService = App.ServiceProvider?.GetService<IDataService>();
+            var dialogService = App.ServiceProvider?.GetService<IDialogService>();
             var currentWindowsUsername = string.Empty;
             var server = string.Empty;
             var database = string.Empty;
 
             MainViewModel mainViewModel = (MainViewModel)DataContext;
 
+            if (dataService == null)
+            {
+                throw new InvalidOperationException("Failed to resolve IDataService.");
+            }
+
+            if (dialogService == null)
+            {
+                throw new InvalidOperationException("Failed to resolve IDialogService.");
+            }
+
             Task.Run(() =>
             {
                 try
                 {
-
-                    if (dataService == null)
-                    {
-                        throw new InvalidOperationException("Failed to resolve IDataService.");
-                    }
 
                     dataService.Context = new EnerFlowContext();
 
@@ -99,17 +105,16 @@ namespace EnerFlow.Views
                     {
                         Dispatcher.Invoke(() =>
                         {
-                            MessageBox.Show("You do not have access to this application.", "Access Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            dialogService.ShowWarningDialog("You do not have access to this application.", "Access Denied");
                             Close();
                         });
                     }
-
                 }
                 catch (Exception ex)
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        dialogService.ShowErrorDialog(ex.Message, "Error");
                         Close();
                     });
                 }
@@ -136,7 +141,7 @@ namespace EnerFlow.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        dialogService.ShowErrorDialog(ex.Message, "Error");
                         Close();
                     }
                 });

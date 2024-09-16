@@ -36,6 +36,8 @@ namespace EnerFlow.ViewModels
 
         }
 
+        public HierarchyViewModel ParentHierarchyViewModel => _parentHierarchyViewModel;
+
         public Hierarchy Hierarchy { get => _hierarchy; }
 
         public string Name
@@ -176,7 +178,7 @@ namespace EnerFlow.ViewModels
 
         private void ExecuteDeleteItemCommand(object? obj)
         {
-           
+           _dialogService.DeleteHierarchyNode(this);
         }
 
         public void Dispose()

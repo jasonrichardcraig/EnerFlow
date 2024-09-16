@@ -26,6 +26,16 @@ namespace EnerFlow.Services
             return result == MessageBoxResult.Yes;
         }
 
+        public void ShowWarningDialog(string message, string title)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        public void ShowErrorDialog(string message, string title)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         public string ShowOpenFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -51,6 +61,27 @@ namespace EnerFlow.Services
             {
                 _dataService.AddCompanyHierarchyNode(_mainViewModel.RootHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy);
                 _mainViewModel.RootHierarchyViewModel.Children.Add(companyHierarchyViewModel);
+            }
+        }
+
+        public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
+        {
+            if (_dataService.GetChildren(hierarchyViewModel.Hierarchy).Count > 0)
+            {
+                ShowErrorDialog("Cannot delete a node with children.", "Error");
+                return;
+            }
+
+            if (_dataService.GetRootHierarchy().Id == hierarchyViewModel.Hierarchy.Id)
+            {
+                ShowErrorDialog("Cannot delete the root node.", "Error");
+                return;
+            }
+
+            if (ShowConfirmationDialog("Are you sure you want to delete this node?", "Delete Node"))
+            {
+                _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+               hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
             }
         }
     }

@@ -12,6 +12,7 @@ namespace EnerFlow
     /// </summary>
     public partial class App : Application
     {
+
         /// <summary>
         /// Gets or sets the service provider.
         /// </summary>
