@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 
 namespace EnerFlow.Commands
 {
@@ -26,6 +27,7 @@ namespace EnerFlow.Commands
         /// </summary>
         /// <param name="parameter">The parameter for the command.</param>
         /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
+        [DebuggerStepThrough]
         public bool CanExecute(object? parameter)
         {
             return _canExecute == null || _canExecute(parameter);

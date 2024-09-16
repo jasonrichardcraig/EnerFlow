@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using EnerFlow.Enums;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace EnerFlow.ViewModels
 {
@@ -13,21 +15,21 @@ namespace EnerFlow.ViewModels
         private bool _isLoaded = false;
         private readonly IDataService _dataService;
         private readonly MainViewModel _mainViewModel;
+        private readonly IDialogService _dialogService;
         private readonly HierarchyViewModel _parentHierarchyViewModel;
         private readonly ObservableCollection<HierarchyViewModel> _children = new ObservableCollection<HierarchyViewModel>();
         private Hierarchy _hierarchy = null!;
 
-        public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, IDataService dataService, MainViewModel mainViewModel, Hierarchy hierarchy)
+        public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy)
         {
             _parentHierarchyViewModel = parentHierarchyViewModel;
-            _dataService = dataService;
-            _mainViewModel = mainViewModel;
+            _dataService = App.ServiceProvider?.GetService<IDataService>() ?? throw new InvalidOperationException("Data Service is not available.");
+            _dialogService = App.ServiceProvider?.GetService<IDialogService>() ?? throw new InvalidOperationException("Dialog Service is not available.");
+            _mainViewModel = App.ServiceProvider?.GetService<MainViewModel>() ?? throw new InvalidOperationException("MainViewModel is not available.");
             _hierarchy = hierarchy;
 
             RefreshCommand = new RelayCommand(ExecuteRefreshCommand);
-
             AddNewItemCommand = new RelayCommand(ExecuteAddNewItemCommand, CanExecuteAddNewItemCommand);
-
             DeleteItemCommand = new RelayCommand(ExecuteDeleteItemCommand, CanExecuteDeleteItemCommand);
 
             _children.CollectionChanged += Children_CollectionChanged;
@@ -36,7 +38,33 @@ namespace EnerFlow.ViewModels
 
         public Hierarchy Hierarchy { get => _hierarchy; }
 
-        public string Name { get => _hierarchy.Name; }
+        public string Name
+        {
+            get => _hierarchy.Name;
+            set
+            {
+                if (_hierarchy.Name != value)
+                {
+                    _hierarchy.Name = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? Description
+        {
+            get => _hierarchy.Description;
+            set
+            {
+                if (_hierarchy.Description != value)
+                {
+                    _hierarchy.Description = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsDisabled
         {
@@ -74,9 +102,12 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-            foreach (var hierarchy in _dataService.GetChildren(_hierarchy).ToArray())
+
+            var poop = _dataService.GetChildren(_hierarchy);
+
+            foreach (var hierarchy in poop)
             {
-                _children.Add(new HierarchyViewModel(this, _dataService, _mainViewModel, hierarchy));
+                _children.Add(new HierarchyViewModel(this, hierarchy));
             }
         }
 
@@ -108,6 +139,7 @@ namespace EnerFlow.ViewModels
 
         private bool CanExecuteAddNewItemCommand(object? arg)
         {
+            Debug.WriteLine(_hierarchy.Name);
             return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
         }
 
@@ -118,11 +150,7 @@ namespace EnerFlow.ViewModels
                 switch (itemType)
                 {
                     case nameof(HierarchyNodeType.Company):
-                        if (_mainViewModel.DialogService != null)
-                        {
-                            _mainViewModel.DialogService.ShowNewCompanyDialog(this, _dataService, _mainViewModel, null!);
-                            _dataService.AddHierarchyNode(_hierarchy);
-                        }
+                        _dialogService?.ShowNewCompanyDialog();
                         break;
                 }
             }
@@ -148,7 +176,7 @@ namespace EnerFlow.ViewModels
 
         private void ExecuteDeleteItemCommand(object? obj)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void Dispose()

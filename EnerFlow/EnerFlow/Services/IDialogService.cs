@@ -7,7 +7,7 @@ namespace EnerFlow.Services
     {
         bool ShowConfirmationDialog(string message, string title);
         string ShowOpenFileDialog();
-        HierarchyViewModel ShowNewCompanyDialog(HierarchyViewModel rootHierarchyViewModel, IDataService dataService, MainViewModel mainViewModel, Hierarchy hierarchy);
+        void ShowNewCompanyDialog();
     }
 
 }

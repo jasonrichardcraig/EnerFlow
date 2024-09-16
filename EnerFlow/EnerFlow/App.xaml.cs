@@ -43,7 +43,7 @@ namespace EnerFlow
             services.AddSingleton<IDialogService, DialogService>();
 
             // Register the MainViewModel
-            services.AddTransient<MainViewModel>();
+            services.AddSingleton<MainViewModel>();
         }
     }
 

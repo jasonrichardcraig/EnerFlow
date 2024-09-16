@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnerFlow.Views.Dialogs"
         mc:Ignorable="d"
-        Title="New Company" Height="450" Width="800" WindowStyle="ToolWindow">
+        Title="New Company" Icon="/Images/Company_16x16.png" Height="240" Width="480" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Topmost="True">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+            <Image Height="24" Width="24" Source="/Images/Company_24x24.png"  Margin="10" />
+            <TextBlock Text="New Company" FontSize="16" FontWeight="Bold" Margin="10" />
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Margin="10" />
+        </Grid>
+        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="OkButton" Content="Ok" Margin="10" Width="64" Click="OkButton_Click" />
+            <Button x:Name="CancelButton" Content="Cancel" Margin="10" Width="64" Click="CancelButton_Click" />
+        </StackPanel>
     </Grid>
 </Window>

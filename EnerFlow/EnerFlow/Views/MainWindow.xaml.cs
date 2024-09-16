@@ -20,13 +20,6 @@ namespace EnerFlow.Views
                 throw new InvalidOperationException("Failed to resolve MainViewModel.");
             }
 
-            var dialogService = App.ServiceProvider?.GetService<IDialogService>();
-            if (dialogService == null)
-            {
-                throw new InvalidOperationException("Failed to resolve DialogService.");
-            }
-            //mainViewModel.DialogService = dialogService!;
-
             InitializeComponent();
             DataContext = mainViewModel;
 
@@ -130,15 +123,13 @@ namespace EnerFlow.Views
                             throw new InvalidOperationException("Failed to resolve IDataService.");
                         }
 
-                        HierarchyViewModel? parentHierarchyViewModel = null;
-
                         mainViewModel.Server = server;
 
                         mainViewModel.Database = database;
 
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
-                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(parentHierarchyViewModel!, dataService, mainViewModel, dataService.GetRootHierarchy());
+                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetRootHierarchy());
 
                         mainViewModel.IsBusy = false;
 

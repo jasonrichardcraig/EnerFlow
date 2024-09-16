@@ -14,12 +14,6 @@ namespace EnerFlow.ViewModels
         private string _server = string.Empty; // Added Server property
         private string _database = string.Empty; // Added Database property
 
-
-        public MainViewModel()
-        {
-
-        }
-
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -46,9 +40,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public HierarchyViewModel? RootHierarchyViewModel
+        public HierarchyViewModel RootHierarchyViewModel
         {
-            get { return _rootHierarchyViewModel; }
+            get { return _rootHierarchyViewModel!; }
             set
             {
                 if (_rootHierarchyViewModel != value)
