@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NetTopologySuite.Geometries;
 
 namespace EnerFlow.Models;
 
@@ -21,8 +20,6 @@ public partial class Well
     public string UnformattedUwi { get; set; } = null!;
 
     public string? SurfaceLocation { get; set; }
-
-    public Geometry? Location { get; set; }
 
     public string? FieldCode { get; set; }
 

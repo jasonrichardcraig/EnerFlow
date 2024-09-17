@@ -53,35 +53,32 @@
                     </MenuItem>
                 </Menu>
                 <ToolBar Grid.Row="1" Grid.ColumnSpan="2" >
-                    <Button Click="Button_Click">
+                    <Button>
                         <Image Source="/Images/Save.png"/>
                     </Button>
                     <Separator/>
+                    <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}" SelectedDateFormat="Long" SelectedDate="{Binding SelectedDate}" DisplayDateEnd="{Binding DisplayDateEnd}" />
+                    <Separator/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <RadioButton Margin="4,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}">Map</RadioButton>
+                        <RadioButton Margin="0,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}">Setup</RadioButton>
+                        <RadioButton Margin="0,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=DataEntry}">Data Entry</RadioButton>
+                    </StackPanel>
+                    <Separator/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <CheckBox Margin="4,0,0,0" Content="Show All Items"/>
+                    </StackPanel>
                 </ToolBar>
-                <Grid Grid.Row="2" Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition MinHeight="128" Height="*"/>
-                        <RowDefinition MinHeight="128" Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TreeView x:Name="NavigationTreeView" Grid.Row="0" ItemsSource="{Binding RootHierarchyViewModel, Converter={StaticResource RootTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
-                    </TreeView>
-                    <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                    <TabControl x:Name="NavigationTabControl" Grid.Row="1">
-                        <TabItem HeaderTemplate="{StaticResource MetersTabHeaderDataTemplate}">
-                            <ListView>
-                            </ListView>
-                        </TabItem>
-                    </TabControl>
-                </Grid>
+                <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0" SelectedItemChanged="NavigationTreeView_SelectedItemChanged" ItemsSource="{Binding RootHierarchyViewModel, Converter={StaticResource RootTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
+                </TreeView>
                 <GridSplitter Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5"/>
-                <TabControl Grid.Row="2" Grid.Column="1">
-                    <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}">
+                <TabControl x:Name="MainTabControl" Grid.Row="2" Grid.Column="1" SelectedIndex="{Binding SelectedTabIndex}">
+                    <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}" Visibility="{Binding ShowMapTab, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <wv2:WebView2 x:Name="MapWebView" NavigationCompleted="MapWebView_NavigationCompleted" WebMessageReceived="MapWebView_WebMessageReceived" Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
                     </TabItem>
-                    <TabItem HeaderTemplate="{StaticResource SetupTabHeaderDataTemplate}">
-
+                    <TabItem Content="{Binding SelectedHierarchyViewModel}" ContentTemplateSelector="{StaticResource SetupTabTemplateSelector}" HeaderTemplate="{StaticResource SetupTabHeaderDataTemplate}" Visibility="{Binding ShowSetupTab, Converter={StaticResource BooleanToVisibilityConverter}}">
                     </TabItem>
-                    <TabItem x:Name="DataEntryTab" HeaderTemplate="{StaticResource DataEntryTabHeaderDataTemplate}">
+                    <TabItem x:Name="DataEntryTab" HeaderTemplate="{StaticResource DataEntryTabHeaderDataTemplate}" Visibility="{Binding ShowDataEntryTab, Converter={StaticResource BooleanToVisibilityConverter}}">
                     </TabItem>
                 </TabControl>
                 <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">

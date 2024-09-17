@@ -1,4 +1,5 @@
 ﻿using EnerFlow.Data;
+using EnerFlow.Enums;
 using EnerFlow.Services;
 using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
@@ -21,6 +22,7 @@ namespace EnerFlow.Views
             }
 
             InitializeComponent();
+
             DataContext = mainViewModel;
 
             mainViewModel.IsBusy = true;
@@ -134,7 +136,19 @@ namespace EnerFlow.Views
 
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
+                        mainViewModel.SetExecuteScriptAction(async (script) =>
+                        {
+                            if (MapWebView.CoreWebView2 != null)
+                            {
+                                await MapWebView.CoreWebView2.ExecuteScriptAsync(script);
+                            }
+                        });
+
                         mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetRootHierarchy());
+
+                        mainViewModel.SelectedHierarchyViewModel = mainViewModel.RootHierarchyViewModel;
+
+                        mainViewModel.TreeMode = TreeMode.Map;
 
                         mainViewModel.IsBusy = false;
 
@@ -158,11 +172,12 @@ namespace EnerFlow.Views
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NavigationTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            MapWebView.Visibility = Visibility.Collapsed;
-            BusyIndicator.IsBusy = true;
+            if(e.NewValue is HierarchyViewModel hierarchyViewModel)
+            {
+                ((MainViewModel)DataContext).SelectedHierarchyViewModel = hierarchyViewModel;
+            }
         }
-
     }
 }

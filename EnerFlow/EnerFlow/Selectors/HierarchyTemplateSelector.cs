@@ -8,7 +8,7 @@ namespace EnerFlow.Selectors
     /// <summary>
     /// A custom DataTemplateSelector for selecting the appropriate DataTemplate based on the type of hierarchy node.
     /// </summary>
-    internal class HierarchyTreeViewItemTemplateSelector : DataTemplateSelector
+    internal class HierarchyTemplateSelector : DataTemplateSelector
     {
 
         /// <summary>
@@ -115,6 +115,11 @@ namespace EnerFlow.Selectors
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             var hierarchyViewModel = (HierarchyViewModel)item;
+
+            if (hierarchyViewModel == null)
+            {
+                return base.SelectTemplate(item, container);
+            }
 
             return (HierarchyNodeType)hierarchyViewModel.Hierarchy.NodeTypeId switch
             {

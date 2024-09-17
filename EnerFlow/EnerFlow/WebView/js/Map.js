@@ -18,3 +18,7 @@ function addMarker(lat, lng, message) {
         window.chrome.webview.postMessage({ event: "markerClicked", lat: lat, lng: lng, message: message });
     });
 }
+
+function updateMap(lat, lng, zoom) {
+    map.setView([lat, lng], zoom);
+}

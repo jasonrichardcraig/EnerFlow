@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NetTopologySuite.Geometries;
 
 namespace EnerFlow.Models;
 
@@ -17,8 +16,6 @@ public partial class Facility
     public string? UniqueFacilityIdentifier { get; set; }
 
     public string? LocationName { get; set; }
-
-    public Geometry? Location { get; set; }
 
     public string? OperatorCode { get; set; }
 

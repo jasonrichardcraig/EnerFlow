@@ -16,6 +16,12 @@ public partial class Hierarchy
 
     public bool IsDisabled { get; set; }
 
+    public double? Latitude { get; set; }
+
+    public double? Longitude { get; set; }
+
+    public int? DefaultZoomLevel { get; set; }
+
     public byte NodeTypeId { get; set; }
 
     public DateTime DateTimeCreated { get; set; }

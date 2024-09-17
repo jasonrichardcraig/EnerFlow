@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:selectors="clr-namespace:EnerFlow.Selectors"
                     xmlns:converters="clr-namespace:EnerFlow.Converters"
                     xmlns:helpers="clr-namespace:EnerFlow.Helpers"
                     xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels"
+                    xmlns:setupusercontrols="clr-namespace:EnerFlow.Views.UserControls.Setup"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Converter for converting boolean value to visibility -->
@@ -11,12 +13,14 @@
     <!-- Converter for converting inverted boolean value to visibility -->
     <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
 
+    <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+
     <converters:RootTreeViewItemSourceConverter x:Key="RootTreeViewItemSourceConverter"/>
 
     <!-- DataTemplate for the Map tab header -->
     <DataTemplate x:Key="MapTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Stretch="None" Source="/Images/Maps_24x24.png"/>
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Maps_24x24.png"/>
             <TextBlock Text="Map" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
@@ -24,7 +28,7 @@
     <!-- DataTemplate for the Setup tab header -->
     <DataTemplate x:Key="SetupTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Margin="0,0,4,0" Source="/Images/Tools_24x24.png"/>
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Tools_24x24.png"/>
             <TextBlock Text="Setup" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
@@ -32,9 +36,8 @@
     <!-- DataTemplate for the Data Entry tab header -->
     <DataTemplate x:Key="DataEntryTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Source="/Images/Runs_24x24.png"/>
-            <Label>Data Entry</Label>
-            <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}"></DatePicker>
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Runs_24x24.png"/>
+            <TextBlock Text="Data Entry" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
@@ -294,7 +297,7 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <selectors:HierarchyTreeViewItemTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector" 
+    <selectors:HierarchyTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector" 
                                                      RootTemplate="{StaticResource RootTreeViewItemDataTemplate}"
                                                      CompanyTemplate="{StaticResource CompanyTreeViewItemDataTemplate}"
                                                      DistrictTemplate="{StaticResource DistrictTreeViewItemDataTemplate}"
@@ -314,6 +317,152 @@
                                                      DiagramTemplate="{StaticResource DiagramTreeViewItemDataTemplate}"
                                                      DocumentTemplate="{StaticResource DocumentTreeViewItemDataTemplate}">
 
-    </selectors:HierarchyTreeViewItemTemplateSelector>
+    </selectors:HierarchyTemplateSelector>
+    
+    <!-- Main Tab Control Setup Content Template -->
+
+    <DataTemplate x:Key="RootTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Root.png">
+        </Image>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CompanyTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:Company/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DistrictTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:District/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AreaTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:Area/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FieldTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Field.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FacilityTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Facility.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SatelliteTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Satellite.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="WellTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Wells_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RunSheetTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Runs_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ContextTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/ContextTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SerialPortChannelTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/SerialPortChannelTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="IpChannelTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/IpChannelTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DeviceTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/DeviceTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AnalogIoTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/AnalogIoTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DigitalIoTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/DigitalIoTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="StringIoTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/StringIoTag_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ScreenTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Screen_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DiagramTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Diagram_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DocumentTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Diagram_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <selectors:HierarchyTemplateSelector x:Key="SetupTabTemplateSelector" 
+                                                     RootTemplate="{StaticResource RootTabDataTemplate}"
+                                                     CompanyTemplate="{StaticResource CompanyTabDataTemplate}"
+                                                     DistrictTemplate="{StaticResource DistrictTabDataTemplate}"
+                                                     AreaTemplate="{StaticResource AreaTabDataTemplate}"
+                                                     FieldTemplate="{StaticResource FieldTabDataTemplate}"
+                                                     FacilityTemplate="{StaticResource FacilityTabDataTemplate}"
+                                                     SatelliteTemplate="{StaticResource SatelliteTabDataTemplate}"
+                                                     RunSheetTemplate="{StaticResource RunSheetTabDataTemplate}"
+                                                     ContextTagTemplate="{StaticResource ContextTagTabDataTemplate}"
+                                                     SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTabDataTemplate}"
+                                                     IpChannelTagTemplate="{StaticResource IpChannelTagTabDataTemplate}"
+                                                     DeviceTagTemplate="{StaticResource DeviceTagTabDataTemplate}"
+                                                     AnalogIoTagTemplate="{StaticResource AnalogIoTagTabDataTemplate}"
+                                                     DigitalIoTagTemplate="{StaticResource DigitalIoTagTabDataTemplate}"
+                                                     StringIoTagTemplate="{StaticResource StringIoTagTabDataTemplate}"
+                                                     ScreenTemplate="{StaticResource ScreenTabDataTemplate}"
+                                                     DiagramTemplate="{StaticResource DiagramTabDataTemplate}"
+                                                     DocumentTemplate="{StaticResource DocumentTabDataTemplate}">
+
+    </selectors:HierarchyTemplateSelector>
 
 </ResourceDictionary>

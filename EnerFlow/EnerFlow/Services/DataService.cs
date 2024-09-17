@@ -1,7 +1,6 @@
 ﻿using EnerFlow.Data;
 using EnerFlow.Enums;
 using EnerFlow.Models;
-using EnerFlow.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
 

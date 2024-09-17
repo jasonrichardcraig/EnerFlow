@@ -6,7 +6,6 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using EnerFlow.Enums;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
 
 namespace EnerFlow.ViewModels
 {
@@ -68,6 +67,48 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        public float? Longitude
+        {
+            get => (float?)_hierarchy.Longitude;
+            set
+            {
+                if (_hierarchy.Longitude != value)
+                {
+                    _hierarchy.Longitude = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public float? Latitude
+        {
+            get => (float?)_hierarchy.Latitude;
+            set
+            {
+                if (_hierarchy.Latitude != value)
+                {
+                    _hierarchy.Latitude = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int? DefaultZoomLevel
+        {
+            get => _hierarchy.DefaultZoomLevel;
+            set
+            {
+                if (_hierarchy.DefaultZoomLevel != value)
+                {
+                    _hierarchy.DefaultZoomLevel = value;
+                    _dataService.Context.SaveChanges();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool IsDisabled
         {
             get => _hierarchy.IsDisabled;
@@ -104,10 +145,7 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-
-            var poop = _dataService.GetChildren(_hierarchy);
-
-            foreach (var hierarchy in poop)
+            foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
             {
                 _children.Add(new HierarchyViewModel(this, hierarchy));
             }
@@ -141,7 +179,6 @@ namespace EnerFlow.ViewModels
 
         private bool CanExecuteAddNewItemCommand(object? arg)
         {
-            Debug.WriteLine(_hierarchy.Name);
             return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
         }
 
