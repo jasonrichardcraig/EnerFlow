@@ -1,27 +1,25 @@
 ﻿using EnerFlow.Commands;
-using EnerFlow.Services;
+using EnerFlow.Enums;
 using EnerFlow.Models;
+using EnerFlow.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
-using EnerFlow.Enums;
-using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections;
 
 namespace EnerFlow.ViewModels
 {
     public class HierarchyViewModel : ViewModelBase, IDisposable
     {
         private bool _isLoaded = false;
-        private readonly IDataService _dataService;
-        private readonly MainViewModel _mainViewModel;
-        private readonly IDialogService _dialogService;
-        private readonly HierarchyViewModel _parentHierarchyViewModel;
-        private readonly ObservableCollection<HierarchyViewModel> _children = new ObservableCollection<HierarchyViewModel>();
-        private Hierarchy _hierarchy = null!;
+        private bool _isSelected;
+        private bool _isExpanded;
+        protected readonly IDataService _dataService;
+        protected readonly MainViewModel _mainViewModel;
+        protected readonly IDialogService _dialogService;
+        protected readonly HierarchyViewModel _parentHierarchyViewModel;
+        protected readonly ObservableCollection<HierarchyViewModel> _children = new ObservableCollection<HierarchyViewModel>();
+        protected Hierarchy _hierarchy = null!;
 
         public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy)
         {
@@ -42,6 +40,32 @@ namespace EnerFlow.ViewModels
         public HierarchyViewModel ParentHierarchyViewModel => _parentHierarchyViewModel;
 
         public Hierarchy Hierarchy { get => _hierarchy; }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set
+            {
+                if (_isExpanded != value)
+                {
+                    _isExpanded = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string Name
         {
@@ -151,7 +175,16 @@ namespace EnerFlow.ViewModels
         {
             foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
             {
-                _children.Add(new HierarchyViewModel(this, hierarchy));
+
+                switch(hierarchy.NodeTypeId)
+                {
+                    case (byte)HierarchyNodeType.Facility:
+                        _children.Add(new FacilityViewModel(this, hierarchy));
+                        break;
+                    default:
+                        _children.Add(new HierarchyViewModel(this, hierarchy));
+                        break;
+                }
             }
         }
 

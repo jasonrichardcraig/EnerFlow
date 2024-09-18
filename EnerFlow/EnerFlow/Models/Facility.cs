@@ -9,9 +9,7 @@ public partial class Facility
 
     public int HierarchyId { get; set; }
 
-    public int FacilitySubTypeId { get; set; }
-
-    public string? Name { get; set; }
+    public int? FacilitySubTypeId { get; set; }
 
     public string? UniqueFacilityIdentifier { get; set; }
 
@@ -49,7 +47,7 @@ public partial class Facility
 
     public virtual ICollection<FacilityStatus> FacilityStatuses { get; set; } = new List<FacilityStatus>();
 
-    public virtual FacilitySubType FacilitySubType { get; set; } = null!;
+    public virtual FacilitySubType? FacilitySubType { get; set; }
 
     public virtual ICollection<GasBatchRecord> GasBatchRecords { get; set; } = new List<GasBatchRecord>();
 

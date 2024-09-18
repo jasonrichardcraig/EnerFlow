@@ -26,6 +26,21 @@ namespace EnerFlow.Services
         {
             return Context.Hierarchies
                 .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel())
+                .Include(hierarchy => hierarchy.Facilities)
+                .Include(hierarchy => hierarchy.Satellites)
+                .Include(hierarchy => hierarchy.Wells)
+                .Include(hierarchy => hierarchy.RunSheets)
+                .Include(hierarchy => hierarchy.ContextTags)
+                .Include(hierarchy => hierarchy.SerialChannelTags)
+                .Include(hierarchy => hierarchy.IpChannelTags)
+                .Include(hierarchy => hierarchy.DeviceTags)
+                .Include(hierarchy => hierarchy.AnalogIoTags)
+                .Include(hierarchy => hierarchy.DigitalIoTags)
+                .Include(hierarchy => hierarchy.StringTags)
+                .Include(hierarchy => hierarchy.Screens)
+                .Include(hierarchy => hierarchy.Diagrams)
+                .Include(hierarchy => hierarchy.Documents)
+                .OrderBy(h=>h.Name)
                 .ToList();
         }
 

@@ -3,6 +3,7 @@ using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic.Logging;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -251,6 +252,10 @@ namespace EnerFlow.ViewModels
                         case HierarchyNodeType.Area:
                         case HierarchyNodeType.Field:
                             _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            break;
+                        case HierarchyNodeType.Facility:
+                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            _executeMapScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
                             break;
                     }
                 }

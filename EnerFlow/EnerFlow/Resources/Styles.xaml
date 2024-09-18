@@ -232,7 +232,7 @@
 
     <HierarchicalDataTemplate x:Key="FacilityTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Facility.png"/>
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Facilities_16x16.png"/>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>

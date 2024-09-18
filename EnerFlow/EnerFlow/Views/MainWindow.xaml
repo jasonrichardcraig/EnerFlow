@@ -51,6 +51,8 @@
                     <MenuItem Header="_Help">
                         <MenuItem Header="_About"/>
                     </MenuItem>
+                    <MenuItem Header="_Search">
+                    </MenuItem>
                 </Menu>
                 <ToolBar Grid.Row="1" Grid.ColumnSpan="2" >
                     <Button>
@@ -70,6 +72,12 @@
                     </StackPanel>
                 </ToolBar>
                 <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0" SelectedItemChanged="NavigationTreeView_SelectedItemChanged" ItemsSource="{Binding SystemHierarchyViewModel, Converter={StaticResource SystemTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
+                    <TreeView.Resources>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.Resources>
                 </TreeView>
                 <GridSplitter Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5"/>
                 <TabControl x:Name="MainTabControl" Grid.Row="2" Grid.Column="1" SelectedIndex="{Binding SelectedTabIndex}">

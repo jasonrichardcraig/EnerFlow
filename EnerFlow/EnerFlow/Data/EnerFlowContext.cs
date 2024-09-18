@@ -1079,9 +1079,6 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.LocationName)
                 .HasMaxLength(128)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .HasMaxLength(128)
-                .IsUnicode(false);
             entity.Property(e => e.OperatorCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
@@ -1095,7 +1092,6 @@ public partial class EnerFlowContext : DbContext
 
             entity.HasOne(d => d.FacilitySubType).WithMany(p => p.Facilities)
                 .HasForeignKey(d => d.FacilitySubTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Facilities_FacilitySubTypes");
 
             entity.HasOne(d => d.Hierarchy).WithMany(p => p.Facilities)
@@ -3880,8 +3876,13 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(64)
                 .IsUnicode(false);
+            entity.Property(e => e.SystemDefaultUnitId).HasColumnName("SystemDefaultUnitID");
 
-            entity.HasMany(d => d.Units).WithMany(p => p.UnitSets)
+            entity.HasOne(d => d.SystemDefaultUnit).WithMany(p => p.UnitSets)
+                .HasForeignKey(d => d.SystemDefaultUnitId)
+                .HasConstraintName("FK_UnitSets_Units");
+
+            entity.HasMany(d => d.Units).WithMany(p => p.UnitSetsNavigation)
                 .UsingEntity<Dictionary<string, object>>(
                     "UnitSetUnit",
                     r => r.HasOne<Unit>().WithMany()

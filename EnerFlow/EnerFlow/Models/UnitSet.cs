@@ -9,5 +9,9 @@ public partial class UnitSet
 
     public string Name { get; set; } = null!;
 
+    public int? SystemDefaultUnitId { get; set; }
+
+    public virtual Unit? SystemDefaultUnit { get; set; }
+
     public virtual ICollection<Unit> Units { get; set; } = new List<Unit>();
 }

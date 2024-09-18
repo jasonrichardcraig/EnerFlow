@@ -289,7 +289,7 @@
     <Resource Include="Images\TurbineMeter_48x48.png" />
     <Resource Include="Images\UltrasonicMeter_48x48.png" />
     <Resource Include="Images\Ungroup.png" />
-    <Resource Include="Images\EF_Logo.png" />
+    <SplashScreen Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />
     <Resource Include="Images\Facilities_16x16.png" />

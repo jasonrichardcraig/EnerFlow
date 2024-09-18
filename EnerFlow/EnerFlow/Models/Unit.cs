@@ -151,9 +151,11 @@ public partial class Unit
 
     public virtual UnitClass UnitClass { get; set; } = null!;
 
+    public virtual ICollection<UnitSet> UnitSets { get; set; } = new List<UnitSet>();
+
     public virtual ICollection<VolumetricHeatingValueUnit> VolumetricHeatingValueUnitEnergyUnits { get; set; } = new List<VolumetricHeatingValueUnit>();
 
     public virtual ICollection<VolumetricHeatingValueUnit> VolumetricHeatingValueUnitVolumeUnits { get; set; } = new List<VolumetricHeatingValueUnit>();
 
-    public virtual ICollection<UnitSet> UnitSets { get; set; } = new List<UnitSet>();
+    public virtual ICollection<UnitSet> UnitSetsNavigation { get; set; } = new List<UnitSet>();
 }
