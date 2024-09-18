@@ -15,7 +15,7 @@
 
     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
 
-    <converters:RootTreeViewItemSourceConverter x:Key="RootTreeViewItemSourceConverter"/>
+    <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
 
     <!-- DataTemplate for the Map tab header -->
     <DataTemplate x:Key="MapTabHeaderDataTemplate">
@@ -25,11 +25,42 @@
         </StackPanel>
     </DataTemplate>
 
-    <!-- DataTemplate for the Setup tab header -->
     <DataTemplate x:Key="SetupTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
             <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Tools_24x24.png"/>
             <TextBlock Text="Setup" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the General tab header -->
+    <DataTemplate x:Key="GeneralTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Settings.png"/>
+            <TextBlock Text="General" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Location tab header -->
+    <DataTemplate x:Key="LocationTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Maps_24x24.png"/>
+            <TextBlock Text="Location" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Units tab header -->
+    <DataTemplate x:Key="UnitsTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Units_24x24.png"/>
+            <TextBlock Text="Units" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Security tab header -->
+    <DataTemplate x:Key="SecurityTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Security_24x24.png"/>
+            <TextBlock Text="Security" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
@@ -57,8 +88,8 @@
         </StackPanel>
     </DataTemplate>
 
-    <HierarchicalDataTemplate x:Key="RootTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Root.png">
+    <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/System.png" ToolTip="System">
             <Image.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Company" Command="{Binding AddNewItemCommand}" CommandParameter="Company">
@@ -80,10 +111,10 @@
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate x:Key="CompanyTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add District" Command="{Binding AddItemCommand}" CommandParameter="District">
+                    <MenuItem Header="Add District" Command="{Binding AddNewItemCommand}" CommandParameter="District">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/District.png"/>
                         </MenuItem.Icon>
@@ -110,10 +141,10 @@
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate x:Key="DistrictTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Area" Command="{Binding AddCommand}" CommandParameter="Area">
+                    <MenuItem Header="Add Area" Command="{Binding AddNewItemCommand}" CommandParameter="Area">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Area.png"/>
                         </MenuItem.Icon>
@@ -140,15 +171,15 @@
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate x:Key="AreaTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Field" Command="{Binding AddCommand}" CommandParameter="Field">
+                    <MenuItem Header="Add Field" Command="{Binding AddNewItemCommand}" CommandParameter="Field">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Field.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Area" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete Area" Command="{Binding DeleteItemCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -170,15 +201,15 @@
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate x:Key="FieldTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Facility" Command="{Binding AddCommand}" CommandParameter="Facility">
+                    <MenuItem Header="Add Facility" Command="{Binding AddNewItemCommand}" CommandParameter="Facility">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Facilities_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Field" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete Field" Command="{Binding DeleteItemCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -298,7 +329,7 @@
     </HierarchicalDataTemplate>
 
     <selectors:HierarchyTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector" 
-                                                     RootTemplate="{StaticResource RootTreeViewItemDataTemplate}"
+                                                     SystemTemplate="{StaticResource SystemTreeViewItemDataTemplate}"
                                                      CompanyTemplate="{StaticResource CompanyTreeViewItemDataTemplate}"
                                                      DistrictTemplate="{StaticResource DistrictTreeViewItemDataTemplate}"
                                                      AreaTemplate="{StaticResource AreaTreeViewItemDataTemplate}"
@@ -321,28 +352,24 @@
     
     <!-- Main Tab Control Setup Content Template -->
 
-    <DataTemplate x:Key="RootTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Root.png">
-        </Image>
+    <DataTemplate x:Key="SystemTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:SystemControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="CompanyTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:Company/>
+        <setupusercontrols:CompanyControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="DistrictTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:District/>
+        <setupusercontrols:DistrictControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="AreaTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:Area/>
+        <setupusercontrols:AreaControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="FieldTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Field.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
+        <setupusercontrols:FieldControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="FacilityTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -444,7 +471,7 @@
     </DataTemplate>
 
     <selectors:HierarchyTemplateSelector x:Key="SetupTabTemplateSelector" 
-                                                     RootTemplate="{StaticResource RootTabDataTemplate}"
+                                                     SystemTemplate="{StaticResource SystemTabDataTemplate}"
                                                      CompanyTemplate="{StaticResource CompanyTabDataTemplate}"
                                                      DistrictTemplate="{StaticResource DistrictTabDataTemplate}"
                                                      AreaTemplate="{StaticResource AreaTabDataTemplate}"

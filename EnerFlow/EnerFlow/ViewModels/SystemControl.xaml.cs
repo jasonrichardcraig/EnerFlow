@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EnerFlow.Views.UserControls.Setup
+namespace EnerFlow.ViewModels
 {
     /// <summary>
-    /// Interaction logic for District.xaml
+    /// Interaction logic for SystemControl.xaml
     /// </summary>
-    public partial class District : UserControl
+    public partial class SystemControl : UserControl
     {
-        public District()
+        public SystemControl()
         {
             InitializeComponent();
         }

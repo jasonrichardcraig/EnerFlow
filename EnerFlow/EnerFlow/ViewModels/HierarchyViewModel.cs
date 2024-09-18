@@ -6,6 +6,10 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using EnerFlow.Enums;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace EnerFlow.ViewModels
 {
@@ -191,6 +195,15 @@ namespace EnerFlow.ViewModels
                     case nameof(HierarchyNodeType.Company):
                         _dialogService?.ShowNewCompanyDialog();
                         break;
+                    case nameof(HierarchyNodeType.District):
+                        _dialogService?.ShowNewDistrictDialog(this);
+                        break;
+                    case nameof(HierarchyNodeType.Area):
+                        _dialogService?.ShowNewAreaDialog(this);
+                        break;
+                    case nameof(HierarchyNodeType.Field):
+                        _dialogService?.ShowNewFieldDialog(this);
+                        break;
                 }
             }
             else
@@ -201,10 +214,10 @@ namespace EnerFlow.ViewModels
 
         private void ExecuteRefreshCommand(object? parameter)
         {
-            if (_mainViewModel.RootHierarchyViewModel != null)
+            if (_mainViewModel.SystemHierarchyViewModel != null)
             {
-                _mainViewModel.RootHierarchyViewModel.Children.Clear();
-                _mainViewModel.RootHierarchyViewModel.LoadChildren();
+                _mainViewModel.SystemHierarchyViewModel.Children.Clear();
+                _mainViewModel.SystemHierarchyViewModel.LoadChildren();
             }
         }
 

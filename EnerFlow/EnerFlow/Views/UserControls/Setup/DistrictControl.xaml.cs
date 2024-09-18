@@ -3,11 +3,11 @@
 namespace EnerFlow.Views.UserControls.Setup
 {
     /// <summary>
-    /// Interaction logic for CompanySetup.xaml
+    /// Interaction logic for District.xaml
     /// </summary>
-    public partial class Company : UserControl
+    public partial class DistrictControl : UserControl
     {
-        public Company()
+        public DistrictControl()
         {
             InitializeComponent();
         }

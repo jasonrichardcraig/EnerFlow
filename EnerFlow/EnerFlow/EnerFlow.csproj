@@ -105,7 +105,6 @@
     <None Remove="Images\Region.png" />
     <None Remove="Images\Reports_16x16.png" />
     <None Remove="Images\Reports_24x24.png" />
-    <None Remove="Images\Root.png" />
     <None Remove="Images\Runs_16x16.png" />
     <None Remove="Images\Runs_24x24.png" />
     <None Remove="Images\Satellite_16x16.png" />
@@ -117,6 +116,8 @@
     <None Remove="Images\Schematics_24x24.png" />
     <None Remove="Images\Screen_16x16.png" />
     <None Remove="Images\Screen_24x24.png" />
+    <None Remove="Images\Security_16x16.png" />
+    <None Remove="Images\Security_24x24.png" />
     <None Remove="Images\SendBackward.png" />
     <None Remove="Images\SendToBack.png" />
     <None Remove="Images\SerialPortChannelTag_16x16.png" />
@@ -126,6 +127,7 @@
     <None Remove="Images\Settings.png" />
     <None Remove="Images\StringIoTag_16x16.png" />
     <None Remove="Images\StringIoTag_24x24.png" />
+    <None Remove="Images\System.png" />
     <None Remove="Images\Tags_16x16.png" />
     <None Remove="Images\Tags_24x24.png" />
     <None Remove="Images\Tanks_16x16.png" />
@@ -140,6 +142,8 @@
     <None Remove="Images\TurbineMeter_48x48.png" />
     <None Remove="Images\UltrasonicMeter_48x48.png" />
     <None Remove="Images\Ungroup.png" />
+    <None Remove="Images\Units_16x16.png" />
+    <None Remove="Images\Units_24x24.png" />
     <None Remove="Images\Unlinked_16x16.png" />
     <None Remove="Images\Unlinked_24x24.png" />
     <None Remove="Images\User_16x16.png" />
@@ -264,7 +268,9 @@
     <Resource Include="Images\Properties.png" />
     <Resource Include="Images\Properties_White.png" />
     <Resource Include="Images\Region.png" />
-    <Resource Include="Images\Root.png" />
+    <Resource Include="Images\Security_16x16.png" />
+    <Resource Include="Images\Security_24x24.png" />
+    <Resource Include="Images\System.png" />
     <Resource Include="Images\Satellite_16x16.png" />
     <Resource Include="Images\Satellite_24x24.png" />
     <Resource Include="Images\Save.png" />
@@ -317,6 +323,8 @@
     <Resource Include="Images\Tickets_16x16.png" />
     <Resource Include="Images\Tickets_24x24.png" />
     <Resource Include="Images\Tools.png" />
+    <Resource Include="Images\Units_16x16.png" />
+    <Resource Include="Images\Units_24x24.png" />
     <Resource Include="Images\Unlinked_16x16.png" />
     <Resource Include="Images\Unlinked_24x24.png" />
     <Resource Include="Images\User_16x16.png" />
@@ -336,6 +344,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dialogs\NewFieldDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\NewAreaDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\NewDistrictDialog.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 

@@ -3,7 +3,7 @@
     public enum HierarchyNodeType : byte
     {
 
-        Root = 1,
+        System = 1,
         Company = 2,
         District = 3,
         Area = 4,

@@ -1,4 +1,5 @@
 ﻿using EnerFlow.Data;
+using EnerFlow.Enums;
 using EnerFlow.Models;
 
 namespace EnerFlow.Services
@@ -6,9 +7,9 @@ namespace EnerFlow.Services
     public interface IDataService
     {
         EnerFlowContext Context { get; set; }
-        void AddCompanyHierarchyNode(Hierarchy rootHierarchy, Hierarchy companyHierarchy);
+        void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, HierarchyNodeType hierarchyNodeType);
         void DeleteHierarchyNode(Hierarchy hierarchy);
         List<Hierarchy> GetChildren(Hierarchy hierarchy);
-        Hierarchy GetRootHierarchy();
+        Hierarchy GetSystemHierarchy();
     }
 }

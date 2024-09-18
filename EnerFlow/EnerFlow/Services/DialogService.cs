@@ -48,7 +48,7 @@ namespace EnerFlow.Services
 
         public void ShowNewCompanyDialog()
         {
-            var companyHierarchyViewModel = new HierarchyViewModel(_mainViewModel.RootHierarchyViewModel!, new Hierarchy());
+            var companyHierarchyViewModel = new HierarchyViewModel(_mainViewModel.SystemHierarchyViewModel!, new Hierarchy());
 
             var dialog = new NewCompanyDialog()
             {
@@ -59,8 +59,62 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
-                _dataService.AddCompanyHierarchyNode(_mainViewModel.RootHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy);
-                _mainViewModel.RootHierarchyViewModel.Children.Add(companyHierarchyViewModel);
+                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, HierarchyNodeType.Company);
+                _mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
+            }
+        }
+
+        public void ShowNewDistrictDialog(HierarchyViewModel companyHierarchyViewModel)
+        {
+            var districtHierarchyViewModel = new HierarchyViewModel(companyHierarchyViewModel, new Hierarchy());
+
+            var dialog = new NewDistrictDialog()
+            {
+                DataContext = districtHierarchyViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, HierarchyNodeType.District);
+                _mainViewModel.SystemHierarchyViewModel.Children.Add(districtHierarchyViewModel);
+            }
+        }
+
+        public void ShowNewAreaDialog(HierarchyViewModel districtHierarchyViewModel)
+        {
+            var areaHierarchyViewModel = new HierarchyViewModel(districtHierarchyViewModel, new Hierarchy());
+
+            var dialog = new NewAreaDialog()
+            {
+                DataContext = areaHierarchyViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, HierarchyNodeType.Area);
+                _mainViewModel.SystemHierarchyViewModel.Children.Add(areaHierarchyViewModel);
+            }
+        }
+
+        public void ShowNewFieldDialog(HierarchyViewModel areaHierarchyViewModel)
+        {
+            var fieldHierarchyViewModel = new HierarchyViewModel(areaHierarchyViewModel, new Hierarchy());
+
+            var dialog = new NewFieldDialog()
+            {
+                DataContext = fieldHierarchyViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
+                _mainViewModel.SystemHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
             }
         }
 
@@ -72,7 +126,7 @@ namespace EnerFlow.Services
                 return;
             }
 
-            if (_dataService.GetRootHierarchy().Id == hierarchyViewModel.Hierarchy.Id)
+            if (_dataService.GetSystemHierarchy().Id == hierarchyViewModel.Hierarchy.Id)
             {
                 ShowErrorDialog("Cannot delete the root node.", "Error");
                 return;

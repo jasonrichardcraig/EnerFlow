@@ -306,8 +306,7 @@ public partial class EnerFlowContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=EnerFlow;TrustServerCertificate=True;Integrated Security=true", x => x
-                .UseHierarchyId());
+        => optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=EnerFlow;TrustServerCertificate=True;Integrated Security=true", x => x.UseHierarchyId());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -3911,24 +3910,6 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.UserName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-
-            entity.HasMany(d => d.Hierarchies).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "UserHierarchy",
-                    r => r.HasOne<Hierarchy>().WithMany()
-                        .HasForeignKey("HierarchyId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_UserHierarchies_Hierarchy"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_UserHierarchies_Users"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "HierarchyId");
-                        j.ToTable("UserHierarchies");
-                        j.IndexerProperty<int>("HierarchyId").HasColumnName("HierarchyID");
-                    });
 
             entity.HasMany(d => d.Roles).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(

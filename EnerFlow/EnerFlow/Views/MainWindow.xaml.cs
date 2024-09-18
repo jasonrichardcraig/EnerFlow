@@ -136,17 +136,21 @@ namespace EnerFlow.Views
 
                         MapWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
-                        mainViewModel.SetExecuteScriptAction(async (script) =>
+                        mainViewModel.SetExecuteMapScriptAction(async (script) =>
                         {
+                            var result = string.Empty;
+
                             if (MapWebView.CoreWebView2 != null)
                             {
-                                await MapWebView.CoreWebView2.ExecuteScriptAsync(script);
+                                result = await MapWebView.CoreWebView2.ExecuteScriptAsync(script);
                             }
+
+                            return result;
                         });
 
-                        mainViewModel.RootHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetRootHierarchy());
+                        mainViewModel.SystemHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetSystemHierarchy());
 
-                        mainViewModel.SelectedHierarchyViewModel = mainViewModel.RootHierarchyViewModel;
+                        mainViewModel.SelectedHierarchyViewModel = mainViewModel.SystemHierarchyViewModel;
 
                         mainViewModel.TreeMode = TreeMode.Map;
 

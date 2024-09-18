@@ -33,7 +33,7 @@ namespace EnerFlow.Services
         /// Retrieves the root hierarchy.
         /// </summary>
         /// <returns>The root hierarchy.</returns>
-        public Hierarchy GetRootHierarchy()
+        public Hierarchy GetSystemHierarchy()
         {
             return Context.Hierarchies.First(h => h.Node == HierarchyId.GetRoot());
         }
@@ -41,23 +41,23 @@ namespace EnerFlow.Services
         /// <summary>
         /// Adds a company hierarchy node to the root hierarchy.
         /// </summary>
-        /// <param name="rootHierarchy">The root hierarchy.</param>
-        /// <param name="companyHierarchy">The company hierarchy to add.</param>
-        public void AddCompanyHierarchyNode(Hierarchy rootHierarchy, Hierarchy companyHierarchy)
+        /// <param name="parentHierarchy">The parent hierarchy.</param>
+        /// <param name="newHierarchy">The new hierarchy to add.</param>
+        public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, HierarchyNodeType hierarchyNodeType)
         {
             var lastChild = Context.Hierarchies
-                .Where(n => n.Node.IsDescendantOf(rootHierarchy.Node))
-                .Where(n => n.Node.GetLevel() == rootHierarchy.Node.GetLevel() + 1)
+                .Where(n => n.Node.IsDescendantOf(parentHierarchy.Node))
+                .Where(n => n.Node.GetLevel() == parentHierarchy.Node.GetLevel() + 1)
                 .OrderByDescending(n => n.Node)
                 .FirstOrDefault();
 
-            // Set the node type to Company
-            companyHierarchy.NodeType = Context.NodeTypes.First(n => n.Id == (int)HierarchyNodeType.Company);
+            // Set the node type
+            newHierarchy.NodeType = Context.NodeTypes.First(n => n.Id == (int)hierarchyNodeType);
 
             // Generate a new HierarchyId for the child node
-            companyHierarchy.Node = rootHierarchy.Node.GetDescendant(lastChild?.Node, null);
+            newHierarchy.Node = parentHierarchy.Node.GetDescendant(lastChild?.Node, null);
 
-            Context.Hierarchies.Add(companyHierarchy);
+            Context.Hierarchies.Add(newHierarchy);
 
             Context.SaveChanges();
         }

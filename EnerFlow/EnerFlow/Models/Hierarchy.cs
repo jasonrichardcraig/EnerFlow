@@ -55,6 +55,4 @@ public partial class Hierarchy
     public virtual ICollection<StringTag> StringTags { get; set; } = new List<StringTag>();
 
     public virtual ICollection<Well> Wells { get; set; } = new List<Well>();
-
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

@@ -12,7 +12,7 @@ namespace EnerFlow.ViewModels
     {
         private bool _isBusy;
         private DialogService? _dialogService;
-        private HierarchyViewModel? _rootHierarchyViewModel;
+        private HierarchyViewModel? _systemHierarchyViewModel;
         private UserViewModel? _userViewModel;
         private HierarchyViewModel? _selectedHierarchyViewModel;
         private DateTime _displayDateEnd = DateTime.Now.Date;
@@ -22,17 +22,10 @@ namespace EnerFlow.ViewModels
         private bool _showSetupTab;
         private bool _showDataEntryTab;
         private TreeMode _treeMode;
-        private Action<string> _executeMapScriptAction = _ => { }; // Initialize with a default action
+        private Func<string, Task<string>> _executeMapScriptAction = _ => Task.FromResult(string.Empty);
         private string _userName = string.Empty;
         private string _server = string.Empty;
         private string _database = string.Empty;
-
-        public MainViewModel()
-        {
-            ExecuteMapScriptCommand = new DelegateCommand(OnExecuteMapScript);
-        }
-
-        public ICommand ExecuteMapScriptCommand { get; }
 
         public HierarchyViewModel? SelectedHierarchyViewModel
         {
@@ -166,14 +159,14 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public HierarchyViewModel RootHierarchyViewModel
+        public HierarchyViewModel SystemHierarchyViewModel
         {
-            get { return _rootHierarchyViewModel!; }
+            get { return _systemHierarchyViewModel!; }
             set
             {
-                if (_rootHierarchyViewModel != value)
+                if (_systemHierarchyViewModel != value)
                 {
-                    _rootHierarchyViewModel = value;
+                    _systemHierarchyViewModel = value;
                     OnPropertyChanged();
                 }
             }
@@ -247,14 +240,24 @@ namespace EnerFlow.ViewModels
         {
             if (SelectedHierarchyViewModel != null)
             {
+
                 if (TreeMode == TreeMode.Map && SelectedHierarchyViewModel.Hierarchy.Latitude != null && SelectedHierarchyViewModel.Hierarchy.Longitude != null && SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel != null)
                 {
-                    _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                    switch ((HierarchyNodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                    {
+                        case HierarchyNodeType.System:
+                        case HierarchyNodeType.Company:
+                        case HierarchyNodeType.District:
+                        case HierarchyNodeType.Area:
+                        case HierarchyNodeType.Field:
+                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            break;
+                    }
                 }
 
                 switch ((HierarchyNodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
                 {
-                    case HierarchyNodeType.Root:
+                    case HierarchyNodeType.System:
                         break;
                     case HierarchyNodeType.Company:
                         break;
@@ -262,15 +265,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public void SetExecuteScriptAction(Action<string> executeScriptAction)
+        public void SetExecuteMapScriptAction(Func<string, Task<string>> executeMapScriptAction)
         {
-            _executeMapScriptAction = executeScriptAction;
-        }
-
-        private void OnExecuteMapScript()
-        {
-            // This is where we call the script in the view via the action.
-            _executeMapScriptAction?.Invoke("'example'");
+            _executeMapScriptAction = executeMapScriptAction;
         }
 
     }

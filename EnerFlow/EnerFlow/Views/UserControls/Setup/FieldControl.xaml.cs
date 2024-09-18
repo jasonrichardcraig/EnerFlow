@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EnerFlow.Views.UserControls.Setup
 {
     /// <summary>
-    /// Interaction logic for Area.xaml
+    /// Interaction logic for FieldControl.xaml
     /// </summary>
-    public partial class Area : UserControl
+    public partial class FieldControl : UserControl
     {
-        public Area()
+        public FieldControl()
         {
             InitializeComponent();
         }
