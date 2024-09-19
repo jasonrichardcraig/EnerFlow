@@ -103,6 +103,8 @@
     <None Remove="Images\Pump_24x24.png" />
     <None Remove="Images\Refresh.png" />
     <None Remove="Images\Region.png" />
+    <None Remove="Images\Regulatory_16x16.png" />
+    <None Remove="Images\Regulatory_24x24.png" />
     <None Remove="Images\Reports_16x16.png" />
     <None Remove="Images\Reports_24x24.png" />
     <None Remove="Images\Runs_16x16.png" />
@@ -268,6 +270,8 @@
     <Resource Include="Images\Properties.png" />
     <Resource Include="Images\Properties_White.png" />
     <Resource Include="Images\Region.png" />
+    <Resource Include="Images\Regulatory_16x16.png" />
+    <Resource Include="Images\Regulatory_24x24.png" />
     <Resource Include="Images\Security_16x16.png" />
     <Resource Include="Images\Security_24x24.png" />
     <Resource Include="Images\System.png" />
@@ -345,6 +349,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Views\Dialogs\NewFacilityDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\NewFieldDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -354,6 +361,9 @@
     <Compile Update="Views\Dialogs\NewDistrictDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UserControls\Setup\FacilityControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -361,6 +371,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Dialogs\NewFacilityDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

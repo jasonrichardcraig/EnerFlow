@@ -3,6 +3,7 @@ using EnerFlow.Enums;
 using EnerFlow.Services;
 using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 namespace EnerFlow.Views
@@ -111,6 +112,12 @@ namespace EnerFlow.Views
                             Close();
                         });
                     }
+
+                    // Load associated data
+                    dataService.Context.FacilityTypes.Load();
+                    dataService.Context.FacilitySubTypes.Load();
+                    dataService.Context.WasteLocationTypes.Load();
+
                 }
                 catch (Exception ex)
                 {

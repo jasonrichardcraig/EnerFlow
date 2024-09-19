@@ -77,8 +77,8 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
-                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, HierarchyNodeType.District);
-                _mainViewModel.SystemHierarchyViewModel.Children.Add(districtHierarchyViewModel);
+                _dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, HierarchyNodeType.District);
+                companyHierarchyViewModel.Children.Add(districtHierarchyViewModel);
             }
         }
 
@@ -95,8 +95,8 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
-                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, HierarchyNodeType.Area);
-                _mainViewModel.SystemHierarchyViewModel.Children.Add(areaHierarchyViewModel);
+                _dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, HierarchyNodeType.Area);
+                districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
             }
         }
 
@@ -113,8 +113,26 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
-                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
-                _mainViewModel.SystemHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
+                _dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
+                areaHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
+            }
+        }
+
+        public void ShowNewFacilityDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var fieldHierarchyViewModel = new HierarchyViewModel(parentHierarchyViewModel, new Hierarchy());
+
+            var dialog = new NewFieldDialog()
+            {
+                DataContext = fieldHierarchyViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
+                parentHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
             }
         }
 

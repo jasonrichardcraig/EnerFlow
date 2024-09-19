@@ -20,7 +20,7 @@
             <TextBlock Text="Field" FontSize="16" FontWeight="Bold" Margin="10" />
         </StackPanel>
         <TabControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <TabItem Header="General">
+            <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -36,7 +36,7 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Location">
+            <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />

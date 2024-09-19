@@ -48,6 +48,15 @@
         </StackPanel>
     </DataTemplate>
 
+    <!-- DataTemplate for the Regulatory tab header -->
+    <DataTemplate x:Key="RegulatoryTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24" Width="24" Source="/Images/Regulatory_24x24.png"/>
+            <Label>Regulatory</Label>
+        </StackPanel>
+    </DataTemplate>
+
+
     <!-- DataTemplate for the Units tab header -->
     <DataTemplate x:Key="UnitsTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
@@ -86,6 +95,10 @@
             <Image Height="16" Width="16" Source="/Images/Tanks_16x16.png"/>
             <Label>Meters</Label>
         </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ComboBoxItemDataTemplate">
+        <TextBlock Text="{Binding Name}"/>
     </DataTemplate>
 
     <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
@@ -149,7 +162,7 @@
                             <Image Height="16" Width="16" Source="/Images/Area.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete District" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete District" Command="{Binding DeleteItemCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -373,10 +386,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="FacilityTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Facility.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
+        <setupusercontrols:FacilityControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="SatelliteTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">

@@ -40,7 +40,7 @@ namespace EnerFlow.Services
                 .Include(hierarchy => hierarchy.Screens)
                 .Include(hierarchy => hierarchy.Diagrams)
                 .Include(hierarchy => hierarchy.Documents)
-                .OrderBy(h=>h.Name)
+                .OrderBy(h => h.Name)
                 .ToList();
         }
 
