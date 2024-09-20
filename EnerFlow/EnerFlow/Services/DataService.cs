@@ -85,9 +85,6 @@ namespace EnerFlow.Services
 
                 switch ((HierarchyNodeType)hierarchy.NodeTypeId)
                 {
-                    case HierarchyNodeType.Satellite:
-                        Context.Satellites.Remove(Context.Satellites.First(s => s.HierarchyId == hierarchyId));
-                        break;
                     case HierarchyNodeType.Well:
                         Context.Wells.Remove(Context.Wells.First(w => w.HierarchyId == hierarchyId));
                         break;

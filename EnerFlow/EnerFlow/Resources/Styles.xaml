@@ -97,9 +97,30 @@
         </StackPanel>
     </DataTemplate>
 
-    <DataTemplate x:Key="ComboBoxItemDataTemplate">
-        <TextBlock Text="{Binding Name}"/>
+    <DataTemplate x:Key="FacilityTypeComboBoxItemDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Code}"/>
+            <TextBlock Text=" - "/>
+            <TextBlock Text="{Binding Name}"/>
+        </StackPanel>
     </DataTemplate>
+
+    <DataTemplate x:Key="FacilitySubTypeComboBoxItemDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Code}"/>
+            <TextBlock Text=" - "/>
+            <TextBlock Text="{Binding Name}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EnergyDevelopmentCategoryTypesComboBoxItemDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Code}"/>
+            <TextBlock Text=" - "/>
+            <TextBlock Text="{Binding Description}"/>
+        </StackPanel>
+    </DataTemplate>
+    
 
     <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/System.png" ToolTip="System">
@@ -250,13 +271,6 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="SatelliteTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Satellite.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
-    </HierarchicalDataTemplate>
-
     <HierarchicalDataTemplate x:Key="WellTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Wells_16x16.png"/>
@@ -348,7 +362,6 @@
                                                      AreaTemplate="{StaticResource AreaTreeViewItemDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTreeViewItemDataTemplate}"
                                                      FacilityTemplate="{StaticResource FacilityTreeViewItemDataTemplate}"
-                                                     SatelliteTemplate="{StaticResource SatelliteTreeViewItemDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTreeViewItemDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTreeViewItemDataTemplate}"
                                                      SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTreeViewItemDataTemplate}"
@@ -387,13 +400,6 @@
 
     <DataTemplate x:Key="FacilityTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
         <setupusercontrols:FacilityControl/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="SatelliteTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Satellite.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="WellTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -487,7 +493,6 @@
                                                      AreaTemplate="{StaticResource AreaTabDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTabDataTemplate}"
                                                      FacilityTemplate="{StaticResource FacilityTabDataTemplate}"
-                                                     SatelliteTemplate="{StaticResource SatelliteTabDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTabDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTabDataTemplate}"
                                                      SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTabDataTemplate}"

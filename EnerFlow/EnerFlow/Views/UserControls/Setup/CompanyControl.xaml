@@ -21,40 +21,44 @@
         </StackPanel>
         <TabControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>

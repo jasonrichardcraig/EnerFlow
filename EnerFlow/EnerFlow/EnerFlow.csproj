@@ -12,6 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewAreaDialog.xaml.cs" />
+    <Compile Remove="Views\NewCompanyDialog.xaml.cs" />
+    <Compile Remove="Views\NewDistrictDialog.xaml.cs" />
+    <Compile Remove="Views\NewFacilityDialog.xaml.cs" />
+    <Compile Remove="Views\NewFieldDialog.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\Alarms_16x16.png" />
     <None Remove="Images\Alarms_24x24.png" />
     <None Remove="Images\AlignObjectsBottom.png" />
@@ -69,6 +77,8 @@
     <None Remove="Images\Facilities_24x24.png" />
     <None Remove="Images\Field.png" />
     <None Remove="Images\Filter.png" />
+    <None Remove="Images\Folder_16x16.png" />
+    <None Remove="Images\Folder_24x24.png" />
     <None Remove="Images\Forward.png" />
     <None Remove="Images\GenericDocument.png" />
     <None Remove="Images\Group.png" />
@@ -109,8 +119,6 @@
     <None Remove="Images\Reports_24x24.png" />
     <None Remove="Images\Runs_16x16.png" />
     <None Remove="Images\Runs_24x24.png" />
-    <None Remove="Images\Satellite_16x16.png" />
-    <None Remove="Images\Satellite_24x24.png" />
     <None Remove="Images\Save.png" />
     <None Remove="Images\Scheduler_16x16.png" />
     <None Remove="Images\Scheduler_24x24.png" />
@@ -247,6 +255,8 @@
     <Resource Include="Images\Exceptions_White.png" />
     <Resource Include="Images\Field.png" />
     <Resource Include="Images\Filter.png" />
+    <Resource Include="Images\Folder_16x16.png" />
+    <Resource Include="Images\Folder_24x24.png" />
     <Resource Include="Images\GenericDocument.png" />
     <Resource Include="Images\Group.png" />
     <Resource Include="Images\IpChannelTag_16x16.png" />
@@ -275,8 +285,6 @@
     <Resource Include="Images\Security_16x16.png" />
     <Resource Include="Images\Security_24x24.png" />
     <Resource Include="Images\System.png" />
-    <Resource Include="Images\Satellite_16x16.png" />
-    <Resource Include="Images\Satellite_24x24.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\Screen_16x16.png" />
     <Resource Include="Images\Screen_24x24.png" />
@@ -340,6 +348,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
 

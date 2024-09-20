@@ -9,17 +9,13 @@ public partial class Well
 
     public int HierarchyId { get; set; }
 
-    public int? FacilityId { get; set; }
-
-    public int? SatelliteId { get; set; }
-
-    public string Name { get; set; } = null!;
-
     public string FormattedUwi { get; set; } = null!;
 
     public string UnformattedUwi { get; set; } = null!;
 
     public string? SurfaceLocation { get; set; }
+
+    public string? DownholeLocation { get; set; }
 
     public string? FieldCode { get; set; }
 
@@ -39,17 +35,7 @@ public partial class Well
 
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
 
-    public virtual Facility? Facility { get; set; }
-
-    public virtual Satellite? FacilityNavigation { get; set; }
-
     public virtual Hierarchy Hierarchy { get; set; } = null!;
-
-    public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
-
-    public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
-
-    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
 
     public virtual ICollection<WastePlantDailyActivity> WastePlantDailyActivities { get; set; } = new List<WastePlantDailyActivity>();
 

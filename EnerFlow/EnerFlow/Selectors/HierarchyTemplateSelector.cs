@@ -42,11 +42,6 @@ namespace EnerFlow.Selectors
         public DataTemplate? FacilityTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets the DataTemplate for the Satellite node type.
-        /// </summary>
-        public DataTemplate? SatelliteTemplate { get; set; }
-
-        /// <summary>
         /// Gets or sets the DataTemplate for the Well node type.
         /// </summary>
         public DataTemplate? WellTemplate { get; set; }
@@ -129,7 +124,6 @@ namespace EnerFlow.Selectors
                 HierarchyNodeType.Area => AreaTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.Field => FieldTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.Facility => FacilityTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Satellite => SatelliteTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.Well => WellTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.RunSheet => RunSheetTemplate ?? base.SelectTemplate(item, container),
                 HierarchyNodeType.ContextTag => ContextTagTemplate ?? base.SelectTemplate(item, container),

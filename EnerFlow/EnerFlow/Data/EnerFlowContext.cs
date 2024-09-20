@@ -66,6 +66,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<Document> Documents { get; set; }
 
+    public virtual DbSet<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes { get; set; }
+
     public virtual DbSet<Equipment> Equipment { get; set; }
 
     public virtual DbSet<EquipmentType> EquipmentTypes { get; set; }
@@ -196,8 +198,6 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<Satellite> Satellites { get; set; }
 
-    public virtual DbSet<SatelliteFlowRun> SatelliteFlowRuns { get; set; }
-
     public virtual DbSet<SaturationCondition> SaturationConditions { get; set; }
 
     public virtual DbSet<Screen> Screens { get; set; }
@@ -265,6 +265,10 @@ public partial class EnerFlowContext : DbContext
     public virtual DbSet<UnitSet> UnitSets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<Vessel> Vessels { get; set; }
+
+    public virtual DbSet<VesselType> VesselTypes { get; set; }
 
     public virtual DbSet<ViscosityEquation> ViscosityEquations { get; set; }
 
@@ -1013,6 +1017,19 @@ public partial class EnerFlowContext : DbContext
                 .HasConstraintName("FK_Documents_Hierarchy");
         });
 
+        modelBuilder.Entity<EnergyDevelopmentCategoryType>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Code)
+                .HasMaxLength(32)
+                .IsUnicode(false);
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Equipment>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
@@ -1068,6 +1085,7 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.EnergyDevelopmentCategoryTypeId).HasColumnName("EnergyDevelopmentCategoryTypeID");
             entity.Property(e => e.FacilitySubTypeId).HasColumnName("FacilitySubTypeID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
             entity.Property(e => e.LicenceNumber)
@@ -1089,6 +1107,10 @@ public partial class EnerFlowContext : DbContext
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.WasteLocationTypeId).HasColumnName("WasteLocationTypeID");
+
+            entity.HasOne(d => d.EnergyDevelopmentCategoryType).WithMany(p => p.Facilities)
+                .HasForeignKey(d => d.EnergyDevelopmentCategoryTypeId)
+                .HasConstraintName("FK_Facilities_EnergyDevelopmentCategoryTypes");
 
             entity.HasOne(d => d.FacilitySubType).WithMany(p => p.Facilities)
                 .HasForeignKey(d => d.FacilitySubTypeId)
@@ -1955,7 +1977,6 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Description)
                 .HasMaxLength(64)
                 .IsUnicode(false);
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
             entity.Property(e => e.FluidTypeId).HasColumnName("FluidTypeID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
             entity.Property(e => e.MeterPurposeId).HasColumnName("MeterPurposeID");
@@ -1963,16 +1984,15 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(32)
                 .IsUnicode(false);
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
-            entity.Property(e => e.WellId).HasColumnName("WellID");
-
-            entity.HasOne(d => d.Facility).WithMany(p => p.Meters)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Meters_Facilities");
 
             entity.HasOne(d => d.FluidType).WithMany(p => p.Meters)
                 .HasForeignKey(d => d.FluidTypeId)
                 .HasConstraintName("FK_Meters_FluidTypes");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Meters)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Meters_Hierarchy");
 
             entity.HasOne(d => d.MeterPurpose).WithMany(p => p.Meters)
                 .HasForeignKey(d => d.MeterPurposeId)
@@ -1981,14 +2001,6 @@ public partial class EnerFlowContext : DbContext
             entity.HasOne(d => d.MeterRunTag).WithMany(p => p.Meters)
                 .HasForeignKey(d => d.MeterRunTagId)
                 .HasConstraintName("FK_Meters_MeterRunTags");
-
-            entity.HasOne(d => d.Satellite).WithMany(p => p.Meters)
-                .HasForeignKey(d => d.SatelliteId)
-                .HasConstraintName("FK_Meters_Satellites");
-
-            entity.HasOne(d => d.Well).WithMany(p => p.Meters)
-                .HasForeignKey(d => d.WellId)
-                .HasConstraintName("FK_Meters_Wells");
         });
 
         modelBuilder.Entity<MeterAlarm>(entity =>
@@ -2793,30 +2805,21 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
             entity.Property(e => e.Name)
                 .HasMaxLength(32)
                 .IsUnicode(false);
             entity.Property(e => e.PumpTypeId).HasColumnName("PumpTypeID");
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
-            entity.Property(e => e.WellId).HasColumnName("WellID");
 
-            entity.HasOne(d => d.Facility).WithMany(p => p.Pumps)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Pumps_Facilities");
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Pumps)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pumps_Hierarchy");
 
             entity.HasOne(d => d.PumpType).WithMany(p => p.Pumps)
                 .HasForeignKey(d => d.PumpTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pumps_PumpTypes");
-
-            entity.HasOne(d => d.Satellite).WithMany(p => p.Pumps)
-                .HasForeignKey(d => d.SatelliteId)
-                .HasConstraintName("FK_Pumps_Satellites");
-
-            entity.HasOne(d => d.Well).WithMany(p => p.Pumps)
-                .HasForeignKey(d => d.WellId)
-                .HasConstraintName("FK_Pumps_Wells");
         });
 
         modelBuilder.Entity<PumpDailyTransaction>(entity =>
@@ -2993,60 +2996,15 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
-            entity.Property(e => e.GroupMeterId).HasColumnName("GroupMeterID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
             entity.Property(e => e.LocationName)
                 .HasMaxLength(64)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .HasMaxLength(64)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Facility).WithMany(p => p.Satellites)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Satellites_Facilities");
-
-            entity.HasOne(d => d.GroupMeter).WithMany(p => p.Satellites)
-                .HasForeignKey(d => d.GroupMeterId)
-                .HasConstraintName("FK_Satellites_Meters");
 
             entity.HasOne(d => d.Hierarchy).WithMany(p => p.Satellites)
                 .HasForeignKey(d => d.HierarchyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Satellites_Hierarchy");
-        });
-
-        modelBuilder.Entity<SatelliteFlowRun>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.DateTimeCreated)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.GasMeterId).HasColumnName("GasMeterID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(64)
-                .IsUnicode(false);
-            entity.Property(e => e.OilMeterId).HasColumnName("OilMeterID");
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
-            entity.Property(e => e.WaterMeterId).HasColumnName("WaterMeterID");
-
-            entity.HasOne(d => d.GasMeter).WithMany(p => p.SatelliteFlowRunGasMeters)
-                .HasForeignKey(d => d.GasMeterId)
-                .HasConstraintName("FK_SatelliteFlowRuns_Meters");
-
-            entity.HasOne(d => d.OilMeter).WithMany(p => p.SatelliteFlowRunOilMeters)
-                .HasForeignKey(d => d.OilMeterId)
-                .HasConstraintName("FK_SatelliteFlowRuns_Meters1");
-
-            entity.HasOne(d => d.Satellite).WithMany(p => p.SatelliteFlowRuns)
-                .HasForeignKey(d => d.SatelliteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_SatelliteFlowRuns_Satellites");
-
-            entity.HasOne(d => d.WaterMeter).WithMany(p => p.SatelliteFlowRunWaterMeters)
-                .HasForeignKey(d => d.WaterMeterId)
-                .HasConstraintName("FK_SatelliteFlowRuns_Meters2");
         });
 
         modelBuilder.Entity<SaturationCondition>(entity =>
@@ -3215,30 +3173,18 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(32)
-                .IsUnicode(false);
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
             entity.Property(e => e.TankTypeId).HasColumnName("TankTypeID");
-            entity.Property(e => e.WellId).HasColumnName("WellID");
 
-            entity.HasOne(d => d.Facility).WithMany(p => p.Tanks)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Tanks_Facilities");
-
-            entity.HasOne(d => d.Satellite).WithMany(p => p.Tanks)
-                .HasForeignKey(d => d.SatelliteId)
-                .HasConstraintName("FK_Tanks_Satellites");
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Tanks)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Tanks_Hierarchy");
 
             entity.HasOne(d => d.TankType).WithMany(p => p.Tanks)
                 .HasForeignKey(d => d.TankTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tanks_TankTypes");
-
-            entity.HasOne(d => d.Well).WithMany(p => p.Tanks)
-                .HasForeignKey(d => d.WellId)
-                .HasConstraintName("FK_Tanks_Wells");
         });
 
         modelBuilder.Entity<TankDailyTransaction>(entity =>
@@ -3932,6 +3878,36 @@ public partial class EnerFlowContext : DbContext
                     });
         });
 
+        modelBuilder.Entity<Vessel>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.VesselTypeId).HasColumnName("VesselTypeID");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.Vessels)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Vessels_Hierarchy");
+
+            entity.HasOne(d => d.VesselType).WithMany(p => p.Vessels)
+                .HasForeignKey(d => d.VesselTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Vessels_VesselTypes");
+        });
+
+        modelBuilder.Entity<VesselType>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<ViscosityEquation>(entity =>
         {
             entity.Property(e => e.Id)
@@ -4099,7 +4075,9 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
+            entity.Property(e => e.DownholeLocation)
+                .HasMaxLength(128)
+                .IsUnicode(false);
             entity.Property(e => e.FieldCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
@@ -4113,30 +4091,18 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.LicenseeCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .HasMaxLength(128)
-                .IsUnicode(false);
             entity.Property(e => e.OperatorCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.PoolCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
             entity.Property(e => e.SurfaceLocation)
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.UnformattedUwi)
                 .HasMaxLength(128)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.Facility).WithMany(p => p.Wells)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Wells_Facilities");
-
-            entity.HasOne(d => d.FacilityNavigation).WithMany(p => p.Wells)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Wells_Satellites");
 
             entity.HasOne(d => d.Hierarchy).WithMany(p => p.Wells)
                 .HasForeignKey(d => d.HierarchyId)
@@ -4377,10 +4343,6 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.TotalWater).HasColumnType("decimal(38, 12)");
             entity.Property(e => e.WaterCut).HasColumnType("decimal(38, 12)");
             entity.Property(e => e.WellId).HasColumnName("WellID");
-
-            entity.HasOne(d => d.SatelliteFlowRun).WithMany(p => p.WellTests)
-                .HasForeignKey(d => d.SatelliteFlowRunId)
-                .HasConstraintName("FK_WellTests_SatelliteFlowRuns");
         });
 
         modelBuilder.Entity<WellType>(entity =>

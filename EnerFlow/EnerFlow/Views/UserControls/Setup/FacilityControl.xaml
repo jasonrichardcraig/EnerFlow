@@ -16,80 +16,89 @@
         </StackPanel>
         <TabControl Grid.Row="1">
             <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource RegulatoryTabHeaderDataTemplate}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Facility Type:" Margin="10" />
-                    <ComboBox Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource ComboBoxItemDataTemplate}" ItemsSource="{Binding FacilityTypes}" SelectedValue="{Binding SelectedFacilityType}" Margin="10" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Facility SubType:" Margin="10" />
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource ComboBoxItemDataTemplate}" ItemsSource="{Binding SelectedFacilityType.FacilitySubTypes}" SelectedValue="{Binding FacilitySubType}" Margin="10" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="Unique Facility Identifier:" Margin="10" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UniqueFacilityIdentifier}" Margin="10" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="Location Name:" Margin="10" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LocationName}" Margin="10" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="Operator Code:" Margin="10" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding OperatorCode}" Margin="10" />
-                    <Label Grid.Row="5" Grid.Column="0" Content="Operator Name:" Margin="10" />
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding OperatorName}" Margin="10" />
-                    <Label Grid.Row="6" Grid.Column="0" Content="Licence Number:" Margin="10" />
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicenceNumber}" Margin="10" />
-                    <Label Grid.Row="7" Grid.Column="0" Content="Licensee Code:" Margin="10" />
-                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicenseeCode}" Margin="10" />
-                    <Label Grid.Row="8" Grid.Column="0" Content="Waste Location Type:" Margin="10" />
-                    <ComboBox Grid.Row="8" Grid.Column="1" ItemTemplate="{StaticResource ComboBoxItemDataTemplate}" ItemsSource="{Binding FacilityTypes}" SelectedValue="{Binding WasteLocationType}" Margin="10" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Facility Type:" Margin="10" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource FacilityTypeComboBoxItemDataTemplate}" ItemsSource="{Binding FacilityTypes}" SelectedValue="{Binding SelectedFacilityType}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Facility SubType:" Margin="10" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource FacilitySubTypeComboBoxItemDataTemplate}" ItemsSource="{Binding SelectedFacilityType.FacilitySubTypes}" SelectedValue="{Binding FacilitySubType}" Margin="10" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Energy Development Category Code:" Margin="10" />
+                        <ComboBox Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource EnergyDevelopmentCategoryTypesComboBoxItemDataTemplate}" ItemsSource="{Binding EnergyDevelopmentCategoryTypes}" SelectedValue="{Binding EnergyDevelopmentCategoryType}" Margin="10" />
+                        <Label Grid.Row="3" Grid.Column="0" Content="Unique Facility Identifier:" Margin="10" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UniqueFacilityIdentifier}" Margin="10" />
+                        <Label Grid.Row="4" Grid.Column="0" Content="Location Name:" Margin="10" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding LocationName}" Margin="10" />
+                        <Label Grid.Row="5" Grid.Column="0" Content="Operator Code:" Margin="10" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding OperatorCode}" Margin="10" />
+                        <Label Grid.Row="6" Grid.Column="0" Content="Operator Name:" Margin="10" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OperatorName}" Margin="10" />
+                        <Label Grid.Row="7" Grid.Column="0" Content="Licence Number:" Margin="10" />
+                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicenceNumber}" Margin="10" />
+                        <Label Grid.Row="8" Grid.Column="0" Content="Licensee Code:" Margin="10" />
+                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LicenseeCode}" Margin="10" />
+                        <Label Grid.Row="9" Grid.Column="0" Content="Waste Location Type:" Margin="10" />
+                        <ComboBox Grid.Row="9" Grid.Column="1" DisplayMemberPath="Name" ItemsSource="{Binding WasteLocationTypes}" SelectedValue="{Binding WasteLocationType}" Margin="10" />
 
 
-                </Grid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>

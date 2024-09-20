@@ -9,7 +9,6 @@
         Area = 4,
         Field = 5,
         Facility = 6,
-        Satellite = 7,
         Well = 8,
         RunSheet = 9,
         ContextTag = 10,
@@ -21,7 +20,8 @@
         StringIoTag = 16,
         Screen = 17,
         Diagram = 18,
-        Document = 19
+        Document = 19,
+        Folder = 20
 
     }
 }

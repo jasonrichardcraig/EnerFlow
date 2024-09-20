@@ -11,6 +11,8 @@ public partial class Facility
 
     public int? FacilitySubTypeId { get; set; }
 
+    public int? EnergyDevelopmentCategoryTypeId { get; set; }
+
     public string? UniqueFacilityIdentifier { get; set; }
 
     public string? LocationName { get; set; }
@@ -28,6 +30,8 @@ public partial class Facility
     public DateTime? DateTimeCreated { get; set; }
 
     public virtual ICollection<Compressor> Compressors { get; set; } = new List<Compressor>();
+
+    public virtual EnergyDevelopmentCategoryType? EnergyDevelopmentCategoryType { get; set; }
 
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
 
@@ -55,14 +59,6 @@ public partial class Facility
 
     public virtual ICollection<LiquidBatchRecord> LiquidBatchRecords { get; set; } = new List<LiquidBatchRecord>();
 
-    public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
-
-    public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
-
-    public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
-
-    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
-
     public virtual ICollection<Ticket> TicketDestinationFacilities { get; set; } = new List<Ticket>();
 
     public virtual ICollection<Ticket> TicketOriginFacilities { get; set; } = new List<Ticket>();
@@ -80,6 +76,4 @@ public partial class Facility
     public virtual ICollection<WellStatus> WellStatusPrimaryLinkedFacilities { get; set; } = new List<WellStatus>();
 
     public virtual ICollection<WellStatus> WellStatusSecondaryLinkedFacilities { get; set; } = new List<WellStatus>();
-
-    public virtual ICollection<Well> Wells { get; set; } = new List<Well>();
 }

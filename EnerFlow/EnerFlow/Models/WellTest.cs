@@ -40,6 +40,4 @@ public partial class WellTest
     public string? Notes { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
-
-    public virtual SatelliteFlowRun? SatelliteFlowRun { get; set; }
 }
