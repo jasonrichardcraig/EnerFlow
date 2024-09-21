@@ -1,15 +1,21 @@
-﻿using EnerFlow.Commands;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using EnerFlow.Commands;
 using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
 {
-    public class HierarchyViewModel : ViewModelBase, IDisposable
+    public class HierarchyViewModel : ObservableValidator, IDisposable
     {
         private bool _isLoaded = false;
         private bool _isSelected;
@@ -18,7 +24,7 @@ namespace EnerFlow.ViewModels
         protected readonly MainViewModel _mainViewModel;
         protected readonly IDialogService _dialogService;
         protected readonly HierarchyViewModel _parentHierarchyViewModel;
-        protected readonly ObservableCollection<HierarchyViewModel> _children = new ObservableCollection<HierarchyViewModel>();
+        protected readonly ObservableCollection<HierarchyViewModel> _children = [];
         protected Hierarchy _hierarchy = null!;
 
         public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy)
@@ -29,9 +35,13 @@ namespace EnerFlow.ViewModels
             _mainViewModel = App.ServiceProvider?.GetService<MainViewModel>() ?? throw new InvalidOperationException("MainViewModel is not available.");
             _hierarchy = hierarchy;
 
-            RefreshCommand = new RelayCommand(ExecuteRefreshCommand);
-            AddNewItemCommand = new RelayCommand(ExecuteAddNewItemCommand, CanExecuteAddNewItemCommand);
-            DeleteItemCommand = new RelayCommand(ExecuteDeleteItemCommand, CanExecuteDeleteItemCommand);
+            RefreshCommand = new RelayCommand(Refresh);
+            AddNewCompanyCommand = new RelayCommand(AddNewCompany, CanAddNewItem);
+            AddNewDistrictCommand = new RelayCommand(AddNewDistrict, CanAddNewItem);
+            AddNewAreaCommand = new RelayCommand(AddNewArea, CanAddNewItem);
+            AddNewFieldCommand = new RelayCommand(AddNewField, CanAddNewItem);
+            AddNewFacilityCommand = new RelayCommand(AddNewFacility, CanAddNewItem);
+            DeleteCommand = new RelayCommand(Delete, CanDelete);
 
             _children.CollectionChanged += Children_CollectionChanged;
 
@@ -67,6 +77,12 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        public IEnumerable GetValidationErrors(string propertyName)
+        {
+            return GetErrors(propertyName);
+        }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required" )]
         public string Name
         {
             get => _hierarchy.Name;
@@ -74,13 +90,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Name != value)
                 {
-                    _hierarchy.Name = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    SetProperty<string>(_hierarchy.Name, value, (newValue) => { _hierarchy.Name = newValue; }, true);
+                    if(!HasErrors)
+                    {
+                        _dataService.Context.SaveChanges();                        
+                    }
                 }
             }
         }
 
+        [MaxLength(255)]
         public string? Description
         {
             get => _hierarchy.Description;
@@ -88,9 +107,11 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Description != value)
                 {
-                    _hierarchy.Description = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    SetProperty<string>(_hierarchy.Description!, value!, (newValue) => { _hierarchy.Description= newValue; }, true);
+                    if (!HasErrors)
+                    {
+                        _dataService.Context.SaveChanges();
+                    }
                 }
             }
         }
@@ -153,9 +174,17 @@ namespace EnerFlow.ViewModels
 
         public ICommand RefreshCommand { get; }
 
-        public ICommand AddNewItemCommand { get; }
+        public ICommand AddNewCompanyCommand { get; }
 
-        public ICommand DeleteItemCommand { get; }
+        public ICommand AddNewDistrictCommand { get; }
+
+        public ICommand AddNewAreaCommand { get; }
+
+        public ICommand AddNewFieldCommand { get; }
+
+        public ICommand AddNewFacilityCommand { get; }
+
+        public ICommand DeleteCommand { get; }
 
         public ObservableCollection<HierarchyViewModel> Children
         {
@@ -176,7 +205,7 @@ namespace EnerFlow.ViewModels
             foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
             {
 
-                switch(hierarchy.NodeTypeId)
+                switch (hierarchy.NodeTypeId)
                 {
                     case (byte)HierarchyNodeType.Facility:
                         _children.Add(new FacilityViewModel(this, hierarchy));
@@ -214,38 +243,36 @@ namespace EnerFlow.ViewModels
 
         }
 
-        private bool CanExecuteAddNewItemCommand(object? arg)
+        private bool CanAddNewItem()
         {
             return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
         }
 
-        private void ExecuteAddNewItemCommand(object? obj)
+        private void AddNewCompany()
         {
-            if (obj is string itemType)
-            {
-                switch (itemType)
-                {
-                    case nameof(HierarchyNodeType.Company):
-                        _dialogService?.ShowNewCompanyDialog();
-                        break;
-                    case nameof(HierarchyNodeType.District):
-                        _dialogService?.ShowNewDistrictDialog(this);
-                        break;
-                    case nameof(HierarchyNodeType.Area):
-                        _dialogService?.ShowNewAreaDialog(this);
-                        break;
-                    case nameof(HierarchyNodeType.Field):
-                        _dialogService?.ShowNewFieldDialog(this);
-                        break;
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Invalid argument type", nameof(obj));
-            }
+            _dialogService?.ShowNewCompanyDialog();
         }
 
-        private void ExecuteRefreshCommand(object? parameter)
+        private void AddNewDistrict()
+        {
+            _dialogService?.ShowNewDistrictDialog(this);
+        }
+
+        private void AddNewArea()
+        {
+            _dialogService?.ShowNewAreaDialog(this);
+        }
+
+        private void AddNewField()
+        {
+            _dialogService?.ShowNewFieldDialog(this);
+        }
+        private void AddNewFacility()
+        {
+            _dialogService?.ShowNewFacilityDialog(this);
+        }
+
+        private void Refresh()
         {
             if (_mainViewModel.SystemHierarchyViewModel != null)
             {
@@ -254,14 +281,14 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        private bool CanExecuteDeleteItemCommand(object? arg)
+        private bool CanDelete()
         {
             return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
         }
 
-        private void ExecuteDeleteItemCommand(object? obj)
+        private void Delete()
         {
-           _dialogService.DeleteHierarchyNode(this);
+            _dialogService.DeleteHierarchyNode(this);
         }
 
         public void Dispose()
@@ -272,6 +299,8 @@ namespace EnerFlow.ViewModels
             {
                 child.Dispose();
             }
+
+            GC.SuppressFinalize(this);
         }
     }
 }

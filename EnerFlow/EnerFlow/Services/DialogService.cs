@@ -38,7 +38,7 @@ namespace EnerFlow.Services
 
         public string ShowOpenFileDialog()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
                 return openFileDialog.FileName;
@@ -120,19 +120,21 @@ namespace EnerFlow.Services
 
         public void ShowNewFacilityDialog(HierarchyViewModel parentHierarchyViewModel)
         {
-            var fieldHierarchyViewModel = new HierarchyViewModel(parentHierarchyViewModel, new Hierarchy());
+            var facility = new Facility();
+            var facilityHierarchyViewModel = new FacilityViewModel(parentHierarchyViewModel, new Hierarchy(), facility);
 
-            var dialog = new NewFieldDialog()
+            var dialog = new NewFacilityDialog()
             {
-                DataContext = fieldHierarchyViewModel
+                DataContext = facilityHierarchyViewModel
             };
 
             var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == true)
             {
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
-                parentHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
+                _dataService.Context.Facilities.Add(facility);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, HierarchyNodeType.Facility);
+                parentHierarchyViewModel.Children.Add(facilityHierarchyViewModel);
             }
         }
 
@@ -153,7 +155,7 @@ namespace EnerFlow.Services
             if (ShowConfirmationDialog("Are you sure you want to delete this node?", "Delete Node"))
             {
                 _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
-               hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
             }
         }
     }

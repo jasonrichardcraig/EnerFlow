@@ -13,6 +13,8 @@
     <!-- Converter for converting inverted boolean value to visibility -->
     <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
 
+    <converters:InvertedBooleanConverter x:Key="InvertedBooleanyConverter"/>
+
     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
 
     <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
@@ -126,7 +128,7 @@
         <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/System.png" ToolTip="System">
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Company" Command="{Binding AddNewItemCommand}" CommandParameter="Company">
+                    <MenuItem Header="Add Company" Command="{Binding AddNewCompanyCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Company_16x16.png"/>
                         </MenuItem.Icon>
@@ -148,12 +150,12 @@
         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add District" Command="{Binding AddNewItemCommand}" CommandParameter="District">
+                    <MenuItem Header="Add District" Command="{Binding AddNewDistrictCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/District.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Company" Command="{Binding DeleteItemCommand}">
+                    <MenuItem Header="Delete Company" Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -178,12 +180,12 @@
         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Area" Command="{Binding AddNewItemCommand}" CommandParameter="Area">
+                    <MenuItem Header="Add Area" Command="{Binding AddNewAreaCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Area.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete District" Command="{Binding DeleteItemCommand}">
+                    <MenuItem Header="Delete District" Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -208,12 +210,12 @@
         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Field" Command="{Binding AddNewItemCommand}" CommandParameter="Field">
+                    <MenuItem Header="Add Field" Command="{Binding AddNewFieldCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Field.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Area" Command="{Binding DeleteItemCommand}">
+                    <MenuItem Header="Delete Area" Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
@@ -238,12 +240,12 @@
         <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Facility" Command="{Binding AddNewItemCommand}" CommandParameter="Facility">
+                    <MenuItem Header="Add Facility" Command="{Binding AddNewFacilityCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Facilities_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Field" Command="{Binding DeleteItemCommand}">
+                    <MenuItem Header="Delete Field" Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16" Width="16" Source="/Images/Delete.png"/>
                         </MenuItem.Icon>

@@ -35,7 +35,7 @@ namespace EnerFlow
         /// Configures the services for dependency injection.
         /// </summary>
         /// <param name="services">The service collection.</param>
-        private void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // Register the IDataService and its implementation
             services.AddSingleton<IDataService, DataService>();

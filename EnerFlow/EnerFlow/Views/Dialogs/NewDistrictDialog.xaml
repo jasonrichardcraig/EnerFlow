@@ -6,7 +6,7 @@
         xmlns:setupusercontrols="clr-namespace:EnerFlow.Views.UserControls.Setup"
         xmlns:local="clr-namespace:EnerFlow.Views.Dialogs"
         mc:Ignorable="d"
-        Title="New District" Icon="/Images/District.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Topmost="True">
+        Title="New District" Icon="/Images/District.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

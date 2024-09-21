@@ -1,15 +1,10 @@
-﻿using EnerFlow.Commands;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EnerFlow.Enums;
-using EnerFlow.Models;
 using EnerFlow.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic.Logging;
-using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ObservableObject
     {
         private bool _isBusy;
         private DialogService? _dialogService;
@@ -24,7 +19,6 @@ namespace EnerFlow.ViewModels
         private bool _showDataEntryTab;
         private TreeMode _treeMode;
         private Func<string, Task<string>> _executeMapScriptAction = _ => Task.FromResult(string.Empty);
-        private string _userName = string.Empty;
         private string _server = string.Empty;
         private string _database = string.Empty;
 

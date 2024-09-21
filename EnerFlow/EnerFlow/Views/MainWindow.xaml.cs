@@ -16,11 +16,7 @@ namespace EnerFlow.Views
         public MainWindow()
         {
             // Resolve the MainViewModel
-            var mainViewModel = App.ServiceProvider?.GetService<MainViewModel>();
-            if (mainViewModel == null)
-            {
-                throw new InvalidOperationException("Failed to resolve MainViewModel.");
-            }
+            var mainViewModel = (App.ServiceProvider?.GetService<MainViewModel>()) ?? throw new InvalidOperationException("Failed to resolve MainViewModel.");
 
             InitializeComponent();
 
@@ -93,13 +89,7 @@ namespace EnerFlow.Views
 
                     currentWindowsUsername = Environment.UserName;
 
-                    var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername);
-
-                    // Check if the user exists
-                    if (currentUser == null)
-                    {
-                        throw new Exception("User does not exist in the database.");
-                    }
+                    var currentUser = dataService.Context.Users.FirstOrDefault(u => u.UserName == currentWindowsUsername) ?? throw new Exception("User does not exist in the database.");
 
                     mainViewModel.UserViewModel = new UserViewModel(currentUser);
 

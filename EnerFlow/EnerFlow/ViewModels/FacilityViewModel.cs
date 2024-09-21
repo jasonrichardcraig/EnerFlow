@@ -5,21 +5,26 @@ namespace EnerFlow.ViewModels
     public class FacilityViewModel : HierarchyViewModel
     {
 
-        private Facility _facility = null!;
+        private readonly Facility _facility = null!;
 
         private FacilityType _selectdFacilityType = null!;
 
         public FacilityViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _facility = hierarchy.Facilities.First();
-
             _selectdFacilityType = _facility.FacilitySubType?.FacilityType ?? FacilityTypes.First();
-
         }
 
-        public List<FacilityType> FacilityTypes => _dataService.Context.FacilityTypes.ToList();
+        public FacilityViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Facility facility) : base(parentHierarchyViewModel, hierarchy)
+        {
+            _facility = facility;
+            facility.Hierarchy = hierarchy;
+            _selectdFacilityType = _facility.FacilitySubType?.FacilityType ?? FacilityTypes.First();
+        }
 
-       public List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => _dataService.Context.EnergyDevelopmentCategoryTypes.ToList();
+        public List<FacilityType> FacilityTypes => [.. _dataService.Context.FacilityTypes];
+
+        public List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => [.. _dataService.Context.EnergyDevelopmentCategoryTypes];
 
         public FacilityType SelectedFacilityType
         {
@@ -148,7 +153,7 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public List<WasteLocationType> WasteLocationTypes => _dataService.Context.WasteLocationTypes.ToList();
+        public List<WasteLocationType> WasteLocationTypes => [.. _dataService.Context.WasteLocationTypes];
 
         public WasteLocationType? WasteLocationType
         {

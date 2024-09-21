@@ -1,18 +1,18 @@
-﻿<UserControl x:Class="EnerFlow.Views.UserControls.Setup.FacilityControl"
+﻿<UserControl x:Class="EnerFlow.Views.UserControls.Setup.WellControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="540">
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-            <Image Height="24" Width="24" Source="/Images/Facilities_24x24.png" Margin="10" />
-            <TextBlock Text="Facility" FontSize="16" FontWeight="Bold" Margin="10" />
+            <Image Height="24" Width="24" Source="/Images/Wells_24x24.png" Margin="10" />
+            <TextBlock Text="Well" FontSize="16" FontWeight="Bold" Margin="10" />
         </StackPanel>
         <TabControl Grid.Row="1">
             <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
@@ -27,17 +27,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Margin="10">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Style.Triggers>
-                                        <Trigger Property="Validation.HasError" Value="true">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
                         <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
                     </Grid>
@@ -61,30 +51,29 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Facility Type:" Margin="10" />
-                        <ComboBox Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource FacilityTypeComboBoxItemDataTemplate}" ItemsSource="{Binding FacilityTypes}" SelectedValue="{Binding SelectedFacilityType}" Margin="10" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Facility SubType:" Margin="10" />
-                        <ComboBox Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource FacilitySubTypeComboBoxItemDataTemplate}" ItemsSource="{Binding SelectedFacilityType.FacilitySubTypes}" SelectedValue="{Binding FacilitySubType}" Margin="10" />
-                        <Label Grid.Row="2" Grid.Column="0" Content="Energy Development Category Code:" Margin="10" />
-                        <ComboBox Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource EnergyDevelopmentCategoryTypesComboBoxItemDataTemplate}" ItemsSource="{Binding EnergyDevelopmentCategoryTypes}" SelectedValue="{Binding EnergyDevelopmentCategoryType}" Margin="10" />
-                        <Label Grid.Row="3" Grid.Column="0" Content="Unique Facility Identifier:" Margin="10" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UniqueFacilityIdentifier}" Margin="10" />
-                        <Label Grid.Row="4" Grid.Column="0" Content="Location Name:" Margin="10" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding LocationName}" Margin="10" />
-                        <Label Grid.Row="5" Grid.Column="0" Content="Operator Code:" Margin="10" />
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding OperatorCode}" Margin="10" />
-                        <Label Grid.Row="6" Grid.Column="0" Content="Operator Name:" Margin="10" />
-                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OperatorName}" Margin="10" />
-                        <Label Grid.Row="7" Grid.Column="0" Content="Licence Number:" Margin="10" />
-                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicenceNumber}" Margin="10" />
-                        <Label Grid.Row="8" Grid.Column="0" Content="Licensee Code:" Margin="10" />
-                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LicenseeCode}" Margin="10" />
-                        <Label Grid.Row="9" Grid.Column="0" Content="Waste Location Type:" Margin="10" />
-                        <ComboBox Grid.Row="9" Grid.Column="1" DisplayMemberPath="Name" ItemsSource="{Binding WasteLocationTypes}" SelectedValue="{Binding WasteLocationType}" Margin="10" />
-
-
+                        <Label Grid.Row="0" Grid.Column="0" Content="Formatted UWI:" Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FormattedUwi}" Margin="10" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Unformatted UWI:" Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UnformattedUwi}" Margin="10" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Surface Location:" Margin="10" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SurfaceLocation}" Margin="10" />
+                        <Label Grid.Row="3" Grid.Column="0" Content="Downhole Location:" Margin="10" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DownholeLocation}" Margin="10" />
+                        <Label Grid.Row="4" Grid.Column="0" Content="Field Code:" Margin="10" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FieldCode}" Margin="10" />
+                        <Label Grid.Row="5" Grid.Column="0" Content="Pool Code:" Margin="10" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PoolCode}" Margin="10" />
+                        <Label Grid.Row="6" Grid.Column="0" Content="License Number:" Margin="10" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicenseNumber}" Margin="10" />
+                        <Label Grid.Row="7" Grid.Column="0" Content="Licensee Code:" Margin="10" />
+                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicenseeCode}" Margin="10" />
+                        <Label Grid.Row="8" Grid.Column="0" Content="Agent Code:" Margin="10" />
+                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding AgentCode}" Margin="10" />
+                        <Label Grid.Row="9" Grid.Column="0" Content="Operator Code:" Margin="10" />
+                        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding OperatorCode}" Margin="10" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>

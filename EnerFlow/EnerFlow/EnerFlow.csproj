@@ -181,6 +181,7 @@
 
   <ItemGroup>
     <PackageReference Include="BusyIndicators" Version="2.1.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -358,6 +359,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Views\Dialogs\NewWellDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\NewFacilityDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -368,6 +372,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Dialogs\NewDistrictDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserControls\Setup\WellControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserControls\Setup\FacilityControl.xaml.cs">
@@ -384,6 +391,9 @@
 
   <ItemGroup>
     <Page Update="Views\Dialogs\NewFacilityDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\Setup\WellControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

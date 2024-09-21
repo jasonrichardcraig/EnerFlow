@@ -13,6 +13,7 @@ namespace EnerFlow.Services
         void ShowNewDistrictDialog(HierarchyViewModel companyHierarchyViewModel);
         void ShowNewAreaDialog(HierarchyViewModel districtHierarchyViewModel);
         void ShowNewFieldDialog(HierarchyViewModel areaHierarchyViewModel);
+        void ShowNewFacilityDialog(HierarchyViewModel facilityHierarchyViewModel);
         void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel);
     }
 

@@ -1,11 +1,11 @@
-﻿using EnerFlow.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EnerFlow.Models;
 
 namespace EnerFlow.ViewModels
 {
-    public class UserViewModel : ViewModelBase
+    public class UserViewModel(User user) : ObservableObject
     {
-        private readonly User _user;
-        public UserViewModel(User user) => _user = user;
+        private readonly User _user = user;
 
         public User User => _user;
 

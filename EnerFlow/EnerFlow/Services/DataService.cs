@@ -24,8 +24,9 @@ namespace EnerFlow.Services
         /// <returns>A list of child hierarchies.</returns>
         public List<Hierarchy> GetChildren(Hierarchy hierarchy)
         {
-            return Context.Hierarchies
+            return new List<Hierarchy>(Context.Hierarchies
                 .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel())
+                .Include(hierarchy => hierarchy.NodeType)
                 .Include(hierarchy => hierarchy.Facilities)
                 .Include(hierarchy => hierarchy.Satellites)
                 .Include(hierarchy => hierarchy.Wells)
@@ -40,8 +41,7 @@ namespace EnerFlow.Services
                 .Include(hierarchy => hierarchy.Screens)
                 .Include(hierarchy => hierarchy.Diagrams)
                 .Include(hierarchy => hierarchy.Documents)
-                .OrderBy(h => h.Name)
-                .ToList();
+                .OrderBy(h => h.Name));
         }
 
         /// <summary>
