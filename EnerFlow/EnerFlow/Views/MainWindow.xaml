@@ -55,7 +55,7 @@
                     </MenuItem>
                 </Menu>
                 <ToolBar Grid.Row="1" Grid.ColumnSpan="2" >
-                    <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}" SelectedDateFormat="Long" SelectedDate="{Binding SelectedDate}" DisplayDateEnd="{Binding DisplayDateEnd}" />
+                    <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}" SelectedDateFormat="Long" SelectedDate="{Binding SelectedDate}" DisplayDateEnd="{Binding DisplayDateEnd}" Margin="4,0,4,0" />
                     <Separator/>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <RadioButton Margin="4,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}">Map</RadioButton>

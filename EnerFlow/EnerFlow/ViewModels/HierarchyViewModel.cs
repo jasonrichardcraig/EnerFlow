@@ -1,16 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EnerFlow.Commands;
 using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Metrics;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
@@ -20,6 +16,7 @@ namespace EnerFlow.ViewModels
         private bool _isLoaded = false;
         private bool _isSelected;
         private bool _isExpanded;
+        private bool _disableAutoSave;
         protected readonly IDataService _dataService;
         protected readonly MainViewModel _mainViewModel;
         protected readonly IDialogService _dialogService;
@@ -33,6 +30,7 @@ namespace EnerFlow.ViewModels
             _dataService = App.ServiceProvider?.GetService<IDataService>() ?? throw new InvalidOperationException("Data Service is not available.");
             _dialogService = App.ServiceProvider?.GetService<IDialogService>() ?? throw new InvalidOperationException("Dialog Service is not available.");
             _mainViewModel = App.ServiceProvider?.GetService<MainViewModel>() ?? throw new InvalidOperationException("MainViewModel is not available.");
+
             _hierarchy = hierarchy;
 
             RefreshCommand = new RelayCommand(Refresh);
@@ -50,6 +48,19 @@ namespace EnerFlow.ViewModels
         public HierarchyViewModel ParentHierarchyViewModel => _parentHierarchyViewModel;
 
         public Hierarchy Hierarchy { get => _hierarchy; }
+
+        public bool DisableAutoSave
+        {
+            get => _disableAutoSave;
+            set
+            {
+                if (_disableAutoSave != value)
+                {
+                    _disableAutoSave = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsSelected
         {
@@ -77,12 +88,8 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public IEnumerable GetValidationErrors(string propertyName)
-        {
-            return GetErrors(propertyName);
-        }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required" )]
+        [Required]
+        [MaxLength(255)]
         public string Name
         {
             get => _hierarchy.Name;
@@ -90,10 +97,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Name != value)
                 {
-                    SetProperty<string>(_hierarchy.Name, value, (newValue) => { _hierarchy.Name = newValue; }, true);
-                    if(!HasErrors)
+                    ValidateProperty(value, nameof(Name));
+                    var errors = GetErrors(nameof(Name));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        _dataService.Context.SaveChanges();                        
+                        _hierarchy.Name = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -107,15 +120,22 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Description != value)
                 {
-                    SetProperty<string>(_hierarchy.Description!, value!, (newValue) => { _hierarchy.Description= newValue; }, true);
-                    if (!HasErrors)
+                    ValidateProperty(value, nameof(Description));
+                    var errors = GetErrors(nameof(Description));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        _dataService.Context.SaveChanges();
+                        _hierarchy.Description = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
                 }
             }
         }
 
+        [Range(-180, 180)]
         public float? Longitude
         {
             get => (float?)_hierarchy.Longitude;
@@ -123,13 +143,22 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Longitude != value)
                 {
-                    _hierarchy.Longitude = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(Longitude));
+                    var errors = GetErrors(nameof(Longitude));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _hierarchy.Longitude = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
                 }
             }
         }
 
+        [Range(-90, 90)]
         public float? Latitude
         {
             get => (float?)_hierarchy.Latitude;
@@ -137,13 +166,23 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.Latitude != value)
                 {
-                    _hierarchy.Latitude = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(Latitude));
+                    var errors = GetErrors(nameof(Latitude));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _hierarchy.Latitude = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+
                 }
             }
         }
 
+        [Range(0,19)]
         public int? DefaultZoomLevel
         {
             get => _hierarchy.DefaultZoomLevel;
@@ -151,9 +190,19 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.DefaultZoomLevel != value)
                 {
-                    _hierarchy.DefaultZoomLevel = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+
+                    ValidateProperty(value, nameof(DefaultZoomLevel));
+                    var errors = GetErrors(nameof(DefaultZoomLevel));
+                    if (errors == null || !errors.Cast<object>().Any())
+                        if (!HasErrors)
+                        {
+                            _hierarchy.DefaultZoomLevel = value;
+                            if (!DisableAutoSave)
+                            {
+                                _dataService.Context.SaveChanges();
+                            }
+                            OnPropertyChanged();
+                        }
                 }
             }
         }
@@ -165,9 +214,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_hierarchy.IsDisabled != value)
                 {
-                    _hierarchy.IsDisabled = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    if (!HasErrors)
+                    {
+                        _hierarchy.IsDisabled = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+
                 }
             }
         }
@@ -293,14 +349,22 @@ namespace EnerFlow.ViewModels
 
         public void Dispose()
         {
-            _children.CollectionChanged -= Children_CollectionChanged;
-
-            foreach (var child in _children)
-            {
-                child.Dispose();
-            }
-
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources
+                _children.CollectionChanged -= Children_CollectionChanged;
+                foreach (var child in _children)
+                {
+                    child.Dispose();
+                }
+            }
+            // Free unmanaged resources if any
         }
     }
 }

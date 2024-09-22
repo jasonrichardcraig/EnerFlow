@@ -19,6 +19,40 @@
 
     <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
 
+    <ControlTemplate x:Key="TextBoxValidationErrorTemplate">
+        <DockPanel LastChildFill="True">
+            <!-- Error Message -->
+            <TextBlock Foreground="Red"
+                       Margin="0,2,0,0"
+                       Text="{Binding [0].ErrorContent}"
+                       FontSize="10"
+                       DockPanel.Dock="Bottom" />
+            <!-- Placeholder for the TextBox -->
+            <Border BorderThickness="2" BorderBrush="Red">
+                <AdornedElementPlaceholder />
+            </Border>
+        </DockPanel>
+    </ControlTemplate>
+
+    <Style x:Key="ValidatedTextBoxStyle" TargetType="TextBox">
+        <!-- Default Style Setters (Optional) -->
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="BorderThickness" Value="1" />
+
+        <!-- Validation Error Template Setter -->
+        <Setter Property="Validation.ErrorTemplate"
+                Value="{StaticResource TextBoxValidationErrorTemplate}" />
+
+        <!-- Triggers for Validation Errors -->
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <!-- Change the BorderBrush to Red on Error -->
+                <Setter Property="BorderBrush" Value="Red" />
+                <Setter Property="BorderThickness" Value="2" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- DataTemplate for the Map tab header -->
     <DataTemplate x:Key="MapTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">

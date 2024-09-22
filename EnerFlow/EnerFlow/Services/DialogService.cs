@@ -48,7 +48,12 @@ namespace EnerFlow.Services
 
         public void ShowNewCompanyDialog()
         {
-            var companyHierarchyViewModel = new HierarchyViewModel(_mainViewModel.SystemHierarchyViewModel!, new Hierarchy());
+            var companyHierarchyViewModel = new HierarchyViewModel(_mainViewModel.SystemHierarchyViewModel!, new Hierarchy())
+            {
+                Name = "New Company",
+                DisableAutoSave = true
+            };
+
 
             var dialog = new NewCompanyDialog()
             {
@@ -59,6 +64,7 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
+                companyHierarchyViewModel.DisableAutoSave = false;
                 _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, HierarchyNodeType.Company);
                 _mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
             }
@@ -66,7 +72,11 @@ namespace EnerFlow.Services
 
         public void ShowNewDistrictDialog(HierarchyViewModel companyHierarchyViewModel)
         {
-            var districtHierarchyViewModel = new HierarchyViewModel(companyHierarchyViewModel, new Hierarchy());
+            var districtHierarchyViewModel = new HierarchyViewModel(companyHierarchyViewModel, new Hierarchy())
+            {
+                Name = "New District",
+                DisableAutoSave = true
+            };
 
             var dialog = new NewDistrictDialog()
             {
@@ -77,6 +87,7 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
+                districtHierarchyViewModel.DisableAutoSave = false;
                 _dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, HierarchyNodeType.District);
                 companyHierarchyViewModel.Children.Add(districtHierarchyViewModel);
             }
@@ -84,7 +95,11 @@ namespace EnerFlow.Services
 
         public void ShowNewAreaDialog(HierarchyViewModel districtHierarchyViewModel)
         {
-            var areaHierarchyViewModel = new HierarchyViewModel(districtHierarchyViewModel, new Hierarchy());
+            var areaHierarchyViewModel = new HierarchyViewModel(districtHierarchyViewModel, new Hierarchy())
+            {
+                Name = "New Area",
+                DisableAutoSave = true
+            };
 
             var dialog = new NewAreaDialog()
             {
@@ -95,6 +110,7 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
+                areaHierarchyViewModel.DisableAutoSave = false;
                 _dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, HierarchyNodeType.Area);
                 districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
             }
@@ -102,7 +118,11 @@ namespace EnerFlow.Services
 
         public void ShowNewFieldDialog(HierarchyViewModel areaHierarchyViewModel)
         {
-            var fieldHierarchyViewModel = new HierarchyViewModel(areaHierarchyViewModel, new Hierarchy());
+            var fieldHierarchyViewModel = new HierarchyViewModel(areaHierarchyViewModel, new Hierarchy())
+            {
+                Name = "New Field", 
+                DisableAutoSave = true
+            };
 
             var dialog = new NewFieldDialog()
             {
@@ -113,6 +133,7 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
+                fieldHierarchyViewModel.DisableAutoSave = false;
                 _dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
                 areaHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
             }
@@ -121,7 +142,11 @@ namespace EnerFlow.Services
         public void ShowNewFacilityDialog(HierarchyViewModel parentHierarchyViewModel)
         {
             var facility = new Facility();
-            var facilityHierarchyViewModel = new FacilityViewModel(parentHierarchyViewModel, new Hierarchy(), facility);
+            var facilityHierarchyViewModel = new FacilityViewModel(parentHierarchyViewModel, new Hierarchy(), facility)
+            {
+                Name = "New Facility",
+                DisableAutoSave = true
+            };
 
             var dialog = new NewFacilityDialog()
             {
@@ -132,6 +157,7 @@ namespace EnerFlow.Services
 
             if (dialogResult == true)
             {
+                facilityHierarchyViewModel.DisableAutoSave = false;
                 _dataService.Context.Facilities.Add(facility);
                 _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, HierarchyNodeType.Facility);
                 parentHierarchyViewModel.Children.Add(facilityHierarchyViewModel);

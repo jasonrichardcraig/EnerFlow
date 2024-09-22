@@ -1,4 +1,5 @@
 ﻿using EnerFlow.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace EnerFlow.ViewModels
 {
@@ -33,8 +34,14 @@ namespace EnerFlow.ViewModels
             {
                 if (_selectdFacilityType != value)
                 {
-                    _selectdFacilityType = value;
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(SelectedFacilityType));
+
+                    if (!HasErrors)
+                    {
+                        _selectdFacilityType = value;
+                        OnPropertyChanged();
+                    }
+
                 }
             }
         }
@@ -48,9 +55,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.FacilitySubType != value)
                 {
-                    _facility.FacilitySubType = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(FacilitySubType));
+                    var errors = GetErrors(nameof(FacilitySubType));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.FacilitySubType = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
@@ -62,13 +76,20 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.EnergyDevelopmentCategoryType != value)
                 {
-                    _facility.EnergyDevelopmentCategoryType = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(EnergyDevelopmentCategoryType));
+                    var errors = GetErrors(nameof(EnergyDevelopmentCategoryType));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.EnergyDevelopmentCategoryType = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
-
+        [MaxLength(128)]
         public string? UniqueFacilityIdentifier
         {
             get => _facility.UniqueFacilityIdentifier;
@@ -76,13 +97,24 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.UniqueFacilityIdentifier != value)
                 {
-                    _facility.UniqueFacilityIdentifier = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    if (_facility.UniqueFacilityIdentifier != value)
+                    {
+                        ValidateProperty(value, nameof(UniqueFacilityIdentifier));
+                        var errors = GetErrors(nameof(UniqueFacilityIdentifier));
+                        if (errors == null || !errors.Cast<object>().Any())
+                        {
+                            _facility.UniqueFacilityIdentifier = value;
+                            if (!DisableAutoSave)
+                            {
+                                _dataService.Context.SaveChanges();
+                            }
+                        }
+                    }
                 }
             }
         }
 
+        [MaxLength(128)]
         public string? LocationName
         {
             get => _facility.LocationName;
@@ -90,13 +122,21 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.LocationName != value)
                 {
-                    _facility.LocationName = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(LocationName));
+                    var errors = GetErrors(nameof(LocationName));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.LocationName = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
 
+        [MaxLength(128)]
         public string? OperatorCode
         {
             get => _facility.OperatorCode;
@@ -104,13 +144,21 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.OperatorCode != value)
                 {
-                    _facility.OperatorCode = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(OperatorCode));
+                    var errors = GetErrors(nameof(OperatorCode));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.OperatorCode = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
 
+        [MaxLength(128)]
         public string? OperatorName
         {
             get => _facility.OperatorName;
@@ -118,13 +166,21 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.OperatorName != value)
                 {
-                    _facility.OperatorName = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(OperatorName));
+                    var errors = GetErrors(nameof(OperatorName));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.OperatorName = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
 
+        [MaxLength(128)]
         public string? LicenceNumber
         {
             get => _facility.LicenceNumber;
@@ -132,13 +188,21 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.LicenceNumber != value)
                 {
-                    _facility.LicenceNumber = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(LicenceNumber));
+                    var errors = GetErrors(nameof(LicenceNumber));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.LicenceNumber = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
 
+        [MaxLength(128)]
         public string? LicenseeCode
         {
             get => _facility.LicenseeCode;
@@ -146,9 +210,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.LicenseeCode != value)
                 {
-                    _facility.LicenseeCode = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+                    ValidateProperty(value, nameof(LicenseeCode));
+                    var errors = GetErrors(nameof(LicenseeCode));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _facility.LicenseeCode = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                    }
                 }
             }
         }
@@ -162,9 +233,16 @@ namespace EnerFlow.ViewModels
             {
                 if (_facility.WasteLocationType != value)
                 {
-                    _facility.WasteLocationType = value;
-                    _dataService.Context.SaveChanges();
-                    OnPropertyChanged();
+
+                    ValidateProperty(value, nameof(WasteLocationType)); 
+
+                    if(!HasErrors)
+                    {
+                        _facility.WasteLocationType = value;
+                        _dataService.Context.SaveChanges();
+                        OnPropertyChanged();
+                    }
+
                 }
             }
         }

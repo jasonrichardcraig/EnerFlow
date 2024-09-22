@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -15,51 +16,98 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <!-- Header Section -->
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-            <Image Height="24" Width="24" Source="/Images/District.png"  Margin="10" />
-            <TextBlock Text="District" FontSize="16" FontWeight="Bold" Margin="10" />
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/District.png"
+                   Margin="10" />
+            <TextBlock Text="District"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="10" />
         </StackPanel>
+        <!-- Tab Control Section -->
         <TabControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <!-- General Tab -->
             <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Name:" Margin="10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="10" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Description:" Margin="10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"  VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" Margin="10" />
-                    </Grid>
-                </ScrollViewer>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Content="Name:"
+                           Margin="10" />
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"
+                             Margin="10" />
+
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Content="Description:"
+                           Margin="10" />
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Description, ValidatesOnNotifyDataErrors=True}"
+                             HorizontalScrollBarVisibility="Disabled"
+                             VerticalScrollBarVisibility="Auto"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Margin="10,10,10,20" />
+                </Grid>
             </TabItem>
+
+            <!-- Location Tab -->
             <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
-                        <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
+
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Content="Latitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Content="Longitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Content="Default Zoom Level:"
+                               Margin="10" />
+                        <TextBox Grid.Row="2" Grid.Column="1"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
+
     </Grid>
 </UserControl>
