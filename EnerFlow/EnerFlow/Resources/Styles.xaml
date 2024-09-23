@@ -28,7 +28,8 @@
                        FontSize="10"
                        DockPanel.Dock="Bottom" />
             <!-- Placeholder for the TextBox -->
-            <Border BorderThickness="2" BorderBrush="Red">
+            <Border BorderThickness="2"
+                    BorderBrush="Red">
                 <AdornedElementPlaceholder />
             </Border>
         </DockPanel>
@@ -36,8 +37,10 @@
 
     <Style x:Key="ValidatedTextBoxStyle" TargetType="TextBox">
         <!-- Default Style Setters (Optional) -->
-        <Setter Property="BorderBrush" Value="Gray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush"
+                Value="Gray" />
+        <Setter Property="BorderThickness"
+                Value="1" />
 
         <!-- Validation Error Template Setter -->
         <Setter Property="Validation.ErrorTemplate"
@@ -45,10 +48,13 @@
 
         <!-- Triggers for Validation Errors -->
         <Style.Triggers>
-            <Trigger Property="Validation.HasError" Value="true">
+            <Trigger Property="Validation.HasError"
+                     Value="true">
                 <!-- Change the BorderBrush to Red on Error -->
-                <Setter Property="BorderBrush" Value="Red" />
-                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderBrush"
+                        Value="Red" />
+                <Setter Property="BorderThickness"
+                        Value="2" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -56,30 +62,46 @@
     <!-- DataTemplate for the Map tab header -->
     <DataTemplate x:Key="MapTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Maps_24x24.png"/>
-            <TextBlock Text="Map" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Maps_24x24.png"/>
+            <TextBlock Text="Map"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
+    <!-- DataTemplate for the Setup tab header -->
     <DataTemplate x:Key="SetupTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Tools_24x24.png"/>
-            <TextBlock Text="Setup" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Tools_24x24.png"/>
+            <TextBlock Text="Setup"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <!-- DataTemplate for the General tab header -->
     <DataTemplate x:Key="GeneralTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Settings.png"/>
-            <TextBlock Text="General" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Settings.png"/>
+            <TextBlock Text="General"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <!-- DataTemplate for the Location tab header -->
     <DataTemplate x:Key="LocationTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Maps_24x24.png"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Maps_24x24.png"/>
             <TextBlock Text="Location" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
@@ -87,8 +109,10 @@
     <!-- DataTemplate for the Regulatory tab header -->
     <DataTemplate x:Key="RegulatoryTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Source="/Images/Regulatory_24x24.png"/>
-            <Label>Regulatory</Label>
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/Regulatory_24x24.png"/>
+            <TextBlock Text="Regulatory" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
@@ -96,40 +120,58 @@
     <!-- DataTemplate for the Units tab header -->
     <DataTemplate x:Key="UnitsTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Units_24x24.png"/>
-            <TextBlock Text="Units" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Units_24x24.png"/>
+            <TextBlock Text="Units"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <!-- DataTemplate for the Security tab header -->
     <DataTemplate x:Key="SecurityTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Security_24x24.png"/>
-            <TextBlock Text="Security" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Security_24x24.png"/>
+            <TextBlock Text="Security"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <!-- DataTemplate for the Data Entry tab header -->
     <DataTemplate x:Key="DataEntryTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="24" Width="24" Margin="0,0,4,0" Source="/Images/Runs_24x24.png"/>
-            <TextBlock Text="Data Entry" VerticalAlignment="Center"/>
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Runs_24x24.png"/>
+            <TextBlock Text="Data Entry"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
     <!-- DataTemplate for the Meters tab header -->
     <DataTemplate x:Key="MetersTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Source="/Images/Meters_16x16.png"/>
-            <Label>Meters</Label>
+            <Image Height="16"
+                   Width="16"
+                   Source="/Images/Meters_16x16.png"/>
+            <TextBlock Text="Meters"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
-    <!-- DataTemplate for the Meters tab header -->
+    <!-- DataTemplate for the Tanks tab header -->
     <DataTemplate x:Key="TanksTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Source="/Images/Tanks_16x16.png"/>
-            <Label>Meters</Label>
+            <Image Height="16"
+                   Width="16"
+                   Source="/Images/Tanks_16x16.png"/>
+            <TextBlock Text="Tanks"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
 
@@ -158,21 +200,35 @@
     </DataTemplate>
     
 
-    <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/System.png" ToolTip="System">
+    <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <Image Height="16"
+               Width="16"
+               Margin="0,0,4,0"
+               Source="/Images/System.png"
+               ToolTip="System">
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Company" Command="{Binding AddNewCompanyCommand}">
+                    <MenuItem Header="Add Company"
+                              Command="{Binding AddNewCompanyCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Company_16x16.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Company_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Disabled" IsCheckable="True" IsChecked="{Binding IsDisabled}"/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
                     <Separator/>
-                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}">
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Refresh.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
@@ -180,137 +236,334 @@
         </Image>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="CompanyTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+    <HierarchicalDataTemplate x:Key="CompanyTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add District" Command="{Binding AddNewDistrictCommand}">
+                    <MenuItem Header="Add District"
+                              Command="{Binding AddNewDistrictCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/District.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/District.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Company" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete Company"
+                              Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Delete.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Disabled" IsCheckable="True" IsChecked="{Binding IsDisabled}"/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
                     <Separator/>
-                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}">
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Refresh.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <TextBlock Text="X" VerticalAlignment="Bottom" Foreground="Red" ToolTip="Disabled" Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Company_16x16.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Company_16x16.png"/>
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="DistrictTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+    <HierarchicalDataTemplate x:Key="DistrictTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Area" Command="{Binding AddNewAreaCommand}">
+                    <MenuItem Header="Add Area"
+                              Command="{Binding AddNewAreaCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Area.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Area.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete District" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete District"
+                              Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Delete.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Disabled" IsCheckable="True" IsChecked="{Binding IsDisabled}"/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
                     <Separator/>
-                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}">
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Refresh.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <TextBlock Text="X" VerticalAlignment="Bottom" Foreground="Red" ToolTip="Disabled" Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/District.png"/>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/District.png"/>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="AreaTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+    <HierarchicalDataTemplate x:Key="AreaTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Field" Command="{Binding AddNewFieldCommand}">
+                    <MenuItem Header="Add Field"
+                              Command="{Binding AddNewFieldCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Field.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Field.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Area" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete Area"
+                              Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Delete.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Disabled" IsCheckable="True" IsChecked="{Binding IsDisabled}"/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
                     <Separator/>
-                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}">
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Refresh.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <TextBlock Text="X" VerticalAlignment="Bottom" Foreground="Red" ToolTip="Disabled" Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Area.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Area.png"/>
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="FieldTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal" ToolTip="{Binding Description}">
+    <HierarchicalDataTemplate x:Key="FieldTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Facility" Command="{Binding AddNewFacilityCommand}">
+                    <MenuItem Header="Add Facility"
+                              Command="{Binding AddNewFacilityCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Facilities_16x16.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Facilities_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Field" Command="{Binding DeleteCommand}">
+                    <MenuItem Header="Delete Field"
+                              Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Delete.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Disabled" IsCheckable="True" IsChecked="{Binding IsDisabled}"/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
                     <Separator/>
-                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}">
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
-                            <Image Height="16" Width="16" Source="/Images/Refresh.png"/>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
-            <TextBlock Text="X" VerticalAlignment="Bottom" Foreground="Red" ToolTip="Disabled" Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Field.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Field.png"/>
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="FacilityTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Facilities_16x16.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+    <HierarchicalDataTemplate x:Key="FacilityTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Add_16x16.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Facility"
+                                 Command="{Binding AddNewFacilityCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                  Width="16"
+                                  Source="/Images/Wells_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Well"
+                                  Command="{Binding AddNewWellCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Wells_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Delete Facility"
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator/>
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Facilities_16x16.png"/>
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate x:Key="WellTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Wells_16x16.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Add_16x16.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Well"
+                                  Command="{Binding AddNewWellCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Wells_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Delete Facility"
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator/>
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Image Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Wells_16x16.png"/>
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
@@ -391,6 +644,13 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
+    <HierarchicalDataTemplate x:Key="FolderTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Diagram_16x16.png"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
     <selectors:HierarchyTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector" 
                                                      SystemTemplate="{StaticResource SystemTreeViewItemDataTemplate}"
                                                      CompanyTemplate="{StaticResource CompanyTreeViewItemDataTemplate}"
@@ -398,6 +658,7 @@
                                                      AreaTemplate="{StaticResource AreaTreeViewItemDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTreeViewItemDataTemplate}"
                                                      FacilityTemplate="{StaticResource FacilityTreeViewItemDataTemplate}"
+                                                     WellTemplate="{StaticResource WellTreeViewItemDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTreeViewItemDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTreeViewItemDataTemplate}"
                                                      SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTreeViewItemDataTemplate}"
@@ -439,10 +700,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="WellTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Wells_16x16.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
+        <setupusercontrols:WellControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="RunSheetTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -529,6 +787,7 @@
                                                      AreaTemplate="{StaticResource AreaTabDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTabDataTemplate}"
                                                      FacilityTemplate="{StaticResource FacilityTabDataTemplate}"
+                                                     WellTemplate="{StaticResource WellTabDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTabDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTabDataTemplate}"
                                                      SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTabDataTemplate}"

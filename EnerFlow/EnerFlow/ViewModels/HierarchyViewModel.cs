@@ -39,6 +39,7 @@ namespace EnerFlow.ViewModels
             AddNewAreaCommand = new RelayCommand(AddNewArea, CanAddNewItem);
             AddNewFieldCommand = new RelayCommand(AddNewField, CanAddNewItem);
             AddNewFacilityCommand = new RelayCommand(AddNewFacility, CanAddNewItem);
+            AddNewWellCommand = new RelayCommand(AddNewWell, CanAddNewItem);
             DeleteCommand = new RelayCommand(Delete, CanDelete);
 
             _children.CollectionChanged += Children_CollectionChanged;
@@ -240,6 +241,8 @@ namespace EnerFlow.ViewModels
 
         public ICommand AddNewFacilityCommand { get; }
 
+        public ICommand AddNewWellCommand { get; }
+
         public ICommand DeleteCommand { get; }
 
         public ObservableCollection<HierarchyViewModel> Children
@@ -326,6 +329,11 @@ namespace EnerFlow.ViewModels
         private void AddNewFacility()
         {
             _dialogService?.ShowNewFacilityDialog(this);
+        }
+
+        private void AddNewWell()
+        {
+            _dialogService?.ShowNewWellDialog(this);
         }
 
         private void Refresh()

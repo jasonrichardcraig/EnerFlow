@@ -21,7 +21,11 @@
         Screen = 17,
         Diagram = 18,
         Document = 19,
-        Folder = 20
+        Folder = 20,
+        Meter = 21,
+        Pump = 22,
+        Tank = 23,
+        Vessel = 24
 
     }
 }

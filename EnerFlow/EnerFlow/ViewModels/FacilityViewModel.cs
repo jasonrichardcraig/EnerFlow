@@ -89,6 +89,7 @@ namespace EnerFlow.ViewModels
                 }
             }
         }
+
         [MaxLength(128)]
         public string? UniqueFacilityIdentifier
         {

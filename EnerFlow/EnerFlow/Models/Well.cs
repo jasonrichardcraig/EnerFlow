@@ -9,9 +9,9 @@ public partial class Well
 
     public int HierarchyId { get; set; }
 
-    public string FormattedUwi { get; set; } = null!;
+    public string? FormattedUwi { get; set; }
 
-    public string UnformattedUwi { get; set; } = null!;
+    public string? UnformattedUwi { get; set; }
 
     public string? SurfaceLocation { get; set; }
 

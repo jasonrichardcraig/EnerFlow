@@ -6,7 +6,7 @@
         xmlns:setupusercontrols="clr-namespace:EnerFlow.Views.UserControls.Setup"
         xmlns:local="clr-namespace:EnerFlow.Views.Dialogs"
         mc:Ignorable="d"
-        Title="New Field" Icon="/Images/Wells_24x24.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" Topmost="True">
+        Title="New Well" Icon="/Images/Wells_24x24.png" Height="620" Width="620" WindowStartupLocation="CenterOwner" Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

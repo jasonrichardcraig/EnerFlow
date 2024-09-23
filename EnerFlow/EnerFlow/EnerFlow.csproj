@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\Add_16x16.png" />
+    <None Remove="Images\Add_24x24.png" />
     <None Remove="Images\Alarms_16x16.png" />
     <None Remove="Images\Alarms_24x24.png" />
     <None Remove="Images\AlignObjectsBottom.png" />
@@ -200,6 +202,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Add_16x16.png" />
+    <Resource Include="Images\Add_24x24.png" />
     <Resource Include="Images\AlignObjectsBottom.png" />
     <Resource Include="Images\AlignObjectsCenteredHorizontal.png" />
     <Resource Include="Images\AlignObjectsCenteredVertical.png" />

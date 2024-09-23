@@ -120,7 +120,7 @@ namespace EnerFlow.Services
         {
             var fieldHierarchyViewModel = new HierarchyViewModel(areaHierarchyViewModel, new Hierarchy())
             {
-                Name = "New Field", 
+                Name = "New Field",
                 DisableAutoSave = true
             };
 
@@ -164,6 +164,31 @@ namespace EnerFlow.Services
             }
         }
 
+        public void ShowNewWellDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var well = new Well();
+            var wellHierarchyViewModel = new WellViewModel(parentHierarchyViewModel, new Hierarchy(), well)
+            {
+                Name = "New Well",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewWellDialog()
+            {
+                DataContext = wellHierarchyViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                wellHierarchyViewModel.DisableAutoSave = false;
+                _dataService.Context.Wells.Add(well);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, HierarchyNodeType.Well);
+                parentHierarchyViewModel.Children.Add(wellHierarchyViewModel);
+            }
+        }
+
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
         {
             if (_dataService.GetChildren(hierarchyViewModel.Hierarchy).Count > 0)
@@ -178,10 +203,50 @@ namespace EnerFlow.Services
                 return;
             }
 
-            if (ShowConfirmationDialog("Are you sure you want to delete this node?", "Delete Node"))
+            switch ((HierarchyNodeType)hierarchyViewModel.Hierarchy.NodeTypeId)
             {
-                _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
-                hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                case HierarchyNodeType.Company:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Company?", "Delete Company"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case HierarchyNodeType.District:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this District?", "Delete District"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case HierarchyNodeType.Area:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Area?", "Delete Area"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case HierarchyNodeType.Field:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Field?", "Delete Field"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case HierarchyNodeType.Facility:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Facility?", "Delete Facility"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case HierarchyNodeType.Well:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Well?", "Delete Well"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
             }
         }
     }
