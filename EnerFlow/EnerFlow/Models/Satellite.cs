@@ -13,7 +13,5 @@ public partial class Satellite
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
-
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

@@ -42,11 +42,15 @@ public partial class Hierarchy
 
     public virtual ICollection<IpChannelTag> IpChannelTags { get; set; } = new List<IpChannelTag>();
 
+    public virtual ICollection<MaintenanceRecord> MaintenanceRecords { get; set; } = new List<MaintenanceRecord>();
+
     public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
 
     public virtual NodeType NodeType { get; set; } = null!;
 
     public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
+
+    public virtual ICollection<RunSheetItem> RunSheetItems { get; set; } = new List<RunSheetItem>();
 
     public virtual ICollection<RunSheet> RunSheets { get; set; } = new List<RunSheet>();
 

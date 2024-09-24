@@ -22,6 +22,4 @@ public partial class Pump
     public virtual ICollection<PumpDailyTransaction> PumpDailyTransactions { get; set; } = new List<PumpDailyTransaction>();
 
     public virtual PumpType PumpType { get; set; } = null!;
-
-    public virtual ICollection<RunSheetPump> RunSheetPumps { get; set; } = new List<RunSheetPump>();
 }

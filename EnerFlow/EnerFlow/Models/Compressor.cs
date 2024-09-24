@@ -27,7 +27,5 @@ public partial class Compressor
 
     public virtual Facility? Facility { get; set; }
 
-    public virtual ICollection<RunSheetCompressor> RunSheetCompressors { get; set; } = new List<RunSheetCompressor>();
-
     public virtual Well? Well { get; set; }
 }

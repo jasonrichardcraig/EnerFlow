@@ -9,19 +9,15 @@ public partial class RunSheet
 
     public int HierarchyId { get; set; }
 
-    public string Name { get; set; } = null!;
-
-    public string Description { get; set; } = null!;
-
     public DateTime DateTimeCreated { get; set; }
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
-    public virtual ICollection<RunSheetCompressor> RunSheetCompressors { get; set; } = new List<RunSheetCompressor>();
+    public virtual ICollection<Observation> Observations { get; set; } = new List<Observation>();
 
-    public virtual ICollection<RunSheetMeter> RunSheetMeters { get; set; } = new List<RunSheetMeter>();
+    public virtual ICollection<RunSheetDailyLog> RunSheetDailyLogs { get; set; } = new List<RunSheetDailyLog>();
 
-    public virtual ICollection<RunSheetPump> RunSheetPumps { get; set; } = new List<RunSheetPump>();
+    public virtual ICollection<RunSheetItem> RunSheetItems { get; set; } = new List<RunSheetItem>();
 
-    public virtual ICollection<RunSheetTank> RunSheetTanks { get; set; } = new List<RunSheetTank>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

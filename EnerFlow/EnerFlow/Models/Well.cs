@@ -33,8 +33,6 @@ public partial class Well
 
     public virtual ICollection<Compressor> Compressors { get; set; } = new List<Compressor>();
 
-    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
-
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
     public virtual ICollection<WastePlantDailyActivity> WastePlantDailyActivities { get; set; } = new List<WastePlantDailyActivity>();

@@ -33,8 +33,6 @@ public partial class Facility
 
     public virtual EnergyDevelopmentCategoryType? EnergyDevelopmentCategoryType { get; set; }
 
-    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
-
     public virtual ICollection<FacilityDailyActivity> FacilityDailyActivityActivityFacilities { get; set; } = new List<FacilityDailyActivity>();
 
     public virtual ICollection<FacilityDailyActivity> FacilityDailyActivityFacilities { get; set; } = new List<FacilityDailyActivity>();

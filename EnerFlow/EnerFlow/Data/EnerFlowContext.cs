@@ -68,10 +68,6 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes { get; set; }
 
-    public virtual DbSet<Equipment> Equipment { get; set; }
-
-    public virtual DbSet<EquipmentType> EquipmentTypes { get; set; }
-
     public virtual DbSet<ExtensionDefinition> ExtensionDefinitions { get; set; }
 
     public virtual DbSet<Facility> Facilities { get; set; }
@@ -128,6 +124,10 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<LiquidVolumeKfactorUnit> LiquidVolumeKfactorUnits { get; set; }
 
+    public virtual DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
+
+    public virtual DbSet<MaintenanceType> MaintenanceTypes { get; set; }
+
     public virtual DbSet<MassHeatingValueUnit> MassHeatingValueUnits { get; set; }
 
     public virtual DbSet<MassKfactorUnit> MassKfactorUnits { get; set; }
@@ -164,6 +164,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<NozzleType> NozzleTypes { get; set; }
 
+    public virtual DbSet<Observation> Observations { get; set; }
+
     public virtual DbSet<PeriodicGasFlowRecord> PeriodicGasFlowRecords { get; set; }
 
     public virtual DbSet<PeriodicLiquidFlowRecord> PeriodicLiquidFlowRecords { get; set; }
@@ -186,13 +188,13 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<RunSheet> RunSheets { get; set; }
 
-    public virtual DbSet<RunSheetCompressor> RunSheetCompressors { get; set; }
+    public virtual DbSet<RunSheetDailyLog> RunSheetDailyLogs { get; set; }
 
-    public virtual DbSet<RunSheetMeter> RunSheetMeters { get; set; }
+    public virtual DbSet<RunSheetDailyLogEntry> RunSheetDailyLogEntries { get; set; }
 
-    public virtual DbSet<RunSheetPump> RunSheetPumps { get; set; }
+    public virtual DbSet<RunSheetItem> RunSheetItems { get; set; }
 
-    public virtual DbSet<RunSheetTank> RunSheetTanks { get; set; }
+    public virtual DbSet<RunSheetItemCapturePoint> RunSheetItemCapturePoints { get; set; }
 
     public virtual DbSet<SampleType> SampleTypes { get; set; }
 
@@ -1027,45 +1029,6 @@ public partial class EnerFlowContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Description)
                 .HasMaxLength(255)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Equipment>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.DateTimeCreated)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.EquipmentTypeId).HasColumnName("EquipmentTypeID");
-            entity.Property(e => e.FacilityId).HasColumnName("FacilityID");
-            entity.Property(e => e.Flare).HasColumnType("decimal(38, 12)");
-            entity.Property(e => e.Fuel).HasColumnType("decimal(38, 12)");
-            entity.Property(e => e.SatelliteId).HasColumnName("SatelliteID");
-            entity.Property(e => e.Vent).HasColumnType("decimal(38, 12)");
-            entity.Property(e => e.WellId).HasColumnName("WellID");
-
-            entity.HasOne(d => d.EquipmentType).WithMany(p => p.Equipment)
-                .HasForeignKey(d => d.EquipmentTypeId)
-                .HasConstraintName("FK_Equipment_EquipmentTypes");
-
-            entity.HasOne(d => d.Facility).WithMany(p => p.Equipment)
-                .HasForeignKey(d => d.FacilityId)
-                .HasConstraintName("FK_Equipment_Facilities");
-
-            entity.HasOne(d => d.Satellite).WithMany(p => p.Equipment)
-                .HasForeignKey(d => d.SatelliteId)
-                .HasConstraintName("FK_Equipment_Satellites");
-
-            entity.HasOne(d => d.Well).WithMany(p => p.Equipment)
-                .HasForeignKey(d => d.WellId)
-                .HasConstraintName("FK_Equipment_Wells");
-        });
-
-        modelBuilder.Entity<EquipmentType>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(30)
                 .IsUnicode(false);
         });
 
@@ -1914,6 +1877,51 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.UnitId).HasColumnName("UnitID");
         });
 
+        modelBuilder.Entity<MaintenanceRecord>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("ID");
+            entity.Property(e => e.Actions).IsUnicode(false);
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Description).IsUnicode(false);
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.HourlyRate).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.LaborHours).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.MaintenanceTypeId).HasColumnName("MaintenanceTypeID");
+            entity.Property(e => e.MaterialCost).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.NextScheduledDate).HasColumnType("datetime");
+            entity.Property(e => e.PerformedByUserId).HasColumnName("PerformedByUserID");
+            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.TotalCost)
+                .HasComputedColumnSql("([LaborHours]*[HourlyRate]+[MaterialCost])", true)
+                .HasColumnType("decimal(13, 4)");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.MaintenanceRecords)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaintenanceRecords_Hierarchy");
+
+            entity.HasOne(d => d.MaintenanceType).WithMany(p => p.MaintenanceRecords)
+                .HasForeignKey(d => d.MaintenanceTypeId)
+                .HasConstraintName("FK_MaintenanceRecords_MaintenanceTypes");
+        });
+
+        modelBuilder.Entity<MaintenanceType>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<MassHeatingValueUnit>(entity =>
         {
             entity.Property(e => e.Id)
@@ -2623,6 +2631,25 @@ public partial class EnerFlowContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Observation>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Notes).IsUnicode(false);
+            entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
+            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.RunSheet).WithMany(p => p.Observations)
+                .HasForeignKey(d => d.RunSheetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Observations_RunSheets");
+        });
+
         modelBuilder.Entity<PeriodicGasFlowRecord>(entity =>
         {
             entity.HasKey(e => new { e.MeterId, e.TimeStamp, e.Duration, e.RecordIndex });
@@ -2881,98 +2908,112 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.Description)
-                .HasMaxLength(128)
-                .IsUnicode(false);
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(64)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.Hierarchy).WithMany(p => p.RunSheets)
                 .HasForeignKey(d => d.HierarchyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RunSheets_Hierarchy");
+
+            entity.HasMany(d => d.Users).WithMany(p => p.RunSheets)
+                .UsingEntity<Dictionary<string, object>>(
+                    "RunSheetUser",
+                    r => r.HasOne<User>().WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_RunSheetUsers_Users"),
+                    l => l.HasOne<RunSheet>().WithMany()
+                        .HasForeignKey("RunSheetId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_RunSheetUsers_RunSheets"),
+                    j =>
+                    {
+                        j.HasKey("RunSheetId", "UserId");
+                        j.ToTable("RunSheetUsers");
+                        j.IndexerProperty<int>("RunSheetId").HasColumnName("RunSheetID");
+                        j.IndexerProperty<int>("UserId").HasColumnName("UserID");
+                    });
         });
 
-        modelBuilder.Entity<RunSheetCompressor>(entity =>
+        modelBuilder.Entity<RunSheetDailyLog>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.CompressorId });
-
-            entity.HasIndex(e => new { e.RunSheetId, e.CompressorId, e.Ordinal }, "IX_RunSheetCompressors").IsUnique();
+            entity.HasKey(e => new { e.RunSheetId, e.TimeStamp });
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
-            entity.Property(e => e.CompressorId).HasColumnName("CompressorID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
 
-            entity.HasOne(d => d.Compressor).WithMany(p => p.RunSheetCompressors)
-                .HasForeignKey(d => d.CompressorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetCompressors_Compressors");
-
-            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetCompressors)
+            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetDailyLogs)
                 .HasForeignKey(d => d.RunSheetId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetCompressors_RunSheets");
+                .HasConstraintName("FK_RunSheetDailyLogs_RunSheets");
         });
 
-        modelBuilder.Entity<RunSheetMeter>(entity =>
+        modelBuilder.Entity<RunSheetDailyLogEntry>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.MeterId });
-
-            entity.HasIndex(e => new { e.RunSheetId, e.MeterId, e.Ordinal }, "IX_RunSheetMeters").IsUnique();
+            entity.HasKey(e => new { e.RunSheetId, e.TimeStamp, e.HierarchyId, e.PropertyName });
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
-            entity.Property(e => e.MeterId).HasColumnName("MeterID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.PropertyName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.StringValue)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.Meter).WithMany(p => p.RunSheetMeters)
-                .HasForeignKey(d => d.MeterId)
+            entity.HasOne(d => d.RunSheetDailyLog).WithMany(p => p.RunSheetDailyLogEntries)
+                .HasForeignKey(d => new { d.RunSheetId, d.TimeStamp })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetMeters_Meters");
+                .HasConstraintName("FK_RunSheetDailyLogEntries_RunSheetDailyLogs");
 
-            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetMeters)
-                .HasForeignKey(d => d.RunSheetId)
+            entity.HasOne(d => d.RunSheetItemCapturePoint).WithMany(p => p.RunSheetDailyLogEntries)
+                .HasForeignKey(d => new { d.RunSheetId, d.HierarchyId, d.PropertyName })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetMeters_RunSheets");
+                .HasConstraintName("FK_RunSheetDailyLogEntries_RunSheetItemCapturePoints");
         });
 
-        modelBuilder.Entity<RunSheetPump>(entity =>
+        modelBuilder.Entity<RunSheetItem>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.PumpId });
+            entity.HasKey(e => new { e.RunSheetId, e.HierarchyId });
 
-            entity.HasIndex(e => new { e.RunSheetId, e.PumpId, e.Ordinal }, "IX_RunSheetPumps").IsUnique();
+            entity.HasIndex(e => new { e.RunSheetId, e.HierarchyId, e.Ordinal }, "IX_RunSheetItems").IsUnique();
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
-            entity.Property(e => e.PumpId).HasColumnName("PumpID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
 
-            entity.HasOne(d => d.Pump).WithMany(p => p.RunSheetPumps)
-                .HasForeignKey(d => d.PumpId)
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.RunSheetItems)
+                .HasForeignKey(d => d.HierarchyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetPumps_Pumps");
+                .HasConstraintName("FK_RunSheetItems_Hierarchy");
 
-            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetPumps)
+            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetItems)
                 .HasForeignKey(d => d.RunSheetId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetPumps_RunSheets");
+                .HasConstraintName("FK_RunSheetItems_RunSheets");
         });
 
-        modelBuilder.Entity<RunSheetTank>(entity =>
+        modelBuilder.Entity<RunSheetItemCapturePoint>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.TankId });
+            entity.HasKey(e => new { e.RunSheetId, e.HierarchyId, e.PropertyName }).HasName("PK_RunSheetItemCapturePoints_1");
 
-            entity.HasIndex(e => new { e.RunSheetId, e.TankId, e.Ordinal }, "IX_RunSheetTanks").IsUnique();
+            entity.HasIndex(e => new { e.RunSheetId, e.HierarchyId, e.PropertyName, e.Ordinal }, "IX_RunSheetItemCapturePoints").IsUnique();
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
-            entity.Property(e => e.TankId).HasColumnName("TankID");
+            entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.PropertyName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
 
-            entity.HasOne(d => d.RunSheet).WithMany(p => p.RunSheetTanks)
-                .HasForeignKey(d => d.RunSheetId)
+            entity.HasOne(d => d.RunSheetItem).WithMany(p => p.RunSheetItemCapturePoints)
+                .HasForeignKey(d => new { d.RunSheetId, d.HierarchyId })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetTanks_RunSheets");
-
-            entity.HasOne(d => d.Tank).WithMany(p => p.RunSheetTanks)
-                .HasForeignKey(d => d.TankId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetTanks_Tanks");
+                .HasConstraintName("FK_RunSheetItemCapturePoints_RunSheetItems");
         });
 
         modelBuilder.Entity<SampleType>(entity =>
@@ -3851,6 +3892,9 @@ public partial class EnerFlowContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.FullName)
                 .HasMaxLength(255)
                 .IsUnicode(false);

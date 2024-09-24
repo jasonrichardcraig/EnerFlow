@@ -51,7 +51,5 @@ public partial class Meter
 
     public virtual ICollection<PeriodicLiquidFlowRecord> PeriodicLiquidFlowRecords { get; set; } = new List<PeriodicLiquidFlowRecord>();
 
-    public virtual ICollection<RunSheetMeter> RunSheetMeters { get; set; } = new List<RunSheetMeter>();
-
     public virtual ICollection<UltrasonicDiagnosticHistory> UltrasonicDiagnosticHistories { get; set; } = new List<UltrasonicDiagnosticHistory>();
 }

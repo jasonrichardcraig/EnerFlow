@@ -21,8 +21,6 @@ public partial class Tank
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
-    public virtual ICollection<RunSheetTank> RunSheetTanks { get; set; } = new List<RunSheetTank>();
-
     public virtual ICollection<TankDailyTransaction> TankDailyTransactions { get; set; } = new List<TankDailyTransaction>();
 
     public virtual TankType TankType { get; set; } = null!;

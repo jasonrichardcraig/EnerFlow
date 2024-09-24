@@ -15,11 +15,13 @@ public partial class User
 
     public bool IsSystemAdministrator { get; set; }
 
-    public bool CanConfigure { get; set; }
+    public DateTime DateTimeCreated { get; set; }
 
     public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
     public virtual ICollection<MeterException> MeterExceptions { get; set; } = new List<MeterException>();
 
     public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
+
+    public virtual ICollection<RunSheet> RunSheets { get; set; } = new List<RunSheet>();
 }
