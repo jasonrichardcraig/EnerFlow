@@ -238,27 +238,27 @@ namespace EnerFlow.ViewModels
 
                 if (TreeMode == TreeMode.Map && SelectedHierarchyViewModel.Hierarchy.Latitude != null && SelectedHierarchyViewModel.Hierarchy.Longitude != null && SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel != null)
                 {
-                    switch ((HierarchyNodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                    switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
                     {
-                        case HierarchyNodeType.System:
-                        case HierarchyNodeType.Company:
-                        case HierarchyNodeType.District:
-                        case HierarchyNodeType.Area:
-                        case HierarchyNodeType.Field:
+                        case NodeType.System:
+                        case NodeType.Company:
+                        case NodeType.District:
+                        case NodeType.Area:
+                        case NodeType.Field:
                             _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
                             break;
-                        case HierarchyNodeType.Facility:
+                        case NodeType.Facility:
                             _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
                             _executeMapScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
                             break;
                     }
                 }
 
-                switch ((HierarchyNodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
                 {
-                    case HierarchyNodeType.System:
+                    case NodeType.System:
                         break;
-                    case HierarchyNodeType.Company:
+                    case NodeType.Company:
                         break;
                 }
             }

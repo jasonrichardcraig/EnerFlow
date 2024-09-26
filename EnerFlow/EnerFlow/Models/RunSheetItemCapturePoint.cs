@@ -9,11 +9,11 @@ public partial class RunSheetItemCapturePoint
 
     public int HierarchyId { get; set; }
 
-    public string PropertyName { get; set; } = null!;
+    public int NodeTypeDailyLogPropertyId { get; set; }
 
     public int? Ordinal { get; set; }
 
-    public virtual ICollection<RunSheetDailyLogEntry> RunSheetDailyLogEntries { get; set; } = new List<RunSheetDailyLogEntry>();
+    public virtual NodeTypeDailyLogProperty NodeTypeDailyLogProperty { get; set; } = null!;
 
     public virtual RunSheetItem RunSheetItem { get; set; } = null!;
 }

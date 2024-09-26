@@ -162,6 +162,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<NodeType> NodeTypes { get; set; }
 
+    public virtual DbSet<NodeTypeDailyLogProperty> NodeTypeDailyLogProperties { get; set; }
+
     public virtual DbSet<NozzleType> NozzleTypes { get; set; }
 
     public virtual DbSet<Observation> Observations { get; set; }
@@ -2615,10 +2617,31 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<NodeType>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<NodeTypeDailyLogProperty>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
+            entity.Property(e => e.EntityName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.NodeTypeId).HasColumnName("NodeTypeID");
+            entity.Property(e => e.PropertyName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.NodeType).WithMany(p => p.NodeTypeDailyLogProperties)
+                .HasForeignKey(d => d.NodeTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NodeTypeDailyLogProperties_NodeTypes");
         });
 
         modelBuilder.Entity<NozzleType>(entity =>
@@ -2952,30 +2975,31 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<RunSheetDailyLogEntry>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.TimeStamp, e.HierarchyId, e.PropertyName });
+            entity.HasKey(e => new { e.RunSheetId, e.TimeStamp, e.HierarchyId, e.NodeTypeDailyLogPropertyId });
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
-            entity.Property(e => e.PropertyName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.NodeTypeDailyLogPropertyId).HasColumnName("NodeTypeDailyLogPropertyID");
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.StringValue)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.Value).HasColumnType("sql_variant");
+
+            entity.HasOne(d => d.Hierarchy).WithMany(p => p.RunSheetDailyLogEntries)
+                .HasForeignKey(d => d.HierarchyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RunSheetDailyLogEntries_Hierarchy");
+
+            entity.HasOne(d => d.NodeTypeDailyLogProperty).WithMany(p => p.RunSheetDailyLogEntries)
+                .HasForeignKey(d => d.NodeTypeDailyLogPropertyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RunSheetDailyLogEntries_NodeTypeDailyLogProperties");
 
             entity.HasOne(d => d.RunSheetDailyLog).WithMany(p => p.RunSheetDailyLogEntries)
                 .HasForeignKey(d => new { d.RunSheetId, d.TimeStamp })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RunSheetDailyLogEntries_RunSheetDailyLogs");
-
-            entity.HasOne(d => d.RunSheetItemCapturePoint).WithMany(p => p.RunSheetDailyLogEntries)
-                .HasForeignKey(d => new { d.RunSheetId, d.HierarchyId, d.PropertyName })
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RunSheetDailyLogEntries_RunSheetItemCapturePoints");
         });
 
         modelBuilder.Entity<RunSheetItem>(entity =>
@@ -3000,15 +3024,18 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<RunSheetItemCapturePoint>(entity =>
         {
-            entity.HasKey(e => new { e.RunSheetId, e.HierarchyId, e.PropertyName }).HasName("PK_RunSheetItemCapturePoints_1");
+            entity.HasKey(e => new { e.RunSheetId, e.HierarchyId, e.NodeTypeDailyLogPropertyId });
 
-            entity.HasIndex(e => new { e.RunSheetId, e.HierarchyId, e.PropertyName, e.Ordinal }, "IX_RunSheetItemCapturePoints").IsUnique();
+            entity.HasIndex(e => new { e.RunSheetId, e.HierarchyId, e.NodeTypeDailyLogPropertyId, e.Ordinal }, "IX_RunSheetItemCapturePoints").IsUnique();
 
             entity.Property(e => e.RunSheetId).HasColumnName("RunSheetID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
-            entity.Property(e => e.PropertyName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.NodeTypeDailyLogPropertyId).HasColumnName("NodeTypeDailyLogPropertyID");
+
+            entity.HasOne(d => d.NodeTypeDailyLogProperty).WithMany(p => p.RunSheetItemCapturePoints)
+                .HasForeignKey(d => d.NodeTypeDailyLogPropertyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RunSheetItemCapturePoints_NodeTypeDailyLogProperties");
 
             entity.HasOne(d => d.RunSheetItem).WithMany(p => p.RunSheetItemCapturePoints)
                 .HasForeignKey(d => new { d.RunSheetId, d.HierarchyId })

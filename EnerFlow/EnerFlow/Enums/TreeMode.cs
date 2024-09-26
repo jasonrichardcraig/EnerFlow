@@ -4,7 +4,9 @@
     {
         None,
         Map,
+        Hmi,
+        DataEntry,
         Setup,
-        DataEntry
+        
     }
 }

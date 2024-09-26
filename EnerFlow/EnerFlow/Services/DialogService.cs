@@ -65,7 +65,7 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 companyHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, HierarchyNodeType.Company);
+                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, Enums.NodeType.Company);
                 _mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
             }
         }
@@ -88,7 +88,7 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 districtHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, HierarchyNodeType.District);
+                _dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, Enums.NodeType.District);
                 companyHierarchyViewModel.Children.Add(districtHierarchyViewModel);
             }
         }
@@ -111,7 +111,7 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 areaHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, HierarchyNodeType.Area);
+                _dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, Enums.NodeType.Area);
                 districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
             }
         }
@@ -134,7 +134,7 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 fieldHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, HierarchyNodeType.Field);
+                _dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, Enums.NodeType.Field);
                 areaHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
             }
         }
@@ -159,7 +159,7 @@ namespace EnerFlow.Services
             {
                 facilityHierarchyViewModel.DisableAutoSave = false;
                 _dataService.Context.Facilities.Add(facility);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, HierarchyNodeType.Facility);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, Enums.NodeType.Facility);
                 parentHierarchyViewModel.Children.Add(facilityHierarchyViewModel);
             }
         }
@@ -184,8 +184,33 @@ namespace EnerFlow.Services
             {
                 wellHierarchyViewModel.DisableAutoSave = false;
                 _dataService.Context.Wells.Add(well);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, HierarchyNodeType.Well);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, Enums.NodeType.Well);
                 parentHierarchyViewModel.Children.Add(wellHierarchyViewModel);
+            }
+        }
+
+        public void ShowNewRunSheetDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var runSheet = new RunSheet();
+            var runSheetViewModel = new RunSheetViewModel(parentHierarchyViewModel, new Hierarchy(), runSheet)
+            {
+                Name = "New Run Sheet",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewRunSheetDialog()
+            {
+                DataContext = runSheetViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                runSheetViewModel.DisableAutoSave = false;
+                _dataService.Context.RunSheets.Add(runSheet);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, runSheetViewModel.Hierarchy, Enums.NodeType.RunSheet);
+                parentHierarchyViewModel.Children.Add(runSheetViewModel);
             }
         }
 
@@ -203,44 +228,44 @@ namespace EnerFlow.Services
                 return;
             }
 
-            switch ((HierarchyNodeType)hierarchyViewModel.Hierarchy.NodeTypeId)
+            switch ((Enums.NodeType)hierarchyViewModel.Hierarchy.NodeTypeId)
             {
-                case HierarchyNodeType.Company:
+                case Enums.NodeType.Company:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Company?", "Delete Company"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case HierarchyNodeType.District:
+                case Enums.NodeType.District:
                     if (ShowConfirmationDialog("Are you sure you want to delete this District?", "Delete District"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case HierarchyNodeType.Area:
+                case Enums.NodeType.Area:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Area?", "Delete Area"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case HierarchyNodeType.Field:
+                case Enums.NodeType.Field:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Field?", "Delete Field"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case HierarchyNodeType.Facility:
+                case Enums.NodeType.Facility:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Facility?", "Delete Facility"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case HierarchyNodeType.Well:
+                case Enums.NodeType.Well:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Well?", "Delete Well"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);

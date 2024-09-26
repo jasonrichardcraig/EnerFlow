@@ -58,7 +58,7 @@ namespace EnerFlow.Services
         /// </summary>
         /// <param name="parentHierarchy">The parent hierarchy.</param>
         /// <param name="newHierarchy">The new hierarchy to add.</param>
-        public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, HierarchyNodeType hierarchyNodeType)
+        public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.NodeType hierarchyNodeType)
         {
             var lastChild = Context.Hierarchies
                 .Where(n => n.Node.IsDescendantOf(parentHierarchy.Node))
@@ -83,45 +83,45 @@ namespace EnerFlow.Services
             {
                 var hierarchyId = hierarchy.Id;
 
-                switch ((HierarchyNodeType)hierarchy.NodeTypeId)
+                switch ((Enums.NodeType)hierarchy.NodeTypeId)
                 {
-                    case HierarchyNodeType.Facility:
+                    case Enums.NodeType.Facility:
                         Context.Facilities.Remove(Context.Facilities.First(f => f.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.Well:
+                    case Enums.NodeType.Well:
                         Context.Wells.Remove(Context.Wells.First(w => w.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.RunSheet:
+                    case Enums.NodeType.RunSheet:
                         Context.RunSheets.Remove(Context.RunSheets.First(r => r.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.ContextTag:
+                    case Enums.NodeType.ContextTag:
                         Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.SerialPortChannelTag:
+                    case Enums.NodeType.SerialPortChannelTag:
                         Context.SerialChannelTags.Remove(Context.SerialChannelTags.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.IpChannelTag:
+                    case Enums.NodeType.IpChannelTag:
                         Context.IpChannelTags.Remove(Context.IpChannelTags.First(i => i.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.DeviceTag:
+                    case Enums.NodeType.DeviceTag:
                         Context.DeviceTags.Remove(Context.DeviceTags.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.AnalogIoTag:
+                    case Enums.NodeType.AnalogIoTag:
                         Context.AnalogIoTags.Remove(Context.AnalogIoTags.First(a => a.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.DigitalIoTag:
+                    case Enums.NodeType.DigitalIoTag:
                         Context.DigitalIoTags.Remove(Context.DigitalIoTags.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.StringIoTag:
+                    case Enums.NodeType.StringIoTag:
                         Context.StringTags.Remove(Context.StringTags.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.Screen:
+                    case Enums.NodeType.Screen:
                         Context.Screens.Remove(Context.Screens.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.Diagram:
+                    case Enums.NodeType.Diagram:
                         Context.Diagrams.Remove(Context.Diagrams.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case HierarchyNodeType.Document:
+                    case Enums.NodeType.Document:
                         Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
                         break;
                 }

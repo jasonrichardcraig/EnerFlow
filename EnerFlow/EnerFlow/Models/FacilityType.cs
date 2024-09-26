@@ -11,5 +11,5 @@ public partial class FacilityType
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<FacilitySubType> FacilitySubTypes { get; set; } = new List<FacilitySubType>();
+    public virtual ICollection<FacilitySubType> FacilitySubTypes { get; set; } = [];
 }

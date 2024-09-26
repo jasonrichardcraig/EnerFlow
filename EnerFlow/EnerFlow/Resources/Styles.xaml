@@ -19,6 +19,9 @@
 
     <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
 
+    <converters:FacilityTypeConverter x:Key="FacilityTypeConverter"/>
+
+
     <ControlTemplate x:Key="TextBoxValidationErrorTemplate">
         <DockPanel LastChildFill="True">
             <!-- Error Message -->
@@ -56,6 +59,66 @@
                 <Setter Property="BorderThickness"
                         Value="2" />
             </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FacilityTreeItemImageStyle" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=0}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=1}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=2}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=3}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=4}" Value="True">
+                <Setter Property="Source" Value="/Images/Pipeline_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=5}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=6}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=7}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=8}" Value="True">
+                <Setter Property="Source" Value="/Images/Pipeline_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=9}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=10}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=11}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DisabledImageStyle" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
@@ -203,7 +266,8 @@
     <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate"
                               DataType="{x:Type viewmodels:HierarchyViewModel}"
                               ItemsSource="{Binding Children}">
-        <Image Height="16"
+        <Image Style="{StaticResource DisabledImageStyle}"
+               Height="16"
                Width="16"
                Margin="0,0,4,0"
                Source="/Images/System.png"
@@ -279,11 +343,13 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
                    Width="16"
                    Margin="0,0,4,0"
                    Source="/Images/Company_16x16.png"/>
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
@@ -331,11 +397,14 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
                    Width="16"
                    Margin="0,0,4,0"
                    Source="/Images/District.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
@@ -382,11 +451,13 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
                    Width="16"
                    Margin="0,0,4,0"
                    Source="/Images/Area.png"/>
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
@@ -404,6 +475,14 @@
                             <Image Height="16"
                                    Width="16"
                                    Source="/Images/Facilities_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Add Run Sheet"
+                              Command="{Binding AddNewRunSheetCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Runs_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Delete Field"
@@ -434,11 +513,13 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
                    Width="16"
                    Margin="0,0,4,0"
                    Source="/Images/Field.png"/>
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
@@ -501,11 +582,12 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource FacilityTreeItemImageStyle}"
+                   Height="16"
                    Width="16"
-                   Margin="0,0,4,0"
-                   Source="/Images/Facilities_16x16.png"/>
-            <TextBlock Text="{Binding Name}"
+                   Margin="0,0,4,0" />
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
@@ -530,7 +612,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Delete Facility"
+                    <MenuItem Header="Delete Well"
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -558,11 +640,13 @@
                        Foreground="Red"
                        ToolTip="Disabled"
                        Visibility="{Binding IsDisabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Height="16"
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
                    Width="16"
                    Margin="0,0,4,0"
                    Source="/Images/Wells_16x16.png"/>
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
@@ -704,10 +788,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RunSheetTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Runs_16x16.png"/>
-            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-        </StackPanel>
+        <setupusercontrols:RunSheetControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="ContextTagTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -787,6 +868,7 @@
                                                      AreaTemplate="{StaticResource AreaTabDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTabDataTemplate}"
                                                      FacilityTemplate="{StaticResource FacilityTabDataTemplate}"
+                                                     
                                                      WellTemplate="{StaticResource WellTabDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTabDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTabDataTemplate}"

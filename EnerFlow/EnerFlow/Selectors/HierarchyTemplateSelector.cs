@@ -1,5 +1,7 @@
 ﻿using EnerFlow.Enums;
 using EnerFlow.ViewModels;
+using Microsoft.Identity.Client.NativeInterop;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,6 +42,11 @@ namespace EnerFlow.Selectors
         /// Gets or sets the DataTemplate for the Facility node type.
         /// </summary>
         public DataTemplate? FacilityTemplate { get; set; }
+
+        ///// <summary>
+        ///// Gets or sets the DataTemplate for the Facility node type with a facility subtype of pipeline.
+        ///// </summary>
+        //public DataTemplate? PipelineFacilityTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the DataTemplate for the Well node type.
@@ -116,26 +123,26 @@ namespace EnerFlow.Selectors
                 return base.SelectTemplate(item, container);
             }
 
-            return (HierarchyNodeType)hierarchyViewModel.Hierarchy.NodeTypeId switch
+            return (NodeType)hierarchyViewModel.Hierarchy.NodeTypeId switch
             {
-                HierarchyNodeType.System => SystemTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Company => CompanyTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.District => DistrictTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Area => AreaTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Field => FieldTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Facility => FacilityTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Well => WellTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.RunSheet => RunSheetTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.ContextTag => ContextTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.SerialPortChannelTag => SerialPortChannelTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.IpChannelTag => IpChannelTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.DeviceTag => DeviceTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.AnalogIoTag => AnalogIoTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.DigitalIoTag => DigitalIoTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.StringIoTag => StringIoTagTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Screen => ScreenTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Diagram => DiagramTemplate ?? base.SelectTemplate(item, container),
-                HierarchyNodeType.Document => DocumentTemplate ?? base.SelectTemplate(item, container),
+                NodeType.System => SystemTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Company => CompanyTemplate ?? base.SelectTemplate(item, container),
+                NodeType.District => DistrictTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Area => AreaTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Field => FieldTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Facility => FacilityTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Well => WellTemplate ?? base.SelectTemplate(item, container),
+                NodeType.RunSheet => RunSheetTemplate ?? base.SelectTemplate(item, container),
+                NodeType.ContextTag => ContextTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.SerialPortChannelTag => SerialPortChannelTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.IpChannelTag => IpChannelTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.DeviceTag => DeviceTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.AnalogIoTag => AnalogIoTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.DigitalIoTag => DigitalIoTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.StringIoTag => StringIoTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Screen => ScreenTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Diagram => DiagramTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Document => DocumentTemplate ?? base.SelectTemplate(item, container),
                 _ => base.SelectTemplate(item, container),
             };
         }

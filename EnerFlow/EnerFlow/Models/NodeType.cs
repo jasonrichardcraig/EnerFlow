@@ -5,9 +5,11 @@ namespace EnerFlow.Models;
 
 public partial class NodeType
 {
-    public byte Id { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Hierarchy> Hierarchies { get; set; } = new List<Hierarchy>();
+
+    public virtual ICollection<NodeTypeDailyLogProperty> NodeTypeDailyLogProperties { get; set; } = new List<NodeTypeDailyLogProperty>();
 }

@@ -36,17 +36,16 @@ namespace EnerFlow.ViewModels
                 {
                     ValidateProperty(value, nameof(SelectedFacilityType));
 
-                    if (!HasErrors)
+                    var errors = GetErrors(nameof(SelectedFacilityType));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
                         _selectdFacilityType = value;
                         OnPropertyChanged();
+                        FacilitySubType = _selectdFacilityType.FacilitySubTypes.FirstOrDefault();
                     }
-
                 }
             }
         }
-
-        public FacilityType? FacilityType => _facility.FacilitySubType?.FacilityType;
 
         public FacilitySubType? FacilitySubType
         {
@@ -64,6 +63,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -85,6 +85,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -109,6 +110,7 @@ namespace EnerFlow.ViewModels
                             {
                                 _dataService.Context.SaveChanges();
                             }
+                            OnPropertyChanged();
                         }
                     }
                 }
@@ -132,6 +134,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -154,6 +157,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -176,6 +180,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -198,6 +203,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -220,6 +226,7 @@ namespace EnerFlow.ViewModels
                         {
                             _dataService.Context.SaveChanges();
                         }
+                        OnPropertyChanged();
                     }
                 }
             }
@@ -240,7 +247,10 @@ namespace EnerFlow.ViewModels
                     if(!HasErrors)
                     {
                         _facility.WasteLocationType = value;
-                        _dataService.Context.SaveChanges();
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
                         OnPropertyChanged();
                     }
 

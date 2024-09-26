@@ -26,7 +26,7 @@ namespace EnerFlow.ViewModels
 
 
         [MaxLength(128)]
-        public string FormattedUwi
+        public string? FormattedUwi
         {
             get => _well.FormattedUwi;
             set
@@ -51,7 +51,7 @@ namespace EnerFlow.ViewModels
         }
 
         [MaxLength(128)]
-        public string UnformattedUwi
+        public string? UnformattedUwi
         {
             get => _well.UnformattedUwi;
             set

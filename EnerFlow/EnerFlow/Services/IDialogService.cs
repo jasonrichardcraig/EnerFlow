@@ -15,6 +15,7 @@ namespace EnerFlow.Services
         void ShowNewFieldDialog(HierarchyViewModel areaHierarchyViewModel);
         void ShowNewFacilityDialog(HierarchyViewModel parentHierarchyViewModel);
         void ShowNewWellDialog(HierarchyViewModel parentHierarchyViewModel);
+        void ShowNewRunSheetDialog(HierarchyViewModel parentHierarchyViewModel);
         void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel);
     }
 

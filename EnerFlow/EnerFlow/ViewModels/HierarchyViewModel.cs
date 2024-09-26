@@ -4,6 +4,7 @@ using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.CodeDom;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
@@ -40,6 +41,7 @@ namespace EnerFlow.ViewModels
             AddNewFieldCommand = new RelayCommand(AddNewField, CanAddNewItem);
             AddNewFacilityCommand = new RelayCommand(AddNewFacility, CanAddNewItem);
             AddNewWellCommand = new RelayCommand(AddNewWell, CanAddNewItem);
+            AddNewRunSheetCommand = new RelayCommand(AddNewRunSheet, CanAddNewItem);
             DeleteCommand = new RelayCommand(Delete, CanDelete);
 
             _children.CollectionChanged += Children_CollectionChanged;
@@ -85,6 +87,27 @@ namespace EnerFlow.ViewModels
                 {
                     _isExpanded = value;
                     OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsDisabled
+        {
+            get => _hierarchy.IsDisabled || (_parentHierarchyViewModel?.IsDisabled ?? false);
+            set
+            {
+                if (_hierarchy.IsDisabled != value)
+                {
+                    if (!HasErrors)
+                    {
+                        _hierarchy.IsDisabled = value;
+                        if (!DisableAutoSave)
+                        {
+                            _dataService.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                        OnIsDisabledChanged();
+                    }
                 }
             }
         }
@@ -183,7 +206,7 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        [Range(0,19)]
+        [Range(0, 19)]
         public int? DefaultZoomLevel
         {
             get => _hierarchy.DefaultZoomLevel;
@@ -208,27 +231,6 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool IsDisabled
-        {
-            get => _hierarchy.IsDisabled;
-            set
-            {
-                if (_hierarchy.IsDisabled != value)
-                {
-                    if (!HasErrors)
-                    {
-                        _hierarchy.IsDisabled = value;
-                        if (!DisableAutoSave)
-                        {
-                            _dataService.Context.SaveChanges();
-                        }
-                        OnPropertyChanged();
-                    }
-
-                }
-            }
-        }
-
         public ICommand RefreshCommand { get; }
 
         public ICommand AddNewCompanyCommand { get; }
@@ -242,6 +244,8 @@ namespace EnerFlow.ViewModels
         public ICommand AddNewFacilityCommand { get; }
 
         public ICommand AddNewWellCommand { get; }
+
+        public ICommand AddNewRunSheetCommand { get; }
 
         public ICommand DeleteCommand { get; }
 
@@ -261,17 +265,26 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-            foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
+            if (!IsDisabled)
             {
-
-                switch (hierarchy.NodeTypeId)
+                foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
                 {
-                    case (byte)HierarchyNodeType.Facility:
-                        _children.Add(new FacilityViewModel(this, hierarchy));
-                        break;
-                    default:
-                        _children.Add(new HierarchyViewModel(this, hierarchy));
-                        break;
+
+                    switch (hierarchy.NodeTypeId)
+                    {
+                        case (int)Enums.NodeType.Facility:
+                            _children.Add(new FacilityViewModel(this, hierarchy));
+                            break;
+                        case (int)Enums.NodeType.Well:
+                            _children.Add(new WellViewModel(this, hierarchy));
+                            break;
+                        case (int)Enums.NodeType.RunSheet:
+                            _children.Add(new RunSheetViewModel(this, hierarchy));
+                            break;
+                        default:
+                            _children.Add(new HierarchyViewModel(this, hierarchy));
+                            break;
+                    }
                 }
             }
         }
@@ -300,6 +313,18 @@ namespace EnerFlow.ViewModels
                     break;
             }
 
+        }
+
+        private void OnIsDisabledChanged()
+        {
+            if (IsDisabled)
+            {
+                Children.Clear();
+            }
+            else
+            {
+                LoadChildren();
+            }
         }
 
         private bool CanAddNewItem()
@@ -334,6 +359,11 @@ namespace EnerFlow.ViewModels
         private void AddNewWell()
         {
             _dialogService?.ShowNewWellDialog(this);
+        }
+
+        private void AddNewRunSheet()
+        {
+            _dialogService?.ShowNewRunSheetDialog(this);
         }
 
         private void Refresh()

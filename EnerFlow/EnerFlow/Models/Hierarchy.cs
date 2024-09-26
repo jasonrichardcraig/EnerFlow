@@ -22,7 +22,7 @@ public partial class Hierarchy
 
     public int? DefaultZoomLevel { get; set; }
 
-    public byte NodeTypeId { get; set; }
+    public int NodeTypeId { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
 
@@ -49,6 +49,8 @@ public partial class Hierarchy
     public virtual NodeType NodeType { get; set; } = null!;
 
     public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
+
+    public virtual ICollection<RunSheetDailyLogEntry> RunSheetDailyLogEntries { get; set; } = new List<RunSheetDailyLogEntry>();
 
     public virtual ICollection<RunSheetItem> RunSheetItems { get; set; } = new List<RunSheetItem>();
 
