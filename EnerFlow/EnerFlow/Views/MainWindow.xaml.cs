@@ -15,10 +15,13 @@ namespace EnerFlow.Views
     {
         public MainWindow()
         {
+
+            InitializeComponent();
+
             // Resolve the MainViewModel
             var mainViewModel = (App.ServiceProvider?.GetService<MainViewModel>()) ?? throw new InvalidOperationException("Failed to resolve MainViewModel.");
 
-            InitializeComponent();
+            
 
             DataContext = mainViewModel;
 

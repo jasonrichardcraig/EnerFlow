@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        xmlns:local="clr-namespace:EnerFlow" xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        xmlns:local="clr-namespace:EnerFlow"
+        xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Height="450" Width="800" Title="EnerFlow" Icon="\Images\EF_Icon.png" Loaded="Window_Loaded">
     <busyIndicator:BusyMask x:Name="BusyIndicator"
@@ -21,11 +23,11 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="120" Width="240"/>
+                    <ColumnDefinition MinWidth="120"
+                                      Width="240"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="24"/>
@@ -44,9 +46,21 @@
                         <MenuItem Header="_Paste"/>
                     </MenuItem>
                     <MenuItem Header="_View">
-                        <MenuItem Header="_Map"/>
-                        <MenuItem Header="_Setup"/>
-                        <MenuItem Header="_Data Entry"/>
+                        <MenuItem Header="_Map" 
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}"/>
+                        <MenuItem Header="_Data Entry"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}"/>
+                        <MenuItem Header="_SCADA"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}"/>
+                        <MenuItem Header="_Data Entry"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}"/>
+                        <MenuItem Header="_Setup"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
                         <MenuItem Header="_About"/>
@@ -54,17 +68,13 @@
                     <MenuItem Header="_Search">
                     </MenuItem>
                 </Menu>
-                <ToolBar Grid.Row="1" Grid.ColumnSpan="2" >
-                    <DatePicker IsEnabled="{Binding ElementName=DataEntryTab, Path=IsSelected}" SelectedDateFormat="Long" SelectedDate="{Binding SelectedDate}" DisplayDateEnd="{Binding DisplayDateEnd}" Margin="4,0,4,0" />
-                    <Separator/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <RadioButton Margin="4,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}">Map</RadioButton>
-                        <RadioButton Margin="0,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}">HMI</RadioButton>
-                        <RadioButton Margin="0,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}">Setup</RadioButton>
-                        <RadioButton Margin="0,0,4,0" IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=DataEntry}">Data Entry</RadioButton>
-                    </StackPanel>
-                </ToolBar>
-                <TreeView x:Name="NavigationTreeView" Grid.Row="2" Grid.Column="0" SelectedItemChanged="NavigationTreeView_SelectedItemChanged" ItemsSource="{Binding SystemHierarchyViewModel, Converter={StaticResource SystemTreeViewItemSourceConverter}}" ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
+
+                <TreeView x:Name="NavigationTreeView"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          SelectedItemChanged="NavigationTreeView_SelectedItemChanged"
+                          ItemsSource="{Binding SystemHierarchyViewModel, Converter={StaticResource SystemTreeViewItemSourceConverter}}"
+                          ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
                     <TreeView.Resources>
                         <Style TargetType="TreeViewItem">
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
@@ -72,17 +82,34 @@
                         </Style>
                     </TreeView.Resources>
                 </TreeView>
-                <GridSplitter Grid.Row="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5"/>
-                <TabControl x:Name="MainTabControl" Grid.Row="2" Grid.Column="1" SelectedIndex="{Binding SelectedTabIndex}">
-                    <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}" Visibility="{Binding ShowMapTab, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <wv2:WebView2 x:Name="MapWebView" NavigationCompleted="MapWebView_NavigationCompleted" WebMessageReceived="MapWebView_WebMessageReceived" Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+                <GridSplitter Grid.Row="1"
+                              Grid.Column="0"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Right"
+                              Width="5"/>
+                <TabControl x:Name="MainTabControl" 
+                            Style="{StaticResource NoHeaderTabControl}"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            SelectedIndex="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}}">
+                    <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}"
+                             Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
+                        <wv2:WebView2 x:Name="MapWebView"
+                                      NavigationCompleted="MapWebView_NavigationCompleted"
+                                      WebMessageReceived="MapWebView_WebMessageReceived"
+                                      Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
                     </TabItem>
-                    <TabItem Content="{Binding SelectedHierarchyViewModel}" ContentTemplateSelector="{StaticResource SetupTabTemplateSelector}" HeaderTemplate="{StaticResource SetupTabHeaderDataTemplate}" Visibility="{Binding ShowSetupTab, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    </TabItem>
-                    <TabItem x:Name="DataEntryTab" HeaderTemplate="{StaticResource DataEntryTabHeaderDataTemplate}" Visibility="{Binding ShowDataEntryTab, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=FieldDataCapture}"/>
+                    <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=SCADA}"/>
+                    <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Schematics}"/>
+                    <TabItem Content="{Binding SelectedHierarchyViewModel}"
+                             ContentTemplateSelector="{StaticResource SetupTabTemplateSelector}"
+                             Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Setup}">
                     </TabItem>
                 </TabControl>
-                <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                <StatusBar Grid.Row="2"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
                     <StatusBarItem ToolTip="User Name">
                         <Image Source="/Images/User_16x16.png"/>
                     </StatusBarItem>

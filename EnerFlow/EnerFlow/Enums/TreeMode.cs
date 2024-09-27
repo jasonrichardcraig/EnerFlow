@@ -2,11 +2,10 @@
 {
     public enum TreeMode
     {
-        None,
-        Map,
-        Hmi,
-        DataEntry,
-        Setup,
-        
+        Map = 0,
+        FieldDataCapture = 1,
+        SCADA = 2,
+        Schematics = 3,
+        Setup = 4
     }
 }

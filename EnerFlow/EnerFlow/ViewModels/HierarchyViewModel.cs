@@ -42,11 +42,14 @@ namespace EnerFlow.ViewModels
             AddNewFacilityCommand = new RelayCommand(AddNewFacility, CanAddNewItem);
             AddNewWellCommand = new RelayCommand(AddNewWell, CanAddNewItem);
             AddNewRunSheetCommand = new RelayCommand(AddNewRunSheet, CanAddNewItem);
+            AddNewContextTagCommand = new RelayCommand(AddNewContextTag, CanAddNewItem);
             DeleteCommand = new RelayCommand(Delete, CanDelete);
 
             _children.CollectionChanged += Children_CollectionChanged;
 
         }
+
+        public MainViewModel MainViewModel => _mainViewModel;
 
         public HierarchyViewModel ParentHierarchyViewModel => _parentHierarchyViewModel;
 
@@ -247,6 +250,8 @@ namespace EnerFlow.ViewModels
 
         public ICommand AddNewRunSheetCommand { get; }
 
+        public ICommand AddNewContextTagCommand { get; }
+
         public ICommand DeleteCommand { get; }
 
         public ObservableCollection<HierarchyViewModel> Children
@@ -279,7 +284,16 @@ namespace EnerFlow.ViewModels
                             _children.Add(new WellViewModel(this, hierarchy));
                             break;
                         case (int)Enums.NodeType.RunSheet:
-                            _children.Add(new RunSheetViewModel(this, hierarchy));
+                            if (MainViewModel.TreeMode == TreeMode.Setup)
+                            {
+                                _children.Add(new RunSheetViewModel(this, hierarchy));
+                            }
+                            break;
+                        case (int)Enums.NodeType.ContextTag:
+                            if (MainViewModel.TreeMode == TreeMode.Setup)
+                            {
+                                _children.Add(new ContextTagViewModel(this, hierarchy));
+                            }
                             break;
                         default:
                             _children.Add(new HierarchyViewModel(this, hierarchy));
@@ -312,7 +326,6 @@ namespace EnerFlow.ViewModels
                     }
                     break;
             }
-
         }
 
         private void OnIsDisabledChanged()
@@ -364,6 +377,11 @@ namespace EnerFlow.ViewModels
         private void AddNewRunSheet()
         {
             _dialogService?.ShowNewRunSheetDialog(this);
+        }
+
+        private void AddNewContextTag()
+        {
+            _dialogService?.ShowNewContextTagDialog(this);
         }
 
         private void Refresh()

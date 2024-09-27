@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EnerFlow.Enums;
 using EnerFlow.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace EnerFlow.ViewModels
 {
@@ -14,9 +16,6 @@ namespace EnerFlow.ViewModels
         private DateTime _displayDateEnd = DateTime.Now.Date;
         private DateTime selectedDate = DateTime.Now.Date;
         private int _selectedTabIndex = 1;
-        private bool _showMapTab;
-        private bool _showSetupTab;
-        private bool _showDataEntryTab;
         private TreeMode _treeMode;
         private Func<string, Task<string>> _executeMapScriptAction = _ => Task.FromResult(string.Empty);
         private string _server = string.Empty;
@@ -58,45 +57,6 @@ namespace EnerFlow.ViewModels
                 if (_selectedTabIndex != value)
                 {
                     _selectedTabIndex = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool ShowMapTab
-        {
-            get { return _showMapTab; }
-            set
-            {
-                if (_showMapTab != value)
-                {
-                    _showMapTab = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool ShowSetupTab
-        {
-            get { return _showSetupTab; }
-            set
-            {
-                if (_showSetupTab != value)
-                {
-                    _showSetupTab = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool ShowDataEntryTab
-        {
-            get { return _showDataEntryTab; }
-            set
-            {
-                if (_showDataEntryTab != value)
-                {
-                    _showDataEntryTab = value;
                     OnPropertyChanged();
                 }
             }
@@ -208,27 +168,57 @@ namespace EnerFlow.ViewModels
 
         private void OnTreeModeChanged()
         {
-            switch (TreeMode)
+            var currentSelectedHierarchyNode = SelectedHierarchyViewModel?.Hierarchy.Node;
+
+            SystemHierarchyViewModel.RefreshCommand.Execute(null);
+
+            if (currentSelectedHierarchyNode != null)
             {
-                case TreeMode.Map:
-                    ShowMapTab = true;
-                    ShowSetupTab = false;
-                    ShowDataEntryTab = false;
-                    SelectedTabIndex = 0;
-                    break;
-                case TreeMode.Setup:
-                    ShowMapTab = false;
-                    ShowSetupTab = true;
-                    ShowDataEntryTab = false;
-                    SelectedTabIndex = 1;
-                    break;
-                case TreeMode.DataEntry:
-                    ShowMapTab = false;
-                    ShowSetupTab = false;
-                    ShowDataEntryTab = true;
-                    SelectedTabIndex = 2;
-                    break;
+                SelectAndExpandNode(SystemHierarchyViewModel, currentSelectedHierarchyNode);
             }
+        }
+
+        public static bool SelectAndExpandNode(HierarchyViewModel hierarchyViewModel, HierarchyId targetNode)
+        {
+            if (hierarchyViewModel == null || targetNode == null)
+                return false;
+
+            int currentLevel = hierarchyViewModel.Hierarchy.Node.GetLevel();
+            int targetLevel = targetNode.GetLevel();
+
+            // If the target node is at a higher level (smaller level number), it cannot be a descendant
+            if (targetLevel < currentLevel)
+                return false;
+
+            // If the current node is the target node
+            if (hierarchyViewModel.Hierarchy.Node.Equals(targetNode))
+            {
+                hierarchyViewModel.IsSelected = true;
+                hierarchyViewModel.IsExpanded = true;
+                return true;
+            }
+
+            // If the target node is a descendant of the current node
+            if (targetNode.IsDescendantOf(hierarchyViewModel.Hierarchy.Node))
+            {
+                // Expand and load children
+                hierarchyViewModel.IsExpanded = true;
+                if (!hierarchyViewModel.Children.Any())
+                {
+                    hierarchyViewModel.LoadChildren();
+                }
+
+                foreach (var child in hierarchyViewModel.Children)
+                {
+                    if (SelectAndExpandNode(child, targetNode))
+                    {
+                        hierarchyViewModel.IsExpanded = true;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private void OnSelectedHierarchyViewModelChanged()

@@ -17,10 +17,13 @@
 
     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
 
+    <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+
+    <converters:EnumToIntegerConverter x:Key="EnumToIntegerConverter"/>
+
     <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
 
     <converters:FacilityTypeConverter x:Key="FacilityTypeConverter"/>
-
 
     <ControlTemplate x:Key="TextBoxValidationErrorTemplate">
         <DockPanel LastChildFill="True">
@@ -105,7 +108,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsDisabled}" Value="True">
@@ -120,6 +123,19 @@
                 <Setter Property="Opacity" Value="0.2"/>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NoHeaderTabControl" TargetType="TabControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <!-- Hides the TabPanel (tab strip) and shows only the content -->
+                        <ContentPresenter ContentSource="SelectedContent" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- DataTemplate for the Map tab header -->
@@ -261,7 +277,7 @@
             <TextBlock Text="{Binding Description}"/>
         </StackPanel>
     </DataTemplate>
-    
+
 
     <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate"
                               DataType="{x:Type viewmodels:HierarchyViewModel}"
@@ -469,21 +485,36 @@
                     ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Facility"
-                              Command="{Binding AddNewFacilityCommand}">
+                    <MenuItem Header="Add">
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
-                                   Source="/Images/Facilities_16x16.png"/>
+                                   Source="/Images/Add_16x16.png"/>
                         </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Add Run Sheet"
+                        <MenuItem Header="Run Sheet"
                               Command="{Binding AddNewRunSheetCommand}">
-                        <MenuItem.Icon>
-                            <Image Height="16"
+                            <MenuItem.Icon>
+                                <Image Height="16"
                                    Width="16"
                                    Source="/Images/Runs_16x16.png"/>
-                        </MenuItem.Icon>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Context Tag"
+                              Command="{Binding AddNewContextTagCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/ContextTag_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Facility"
+                              Command="{Binding AddNewFacilityCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Facilities_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Delete Field"
                               Command="{Binding DeleteCommand}">
@@ -542,7 +573,7 @@
                             <MenuItem.Icon>
                                 <Image Height="16"
                                   Width="16"
-                                  Source="/Images/Wells_16x16.png"/>
+                                  Source="/Images/Facilities_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="Well"
@@ -653,6 +684,33 @@
 
     <HierarchicalDataTemplate x:Key="RunSheetTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete Run Sheet"
+                              Visibility="{Binding MainViewModel.TreeMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Setup}"
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Visibility="{Binding MainViewModel.TreeMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Setup}"/>
+                    <MenuItem Header="Disabled"
+                              Visibility="{Binding MainViewModel.TreeMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Setup}"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator Visibility="{Binding MainViewModel.TreeMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Setup}"/>
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
             <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/Runs_16x16.png"/>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
         </StackPanel>
@@ -660,6 +718,46 @@
 
     <HierarchicalDataTemplate x:Key="ContextTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Add_16x16.png"/>
+                        </MenuItem.Icon>
+                        <!--<MenuItem Header="Well"
+                                  Command="{Binding AddNewWellCommand}">
+                            <MenuItem.Icon>
+                                <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Wells_16x16.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>-->
+                    </MenuItem>
+                    <MenuItem Header="Delete Context Tag"
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator/>
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
             <Image Height="16" Width="16" Margin="0,0,4,0" Source="/Images/ContextTag_16x16.png"/>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
         </StackPanel>
@@ -756,7 +854,7 @@
                                                      DocumentTemplate="{StaticResource DocumentTreeViewItemDataTemplate}">
 
     </selectors:HierarchyTemplateSelector>
-    
+
     <!-- Main Tab Control Setup Content Template -->
 
     <DataTemplate x:Key="SystemTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -867,8 +965,7 @@
                                                      DistrictTemplate="{StaticResource DistrictTabDataTemplate}"
                                                      AreaTemplate="{StaticResource AreaTabDataTemplate}"
                                                      FieldTemplate="{StaticResource FieldTabDataTemplate}"
-                                                     FacilityTemplate="{StaticResource FacilityTabDataTemplate}"
-                                                     
+                                                     FacilityTemplate="{StaticResource FacilityTabDataTemplate}" 
                                                      WellTemplate="{StaticResource WellTabDataTemplate}"
                                                      RunSheetTemplate="{StaticResource RunSheetTabDataTemplate}"
                                                      ContextTagTemplate="{StaticResource ContextTagTabDataTemplate}"

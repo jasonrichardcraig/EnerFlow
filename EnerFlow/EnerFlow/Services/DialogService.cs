@@ -214,6 +214,31 @@ namespace EnerFlow.Services
             }
         }
 
+        public void ShowNewContextTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var contextTag = new ContextTag();
+            var contextTagViewModel = new ContextTagViewModel(parentHierarchyViewModel, new Hierarchy(), contextTag)
+            {
+                Name = "New Context Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewContextTagDialog()
+            {
+                DataContext = contextTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                contextTagViewModel.DisableAutoSave = false;
+                _dataService.Context.ContextTags.Add(contextTag);
+                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, contextTagViewModel.Hierarchy, Enums.NodeType.ContextTag);
+                parentHierarchyViewModel.Children.Add(contextTagViewModel);
+            }
+        }
+
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
         {
             if (_dataService.GetChildren(hierarchyViewModel.Hierarchy).Count > 0)
@@ -267,6 +292,20 @@ namespace EnerFlow.Services
                     break;
                 case Enums.NodeType.Well:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Well?", "Delete Well"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.ContextTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Context Tag?", "Delete Context Tag"))
+                    {
+                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.RunSheet:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Run Sheet?", "Delete Run Sheet"))
                     {
                         _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);

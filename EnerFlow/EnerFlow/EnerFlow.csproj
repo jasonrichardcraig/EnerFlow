@@ -363,6 +363,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Views\Dialogs\NewContextTagDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\NewRunSheetDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -379,6 +382,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Dialogs\NewDistrictDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserControls\Setup\ContextTagControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserControls\Setup\RunSheetControl.xaml.cs">
