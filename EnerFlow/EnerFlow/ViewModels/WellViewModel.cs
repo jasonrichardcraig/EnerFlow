@@ -1,17 +1,14 @@
-﻿using EnerFlow.Models;
-using System;
-using System.Collections.Generic;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EnerFlow.Models;
+using EnerFlow.Services;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnerFlow.ViewModels
 {
     public class WellViewModel : HierarchyViewModel
     {
 
-        private Well _well = null!;
+        private readonly Well _well = null!;
 
         public WellViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
@@ -42,7 +39,7 @@ namespace EnerFlow.ViewModels
                             _well.FormattedUwi = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -67,7 +64,7 @@ namespace EnerFlow.ViewModels
                             _well.UnformattedUwi = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -92,7 +89,7 @@ namespace EnerFlow.ViewModels
                             _well.SurfaceLocation = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -117,7 +114,7 @@ namespace EnerFlow.ViewModels
                             _well.DownholeLocation = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -142,7 +139,7 @@ namespace EnerFlow.ViewModels
                             _well.FieldCode = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -167,7 +164,7 @@ namespace EnerFlow.ViewModels
                             _well.PoolCode = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -192,7 +189,7 @@ namespace EnerFlow.ViewModels
                             _well.LicenseNumber = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -217,7 +214,7 @@ namespace EnerFlow.ViewModels
                             _well.LicenseeCode = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -242,7 +239,7 @@ namespace EnerFlow.ViewModels
                             _well.AgentCode = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }
@@ -267,7 +264,7 @@ namespace EnerFlow.ViewModels
                             _well.OperatorCode = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                         }
                     }

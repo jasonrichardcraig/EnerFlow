@@ -1,8 +1,7 @@
-﻿using EnerFlow.Enums;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using EnerFlow.Models;
 using EnerFlow.ViewModels;
 using EnerFlow.Views.Dialogs;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using System.Windows;
 
@@ -10,15 +9,6 @@ namespace EnerFlow.Services
 {
     public class DialogService : IDialogService
     {
-
-        private readonly IDataService _dataService;
-        private readonly MainViewModel _mainViewModel;
-
-        public DialogService()
-        {
-            _dataService = App.ServiceProvider?.GetService<IDataService>() ?? throw new InvalidOperationException("Data Service is not available.");
-            _mainViewModel = App.ServiceProvider?.GetService<MainViewModel>() ?? throw new InvalidOperationException("MainViewModel is not available.");
-        }
 
         public bool ShowConfirmationDialog(string message, string title)
         {
@@ -46,17 +36,37 @@ namespace EnerFlow.Services
             return string.Empty;
         }
 
+        public void ShowSearchDialog()
+        {
+            var searchDialog = new SearchDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = new SearchViewModel()
+            };
+
+            searchDialog.ShowDialog();
+        }
+
         public void ShowNewCompanyDialog()
         {
-            var companyHierarchyViewModel = new HierarchyViewModel(_mainViewModel.SystemHierarchyViewModel!, new Hierarchy())
+            var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (mainViewModel == null || mainViewModel.SystemHierarchyViewModel == null || dataService == null)
+            {
+                ShowErrorDialog("Unable to create new company. Required services are not available.", "Error");
+                return;
+            }
+
+            var companyHierarchyViewModel = new HierarchyViewModel(mainViewModel.SystemHierarchyViewModel, new Hierarchy())
             {
                 Name = "New Company",
                 DisableAutoSave = true
             };
 
-
             var dialog = new NewCompanyDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = companyHierarchyViewModel
             };
 
@@ -65,13 +75,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 companyHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(_mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, Enums.NodeType.Company);
-                _mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
+                dataService.AddHierarchyNode(mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, Enums.NodeType.Company);
+                mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
             }
         }
 
         public void ShowNewDistrictDialog(HierarchyViewModel companyHierarchyViewModel)
         {
+
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new district. Required services are not available.", "Error");
+                return;
+            }
+
             var districtHierarchyViewModel = new HierarchyViewModel(companyHierarchyViewModel, new Hierarchy())
             {
                 Name = "New District",
@@ -80,6 +99,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewDistrictDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = districtHierarchyViewModel
             };
 
@@ -88,13 +108,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 districtHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, Enums.NodeType.District);
+                dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, Enums.NodeType.District);
                 companyHierarchyViewModel.Children.Add(districtHierarchyViewModel);
             }
         }
 
         public void ShowNewAreaDialog(HierarchyViewModel districtHierarchyViewModel)
         {
+
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new area. Required services are not available.", "Error");
+                return;
+            }
+
             var areaHierarchyViewModel = new HierarchyViewModel(districtHierarchyViewModel, new Hierarchy())
             {
                 Name = "New Area",
@@ -103,6 +132,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewAreaDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = areaHierarchyViewModel
             };
 
@@ -111,13 +141,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 areaHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, Enums.NodeType.Area);
+                dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, Enums.NodeType.Area);
                 districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
             }
         }
 
         public void ShowNewFieldDialog(HierarchyViewModel areaHierarchyViewModel)
         {
+
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new field. Required services are not available.", "Error");
+                return;
+            }
+
             var fieldHierarchyViewModel = new HierarchyViewModel(areaHierarchyViewModel, new Hierarchy())
             {
                 Name = "New Field",
@@ -126,6 +165,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewFieldDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = fieldHierarchyViewModel
             };
 
@@ -134,13 +174,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 fieldHierarchyViewModel.DisableAutoSave = false;
-                _dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, Enums.NodeType.Field);
+                dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, Enums.NodeType.Field);
                 areaHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
             }
         }
 
         public void ShowNewFacilityDialog(HierarchyViewModel parentHierarchyViewModel)
         {
+
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new facility. Required services are not available.", "Error");
+                return;
+            }
+
             var facility = new Facility();
             var facilityHierarchyViewModel = new FacilityViewModel(parentHierarchyViewModel, new Hierarchy(), facility)
             {
@@ -150,6 +199,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewFacilityDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = facilityHierarchyViewModel
             };
 
@@ -158,14 +208,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 facilityHierarchyViewModel.DisableAutoSave = false;
-                _dataService.Context.Facilities.Add(facility);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, Enums.NodeType.Facility);
+                dataService.Context.Facilities.Add(facility);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, Enums.NodeType.Facility);
                 parentHierarchyViewModel.Children.Add(facilityHierarchyViewModel);
             }
         }
 
         public void ShowNewWellDialog(HierarchyViewModel parentHierarchyViewModel)
         {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new well. Required services are not available.", "Error");
+                return;
+            }
+
             var well = new Well();
             var wellHierarchyViewModel = new WellViewModel(parentHierarchyViewModel, new Hierarchy(), well)
             {
@@ -175,6 +233,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewWellDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = wellHierarchyViewModel
             };
 
@@ -183,14 +242,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 wellHierarchyViewModel.DisableAutoSave = false;
-                _dataService.Context.Wells.Add(well);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, Enums.NodeType.Well);
+                dataService.Context.Wells.Add(well);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, Enums.NodeType.Well);
                 parentHierarchyViewModel.Children.Add(wellHierarchyViewModel);
             }
         }
 
         public void ShowNewRunSheetDialog(HierarchyViewModel parentHierarchyViewModel)
         {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new run sheet. Required services are not available.", "Error");
+                return;
+            }
+
             var runSheet = new RunSheet();
             var runSheetViewModel = new RunSheetViewModel(parentHierarchyViewModel, new Hierarchy(), runSheet)
             {
@@ -200,6 +267,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewRunSheetDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = runSheetViewModel
             };
 
@@ -208,14 +276,22 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 runSheetViewModel.DisableAutoSave = false;
-                _dataService.Context.RunSheets.Add(runSheet);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, runSheetViewModel.Hierarchy, Enums.NodeType.RunSheet);
+                dataService.Context.RunSheets.Add(runSheet);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, runSheetViewModel.Hierarchy, Enums.NodeType.RunSheet);
                 parentHierarchyViewModel.Children.Add(runSheetViewModel);
             }
         }
 
         public void ShowNewContextTagDialog(HierarchyViewModel parentHierarchyViewModel)
         {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new context tag. Required services are not available.", "Error");
+                return;
+            }
+
             var contextTag = new ContextTag();
             var contextTagViewModel = new ContextTagViewModel(parentHierarchyViewModel, new Hierarchy(), contextTag)
             {
@@ -225,6 +301,7 @@ namespace EnerFlow.Services
 
             var dialog = new NewContextTagDialog()
             {
+                Owner = Application.Current.MainWindow,
                 DataContext = contextTagViewModel
             };
 
@@ -233,21 +310,29 @@ namespace EnerFlow.Services
             if (dialogResult == true)
             {
                 contextTagViewModel.DisableAutoSave = false;
-                _dataService.Context.ContextTags.Add(contextTag);
-                _dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, contextTagViewModel.Hierarchy, Enums.NodeType.ContextTag);
+                dataService.Context.ContextTags.Add(contextTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, contextTagViewModel.Hierarchy, Enums.NodeType.ContextTag);
                 parentHierarchyViewModel.Children.Add(contextTagViewModel);
             }
         }
 
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
         {
-            if (_dataService.GetChildren(hierarchyViewModel.Hierarchy).Count > 0)
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to delete item. Required services are not available.", "Error");
+                return;
+            }
+
+            if (dataService.GetChildren(hierarchyViewModel.Hierarchy).Count > 0)
             {
                 ShowErrorDialog("Cannot delete a node with children.", "Error");
                 return;
             }
 
-            if (_dataService.GetSystemHierarchy().Id == hierarchyViewModel.Hierarchy.Id)
+            if (dataService.GetSystemHierarchy().Id == hierarchyViewModel.Hierarchy.Id)
             {
                 ShowErrorDialog("Cannot delete the root node.", "Error");
                 return;
@@ -258,56 +343,56 @@ namespace EnerFlow.Services
                 case Enums.NodeType.Company:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Company?", "Delete Company"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.District:
                     if (ShowConfirmationDialog("Are you sure you want to delete this District?", "Delete District"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.Area:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Area?", "Delete Area"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.Field:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Field?", "Delete Field"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.Facility:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Facility?", "Delete Facility"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.Well:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Well?", "Delete Well"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.ContextTag:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Context Tag?", "Delete Context Tag"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
                 case Enums.NodeType.RunSheet:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Run Sheet?", "Delete Run Sheet"))
                     {
-                        _dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;

@@ -109,6 +109,77 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="SearchResultItemImageStyle" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Company}" Value="True">
+                <Setter Property="Source" Value="/Images/Company_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=District}" Value="True">
+                <Setter Property="Source" Value="/Images/District.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Area}" Value="True">
+                <Setter Property="Source" Value="/Images/Area.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Field}" Value="True">
+                <Setter Property="Source" Value="/Images/Field.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Facility}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Well}" Value="True">
+                <Setter Property="Source" Value="/Images/Wells_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=RunSheet}" Value="True">
+                <Setter Property="Source" Value="/Images/Runs_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=ContextTag}" Value="True">
+                <Setter Property="Source" Value="/Images/ContextTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SerialPortChannelTag}" Value="True">
+                <Setter Property="Source" Value="/Images/SerialPortChannelTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=IpChannelTag}" Value="True">
+                <Setter Property="Source" Value="/Images/IpChannelTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=DeviceTag}" Value="True">
+                <Setter Property="Source" Value="/Images/DeviceTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=AnalogIoTag}" Value="True">
+                <Setter Property="Source" Value="/Images/AnalogIoTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=DigitalIoTag}" Value="True">
+                <Setter Property="Source" Value="/Images/DigitalIoTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=StringIoTag}" Value="True">
+                <Setter Property="Source" Value="/Images/StringIoTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Screen}" Value="True">
+                <Setter Property="Source" Value="/Images/Screen_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Diagram}" Value="True">
+                <Setter Property="Source" Value="/Images/Diagram_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Document}" Value="True">
+                <Setter Property="Source" Value="/Images/Document_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Folder}" Value="True">
+                <Setter Property="Source" Value="/Images/Folder_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Meter}" Value="True">
+                <Setter Property="Source" Value="/Images/Meters_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Pump}" Value="True">
+                <Setter Property="Source" Value="/Images/Pump_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Tank}" Value="True">
+                <Setter Property="Source" Value="/Images/Tanks_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Vessel}" Value="True">
+                <Setter Property="Source" Value="/Images/Tanks_16x16.png"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsDisabled}" Value="True">
@@ -980,5 +1051,29 @@
                                                      DocumentTemplate="{StaticResource DocumentTabDataTemplate}">
 
     </selectors:HierarchyTemplateSelector>
+
+    <!-- Search Result Data Templates -->
+
+    <DataTemplate x:Key="SearchResultItemDataTemplate">
+        <Grid ToolTip="{Binding Description}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Column="0"
+                   Style="{StaticResource SearchResultItemImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="4"/>
+            <TextBlock Grid.Column="1"
+                       Text="{Binding Name}"
+                       FontSize="12"
+                       VerticalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+
 
 </ResourceDictionary>

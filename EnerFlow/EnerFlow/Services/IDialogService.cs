@@ -9,6 +9,7 @@ namespace EnerFlow.Services
         void ShowWarningDialog(string message, string title);
         void ShowErrorDialog(string message, string title);
         string ShowOpenFileDialog();
+        void ShowSearchDialog();
         void ShowNewCompanyDialog();
         void ShowNewDistrictDialog(HierarchyViewModel companyHierarchyViewModel);
         void ShowNewAreaDialog(HierarchyViewModel districtHierarchyViewModel);

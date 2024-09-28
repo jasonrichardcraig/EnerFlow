@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System.CodeDom;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
@@ -18,9 +17,6 @@ namespace EnerFlow.ViewModels
         private bool _isSelected;
         private bool _isExpanded;
         private bool _disableAutoSave;
-        protected readonly IDataService _dataService;
-        protected readonly MainViewModel _mainViewModel;
-        protected readonly IDialogService _dialogService;
         protected readonly HierarchyViewModel _parentHierarchyViewModel;
         protected readonly ObservableCollection<HierarchyViewModel> _children = [];
         protected Hierarchy _hierarchy = null!;
@@ -28,9 +24,6 @@ namespace EnerFlow.ViewModels
         public HierarchyViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy)
         {
             _parentHierarchyViewModel = parentHierarchyViewModel;
-            _dataService = App.ServiceProvider?.GetService<IDataService>() ?? throw new InvalidOperationException("Data Service is not available.");
-            _dialogService = App.ServiceProvider?.GetService<IDialogService>() ?? throw new InvalidOperationException("Dialog Service is not available.");
-            _mainViewModel = App.ServiceProvider?.GetService<MainViewModel>() ?? throw new InvalidOperationException("MainViewModel is not available.");
 
             _hierarchy = hierarchy;
 
@@ -48,8 +41,6 @@ namespace EnerFlow.ViewModels
             _children.CollectionChanged += Children_CollectionChanged;
 
         }
-
-        public MainViewModel MainViewModel => _mainViewModel;
 
         public HierarchyViewModel ParentHierarchyViewModel => _parentHierarchyViewModel;
 
@@ -106,7 +97,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.IsDisabled = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                         OnIsDisabledChanged();
@@ -131,7 +122,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Name = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -154,7 +145,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Description = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -177,7 +168,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Longitude = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -200,7 +191,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Latitude = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -226,7 +217,7 @@ namespace EnerFlow.ViewModels
                             _hierarchy.DefaultZoomLevel = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                             OnPropertyChanged();
                         }
@@ -272,7 +263,15 @@ namespace EnerFlow.ViewModels
         {
             if (!IsDisabled)
             {
-                foreach (var hierarchy in _dataService.GetChildren(_hierarchy))
+                var dataService = Ioc.Default.GetService<IDataService>();
+                var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+
+                if (dataService == null || mainViewModel == null)
+                {
+                    return; 
+                }
+
+                foreach (var hierarchy in dataService.GetChildren(_hierarchy))
                 {
 
                     switch (hierarchy.NodeTypeId)
@@ -284,13 +283,13 @@ namespace EnerFlow.ViewModels
                             _children.Add(new WellViewModel(this, hierarchy));
                             break;
                         case (int)Enums.NodeType.RunSheet:
-                            if (MainViewModel.TreeMode == TreeMode.Setup)
+                            if (mainViewModel.TreeMode == TreeMode.Setup)
                             {
                                 _children.Add(new RunSheetViewModel(this, hierarchy));
                             }
                             break;
                         case (int)Enums.NodeType.ContextTag:
-                            if (MainViewModel.TreeMode == TreeMode.Setup)
+                            if (mainViewModel.TreeMode == TreeMode.Setup)
                             {
                                 _children.Add(new ContextTagViewModel(this, hierarchy));
                             }
@@ -342,65 +341,69 @@ namespace EnerFlow.ViewModels
 
         private bool CanAddNewItem()
         {
-            return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
+            var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+
+            return mainViewModel?.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(mainViewModel.UserViewModel.User);
         }
 
         private void AddNewCompany()
         {
-            _dialogService?.ShowNewCompanyDialog();
+            Ioc.Default.GetService<IDialogService>()?.ShowNewCompanyDialog();
         }
 
         private void AddNewDistrict()
         {
-            _dialogService?.ShowNewDistrictDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewDistrictDialog(this);
         }
 
         private void AddNewArea()
         {
-            _dialogService?.ShowNewAreaDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewAreaDialog(this);
         }
 
         private void AddNewField()
         {
-            _dialogService?.ShowNewFieldDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewFieldDialog(this);
         }
         private void AddNewFacility()
         {
-            _dialogService?.ShowNewFacilityDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewFacilityDialog(this);
         }
 
         private void AddNewWell()
         {
-            _dialogService?.ShowNewWellDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewWellDialog(this);
         }
 
         private void AddNewRunSheet()
         {
-            _dialogService?.ShowNewRunSheetDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewRunSheetDialog(this);
         }
 
         private void AddNewContextTag()
         {
-            _dialogService?.ShowNewContextTagDialog(this);
+            Ioc.Default.GetService<IDialogService>()?.ShowNewContextTagDialog(this);
         }
 
         private void Refresh()
         {
-            if (_mainViewModel.SystemHierarchyViewModel != null)
+            var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+            if (mainViewModel?.SystemHierarchyViewModel != null)
             {
-                _mainViewModel.SystemHierarchyViewModel.Children.Clear();
-                _mainViewModel.SystemHierarchyViewModel.LoadChildren();
+                mainViewModel.SystemHierarchyViewModel.Children.Clear();
+                mainViewModel.SystemHierarchyViewModel.LoadChildren();
             }
         }
 
         private bool CanDelete()
         {
-            return _mainViewModel.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(_mainViewModel.UserViewModel.User);
+            var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+            return mainViewModel?.UserViewModel != null && Security.SecurityChecker.HasModifyTreeItemPermission(mainViewModel.UserViewModel.User);
         }
 
         private void Delete()
         {
-            _dialogService.DeleteHierarchyNode(this);
+            Ioc.Default.GetService<IDialogService>()?.DeleteHierarchyNode(this);
         }
 
         public void Dispose()

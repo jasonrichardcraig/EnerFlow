@@ -55,7 +55,7 @@
                         <MenuItem Header="_SCADA"
                                   IsCheckable="True"
                                   IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}"/>
-                        <MenuItem Header="_Data Entry"
+                        <MenuItem Header="_Schematics"
                                   IsCheckable="True"
                                   IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}"/>
                         <MenuItem Header="_Setup"
@@ -65,7 +65,7 @@
                     <MenuItem Header="_Help">
                         <MenuItem Header="_About"/>
                     </MenuItem>
-                    <MenuItem Header="_Search">
+                    <MenuItem Header="_Search" Command="{Binding SearchCommand}">
                     </MenuItem>
                 </Menu>
 

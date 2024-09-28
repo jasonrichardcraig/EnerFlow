@@ -1,6 +1,7 @@
 ﻿using EnerFlow.Data;
 using EnerFlow.Enums;
 using EnerFlow.Models;
+using EnerFlow.ViewModels;
 
 namespace EnerFlow.Services
 {
@@ -11,5 +12,9 @@ namespace EnerFlow.Services
         void DeleteHierarchyNode(Hierarchy hierarchy);
         List<Hierarchy> GetChildren(Hierarchy hierarchy);
         Hierarchy GetSystemHierarchy();
+
+        void Search(string searchText, Action<IEnumerable<SearchResult>> searchResultsCallback);
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using EnerFlow.Services;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EnerFlow.Services;
 using EnerFlow.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
@@ -27,6 +28,7 @@ namespace EnerFlow
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
+            Ioc.Default.ConfigureServices(ServiceProvider);  // Set up Ioc
 
             base.OnStartup(e);
         }

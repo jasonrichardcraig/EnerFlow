@@ -1,4 +1,6 @@
-﻿using EnerFlow.Models;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EnerFlow.Models;
+using EnerFlow.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace EnerFlow.ViewModels
@@ -23,9 +25,9 @@ namespace EnerFlow.ViewModels
             _selectdFacilityType = _facility.FacilitySubType?.FacilityType ?? FacilityTypes.First();
         }
 
-        public List<FacilityType> FacilityTypes => [.. _dataService.Context.FacilityTypes];
+        public static List<FacilityType> FacilityTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.FacilityTypes];
 
-        public List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => [.. _dataService.Context.EnergyDevelopmentCategoryTypes];
+        public static List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.EnergyDevelopmentCategoryTypes];
 
         public FacilityType SelectedFacilityType
         {
@@ -61,7 +63,7 @@ namespace EnerFlow.ViewModels
                         _facility.FacilitySubType = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -83,7 +85,7 @@ namespace EnerFlow.ViewModels
                         _facility.EnergyDevelopmentCategoryType = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -108,7 +110,7 @@ namespace EnerFlow.ViewModels
                             _facility.UniqueFacilityIdentifier = value;
                             if (!DisableAutoSave)
                             {
-                                _dataService.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                             }
                             OnPropertyChanged();
                         }
@@ -132,7 +134,7 @@ namespace EnerFlow.ViewModels
                         _facility.LocationName = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -155,7 +157,7 @@ namespace EnerFlow.ViewModels
                         _facility.OperatorCode = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -178,7 +180,7 @@ namespace EnerFlow.ViewModels
                         _facility.OperatorName = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -201,7 +203,7 @@ namespace EnerFlow.ViewModels
                         _facility.LicenceNumber = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -224,7 +226,7 @@ namespace EnerFlow.ViewModels
                         _facility.LicenseeCode = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -232,7 +234,7 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public List<WasteLocationType> WasteLocationTypes => [.. _dataService.Context.WasteLocationTypes];
+        public static List<WasteLocationType> WasteLocationTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.WasteLocationTypes];
 
         public WasteLocationType? WasteLocationType
         {
@@ -249,7 +251,7 @@ namespace EnerFlow.ViewModels
                         _facility.WasteLocationType = value;
                         if (!DisableAutoSave)
                         {
-                            _dataService.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
                         }
                         OnPropertyChanged();
                     }

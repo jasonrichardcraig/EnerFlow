@@ -135,5 +135,28 @@ namespace EnerFlow.Services
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public void Search(string searchText, Action<IEnumerable<SearchResult>> searchResultsCallback)
+        {
+            if (searchText.Length > 0)
+            {
+                var results = Context.Hierarchies
+                    .Where(h => EF.Functions.Like(h.Name, $"%{searchText}%") || EF.Functions.Like(h.Description, $"%{searchText}%"))
+                    .Select(h => new SearchResult
+                    {
+                        Id = h.Id,
+                        Node = h.Node,
+                        NodeType = (Enums.NodeType)h.NodeType.Id,
+                        Name = h.Name,
+                        Description = h.Description!
+                    });
+
+                searchResultsCallback(results);
+            }
+            else
+            {
+                searchResultsCallback([]);
+            }
+        }
     }
 }

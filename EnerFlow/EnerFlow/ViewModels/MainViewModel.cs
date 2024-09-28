@@ -1,25 +1,31 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Enums;
 using EnerFlow.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
         private bool _isBusy;
-        private DialogService? _dialogService;
         private HierarchyViewModel? _systemHierarchyViewModel;
         private UserViewModel? _userViewModel;
         private HierarchyViewModel? _selectedHierarchyViewModel;
         private DateTime _displayDateEnd = DateTime.Now.Date;
         private DateTime selectedDate = DateTime.Now.Date;
-        private int _selectedTabIndex = 1;
         private TreeMode _treeMode;
         private Func<string, Task<string>> _executeMapScriptAction = _ => Task.FromResult(string.Empty);
         private string _server = string.Empty;
         private string _database = string.Empty;
+
+        public MainViewModel()
+        {
+            SearchCommand = new RelayCommand(Search);
+        }
 
         public HierarchyViewModel? SelectedHierarchyViewModel
         {
@@ -44,19 +50,6 @@ namespace EnerFlow.ViewModels
                 {
                     _treeMode = value;
                     OnTreeModeChanged();
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int SelectedTabIndex
-        {
-            get { return _selectedTabIndex; }
-            set
-            {
-                if (_selectedTabIndex != value)
-                {
-                    _selectedTabIndex = value;
                     OnPropertyChanged();
                 }
             }
@@ -96,19 +89,6 @@ namespace EnerFlow.ViewModels
                 if (_isBusy != value)
                 {
                     _isBusy = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public DialogService? DialogService
-        {
-            get { return _dialogService; }
-            set
-            {
-                if (_dialogService != value)
-                {
-                    _dialogService = value;
                     OnPropertyChanged();
                 }
             }
@@ -166,6 +146,8 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        public ICommand SearchCommand { get; }
+
         private void OnTreeModeChanged()
         {
             var currentSelectedHierarchyNode = SelectedHierarchyViewModel?.Hierarchy.Node;
@@ -176,6 +158,56 @@ namespace EnerFlow.ViewModels
             {
                 SelectAndExpandNode(SystemHierarchyViewModel, currentSelectedHierarchyNode);
             }
+        }
+
+        private void OnSelectedHierarchyViewModelChanged()
+        {
+            if (SelectedHierarchyViewModel != null)
+            {
+
+                if (TreeMode == TreeMode.Map && SelectedHierarchyViewModel.Hierarchy.Latitude != null && SelectedHierarchyViewModel.Hierarchy.Longitude != null && SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel != null)
+                {
+                    switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                    {
+                        case NodeType.System:
+                        case NodeType.Company:
+                        case NodeType.District:
+                        case NodeType.Area:
+                        case NodeType.Field:
+                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            break;
+                        case NodeType.Facility:
+                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            _executeMapScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
+                            break;
+                    }
+                }
+
+                switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                {
+                    case NodeType.System:
+                        break;
+                    case NodeType.Company:
+                        break;
+                }
+            }
+        }
+
+        private void Search()
+        {
+            var dialogService = Ioc.Default.GetService<IDialogService>();
+
+            if (dialogService == null)
+            {
+                return;
+            }
+
+            dialogService.ShowSearchDialog();
+        }
+
+        public void SetExecuteMapScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        {
+            _executeMapScriptAction = executeMapScriptAction;
         }
 
         public static bool SelectAndExpandNode(HierarchyViewModel hierarchyViewModel, HierarchyId targetNode)
@@ -220,44 +252,5 @@ namespace EnerFlow.ViewModels
 
             return false;
         }
-
-        private void OnSelectedHierarchyViewModelChanged()
-        {
-            if (SelectedHierarchyViewModel != null)
-            {
-
-                if (TreeMode == TreeMode.Map && SelectedHierarchyViewModel.Hierarchy.Latitude != null && SelectedHierarchyViewModel.Hierarchy.Longitude != null && SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel != null)
-                {
-                    switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
-                    {
-                        case NodeType.System:
-                        case NodeType.Company:
-                        case NodeType.District:
-                        case NodeType.Area:
-                        case NodeType.Field:
-                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
-                            break;
-                        case NodeType.Facility:
-                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
-                            _executeMapScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
-                            break;
-                    }
-                }
-
-                switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
-                {
-                    case NodeType.System:
-                        break;
-                    case NodeType.Company:
-                        break;
-                }
-            }
-        }
-
-        public void SetExecuteMapScriptAction(Func<string, Task<string>> executeMapScriptAction)
-        {
-            _executeMapScriptAction = executeMapScriptAction;
-        }
-
     }
 }
