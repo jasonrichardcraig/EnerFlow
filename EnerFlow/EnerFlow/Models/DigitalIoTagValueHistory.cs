@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnerFlow.Models;
 
-public partial class DigitalIoTagHistory
+public partial class DigitalIoTagValueHistory
 {
     public int DigitalIoTagId { get; set; }
 

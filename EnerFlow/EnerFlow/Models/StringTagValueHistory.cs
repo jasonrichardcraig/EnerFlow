@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnerFlow.Models;
 
-public partial class StringTagHistory
+public partial class StringTagValueHistory
 {
     public int StringTagId { get; set; }
 
@@ -13,5 +13,5 @@ public partial class StringTagHistory
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual StringTag StringTag { get; set; } = null!;
+    public virtual StringIoTag StringTag { get; set; } = null!;
 }

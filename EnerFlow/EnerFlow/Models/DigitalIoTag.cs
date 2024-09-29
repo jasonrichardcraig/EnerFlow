@@ -9,8 +9,6 @@ public partial class DigitalIoTag
 
     public int HierarchyId { get; set; }
 
-    public int? DeviceId { get; set; }
-
     public string? ReadAddress { get; set; }
 
     public int? ReadAddressScanInterval { get; set; }
@@ -43,9 +41,7 @@ public partial class DigitalIoTag
 
     public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
-    public virtual DeviceTag? Device { get; set; }
-
-    public virtual ICollection<DigitalIoTagHistory> DigitalIoTagHistories { get; set; } = new List<DigitalIoTagHistory>();
+    public virtual ICollection<DigitalIoTagValueHistory> DigitalIoTagValueHistories { get; set; } = new List<DigitalIoTagValueHistory>();
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

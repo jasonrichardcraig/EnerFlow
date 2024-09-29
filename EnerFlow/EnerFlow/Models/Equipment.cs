@@ -7,27 +7,11 @@ public partial class Equipment
 {
     public int Id { get; set; }
 
-    public int? WellId { get; set; }
+    public int HierarchyId { get; set; }
 
-    public int? SatelliteId { get; set; }
+    public int EquipmentSubTypeId { get; set; }
 
-    public int? FacilityId { get; set; }
+    public virtual EquipmentSubType EquipmentSubType { get; set; } = null!;
 
-    public int? EquipmentTypeId { get; set; }
-
-    public decimal? Fuel { get; set; }
-
-    public decimal? Flare { get; set; }
-
-    public decimal? Vent { get; set; }
-
-    public DateTime? DateTimeCreated { get; set; }
-
-    public virtual EquipmentType? EquipmentType { get; set; }
-
-    public virtual Facility? Facility { get; set; }
-
-    public virtual Satellite? Satellite { get; set; }
-
-    public virtual Well? Well { get; set; }
+    public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

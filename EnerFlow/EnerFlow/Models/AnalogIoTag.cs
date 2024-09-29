@@ -9,8 +9,6 @@ public partial class AnalogIoTag
 
     public int HierarchyId { get; set; }
 
-    public int? DeviceId { get; set; }
-
     public bool? ByteSwap { get; set; }
 
     public bool? WordSwap { get; set; }
@@ -102,8 +100,6 @@ public partial class AnalogIoTag
     public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
     public virtual ICollection<AnalogIoTagValueHistory> AnalogIoTagValueHistories { get; set; } = new List<AnalogIoTagValueHistory>();
-
-    public virtual DeviceTag? Device { get; set; }
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 

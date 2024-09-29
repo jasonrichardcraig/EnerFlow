@@ -9,5 +9,7 @@ public partial class EquipmentType
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
+    public string Description { get; set; } = null!;
+
+    public virtual ICollection<EquipmentSubType> EquipmentSubTypes { get; set; } = new List<EquipmentSubType>();
 }

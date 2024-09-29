@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnerFlow.Models;
 
-public partial class StringTag
+public partial class StringIoTag
 {
     public int Id { get; set; }
 
@@ -23,5 +23,5 @@ public partial class StringTag
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
-    public virtual ICollection<StringTagHistory> StringTagHistories { get; set; } = new List<StringTagHistory>();
+    public virtual ICollection<StringTagValueHistory> StringTagValueHistories { get; set; } = new List<StringTagValueHistory>();
 }

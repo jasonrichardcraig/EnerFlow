@@ -32,12 +32,12 @@ namespace EnerFlow.Services
                 .Include(hierarchy => hierarchy.Wells)
                 .Include(hierarchy => hierarchy.RunSheets)
                 .Include(hierarchy => hierarchy.ContextTags)
-                .Include(hierarchy => hierarchy.SerialChannelTags)
+                .Include(hierarchy => hierarchy.SerialPortChannelTags)
                 .Include(hierarchy => hierarchy.IpChannelTags)
                 .Include(hierarchy => hierarchy.DeviceTags)
                 .Include(hierarchy => hierarchy.AnalogIoTags)
                 .Include(hierarchy => hierarchy.DigitalIoTags)
-                .Include(hierarchy => hierarchy.StringTags)
+                .Include(hierarchy => hierarchy.StringIoTags)
                 .Include(hierarchy => hierarchy.Screens)
                 .Include(hierarchy => hierarchy.Diagrams)
                 .Include(hierarchy => hierarchy.Documents)
@@ -98,7 +98,7 @@ namespace EnerFlow.Services
                         Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.SerialPortChannelTag:
-                        Context.SerialChannelTags.Remove(Context.SerialChannelTags.First(s => s.HierarchyId == hierarchyId));
+                        Context.SerialPortChannelTags.Remove(Context.SerialPortChannelTags.First(s => s.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.IpChannelTag:
                         Context.IpChannelTags.Remove(Context.IpChannelTags.First(i => i.HierarchyId == hierarchyId));
@@ -113,7 +113,7 @@ namespace EnerFlow.Services
                         Context.DigitalIoTags.Remove(Context.DigitalIoTags.First(d => d.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.StringIoTag:
-                        Context.StringTags.Remove(Context.StringTags.First(s => s.HierarchyId == hierarchyId));
+                        Context.StringIoTags.Remove(Context.StringIoTags.First(s => s.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Screen:
                         Context.Screens.Remove(Context.Screens.First(s => s.HierarchyId == hierarchyId));

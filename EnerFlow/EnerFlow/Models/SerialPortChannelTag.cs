@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnerFlow.Models;
 
-public partial class SerialChannelTag
+public partial class SerialPortChannelTag
 {
     public int Id { get; set; }
 
@@ -26,8 +26,6 @@ public partial class SerialChannelTag
     public int? WriteTimeout { get; set; }
 
     public bool? SerialChannelDisabled { get; set; }
-
-    public virtual ICollection<DeviceTag> DeviceTags { get; set; } = new List<DeviceTag>();
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

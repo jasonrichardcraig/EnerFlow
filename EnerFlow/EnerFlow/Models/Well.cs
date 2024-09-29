@@ -31,8 +31,6 @@ public partial class Well
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual ICollection<Compressor> Compressors { get; set; } = new List<Compressor>();
-
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
     public virtual ICollection<WastePlantDailyActivity> WastePlantDailyActivities { get; set; } = new List<WastePlantDailyActivity>();

@@ -38,7 +38,11 @@ public partial class Hierarchy
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
 
+    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
+
     public virtual ICollection<Facility> Facilities { get; set; } = new List<Facility>();
+
+    public virtual ICollection<Folder> Folders { get; set; } = new List<Folder>();
 
     public virtual ICollection<IpChannelTag> IpChannelTags { get; set; } = new List<IpChannelTag>();
 
@@ -60,9 +64,9 @@ public partial class Hierarchy
 
     public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
 
-    public virtual ICollection<SerialChannelTag> SerialChannelTags { get; set; } = new List<SerialChannelTag>();
+    public virtual ICollection<SerialPortChannelTag> SerialPortChannelTags { get; set; } = new List<SerialPortChannelTag>();
 
-    public virtual ICollection<StringTag> StringTags { get; set; } = new List<StringTag>();
+    public virtual ICollection<StringIoTag> StringIoTags { get; set; } = new List<StringIoTag>();
 
     public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
 

@@ -9,8 +9,6 @@ public partial class DeviceTag
 
     public int HierarchyId { get; set; }
 
-    public int? ChannelId { get; set; }
-
     public string IpendPoint { get; set; } = null!;
 
     public int InterPollDelay { get; set; }
@@ -31,15 +29,7 @@ public partial class DeviceTag
 
     public int RocSourceGroup { get; set; }
 
-    public virtual ICollection<AnalogIoTag> AnalogIoTags { get; set; } = new List<AnalogIoTag>();
-
-    public virtual IpChannelTag? Channel { get; set; }
-
-    public virtual SerialChannelTag? ChannelNavigation { get; set; }
-
     public virtual DeviceType DeviceType { get; set; } = null!;
-
-    public virtual ICollection<DigitalIoTag> DigitalIoTags { get; set; } = new List<DigitalIoTag>();
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 

@@ -29,8 +29,6 @@ public partial class Facility
 
     public DateTime? DateTimeCreated { get; set; }
 
-    public virtual ICollection<Compressor> Compressors { get; set; } = new List<Compressor>();
-
     public virtual EnergyDevelopmentCategoryType? EnergyDevelopmentCategoryType { get; set; }
 
     public virtual ICollection<FacilityDailyActivity> FacilityDailyActivityActivityFacilities { get; set; } = new List<FacilityDailyActivity>();

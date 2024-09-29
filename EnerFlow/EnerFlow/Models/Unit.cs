@@ -89,6 +89,8 @@ public partial class Unit
 
     public virtual ICollection<MeterConfiguration> MeterConfigurationViscosityUnits { get; set; } = new List<MeterConfiguration>();
 
+    public virtual ICollection<NodeTypeDailyLogProperty> NodeTypeDailyLogProperties { get; set; } = new List<NodeTypeDailyLogProperty>();
+
     public virtual ICollection<PeriodicLiquidFlowRecord> PeriodicLiquidFlowRecordDensityUnits { get; set; } = new List<PeriodicLiquidFlowRecord>();
 
     public virtual ICollection<PeriodicLiquidFlowRecord> PeriodicLiquidFlowRecordTemperatureBaseUnits { get; set; } = new List<PeriodicLiquidFlowRecord>();
