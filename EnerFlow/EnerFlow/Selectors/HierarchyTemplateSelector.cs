@@ -43,11 +43,6 @@ namespace EnerFlow.Selectors
         /// </summary>
         public DataTemplate? FacilityTemplate { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets the DataTemplate for the Facility node type with a facility subtype of pipeline.
-        ///// </summary>
-        //public DataTemplate? PipelineFacilityTemplate { get; set; }
-
         /// <summary>
         /// Gets or sets the DataTemplate for the Well node type.
         /// </summary>
@@ -109,6 +104,36 @@ namespace EnerFlow.Selectors
         public DataTemplate? DocumentTemplate { get; set; }
 
         /// <summary>
+        /// Gets or sets the DataTemplate for the Folder node type.
+        /// </summary>
+        public DataTemplate? FolderTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Meter node type.
+        /// </summary>
+        public DataTemplate? MeterTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Pump node type.
+        /// </summary>
+        public DataTemplate? PumpTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Tank node type.
+        /// </summary>
+        public DataTemplate? TankTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Vessel node type.
+        /// </summary>
+        public DataTemplate? VesselTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate for the Equipment node type.
+        /// </summary>
+        public DataTemplate? EquipmentTemplate { get; set; }
+
+        /// <summary>
         /// Selects the appropriate DataTemplate based on the type of hierarchy node.
         /// </summary>
         /// <param name="item">The data item.</param>
@@ -143,6 +168,12 @@ namespace EnerFlow.Selectors
                 NodeType.Screen => ScreenTemplate ?? base.SelectTemplate(item, container),
                 NodeType.Diagram => DiagramTemplate ?? base.SelectTemplate(item, container),
                 NodeType.Document => DocumentTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Folder => FolderTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Meter => MeterTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Pump => PumpTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Tank => TankTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Vessel => VesselTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Equipment => EquipmentTemplate ?? base.SelectTemplate(item, container),
                 _ => base.SelectTemplate(item, container),
             };
         }

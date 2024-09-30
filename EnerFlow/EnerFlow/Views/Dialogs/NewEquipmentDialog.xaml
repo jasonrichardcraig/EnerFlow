@@ -1,4 +1,4 @@
-﻿<Window x:Class="EnerFlow.Views.Dialogs.NewStringIoTagDialog"
+﻿<Window x:Class="EnerFlow.Views.Dialogs.NewEquipmentDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:setupusercontrols="clr-namespace:EnerFlow.Views.UserControls.Setup"
         xmlns:local="clr-namespace:EnerFlow.Views.Dialogs"
         mc:Ignorable="d"
-        Title="New String IO Tag" Icon="/Images/StringIoTag_16x16.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" Topmost="True">
+        Title="New Equipment" Icon="/Images/Equipment_16x16.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <setupusercontrols:StringIoTagControl Grid.Column="0" Grid.Row="0"/>
+        <setupusercontrols:EquipmentControl Grid.Column="0" Grid.Row="0"/>
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="OkButton" Content="Ok" Margin="10" Width="64" Click="OkButton_Click" />
             <Button x:Name="CancelButton" Content="Cancel" Margin="10" Width="64" Click="CancelButton_Click" />

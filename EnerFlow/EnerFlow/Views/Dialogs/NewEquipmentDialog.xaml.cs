@@ -3,11 +3,11 @@
 namespace EnerFlow.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for NewSerialPortChannelTagDialog.xaml
+    /// Interaction logic for NewEquipmentDialog.xaml
     /// </summary>
-    public partial class NewSerialPortChannelTagDialog : Window
+    public partial class NewEquipmentDialog : Window
     {
-        public NewSerialPortChannelTagDialog()
+        public NewEquipmentDialog()
         {
             InitializeComponent();
         }

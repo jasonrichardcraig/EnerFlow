@@ -2,7 +2,6 @@
 {
     public enum NodeType : int
     {
-
         System = 1,
         Company = 2,
         District = 3,
@@ -25,7 +24,7 @@
         Meter = 21,
         Pump = 22,
         Tank = 23,
-        Vessel = 24
-
+        Vessel = 24,
+        Equipment = 25
     }
 }

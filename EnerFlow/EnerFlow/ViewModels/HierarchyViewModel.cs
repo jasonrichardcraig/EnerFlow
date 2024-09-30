@@ -243,6 +243,36 @@ namespace EnerFlow.ViewModels
 
         public ICommand AddNewContextTagCommand { get; }
 
+        public ICommand AddNewSerialPortChannelTagCommand { get; }
+
+        public ICommand AddNewIpChannelTagCommand { get; }
+
+        public ICommand AddNewDeviceTagCommand { get; }
+
+        public ICommand AddNewAnalogIoTagCommand { get; }
+
+        public ICommand AddNewDigitalIoTagCommand { get; }
+
+        public ICommand AddNewStringIoTagCommand { get; }
+
+        public ICommand AddNewScreenCommand { get; }
+
+        public ICommand AddNewDiagramCommand { get; }
+
+        public ICommand AddNewDocumentCommand { get; }
+
+        public ICommand AddNewFolderCommand { get; }
+
+        public ICommand AddNewMeterCommand { get; }
+
+        public ICommand AddNewPumpCommand { get; }
+
+        public ICommand AddNewTankCommand { get; }
+
+        public ICommand AddNewVesselCommand { get; }
+
+        public ICommand AddNewEquipmentCommand { get; }
+
         public ICommand DeleteCommand { get; }
 
         public ObservableCollection<HierarchyViewModel> Children
@@ -261,44 +291,52 @@ namespace EnerFlow.ViewModels
 
         public void LoadChildren()
         {
-            if (!IsDisabled)
+            if (IsDisabled)
             {
-                var dataService = Ioc.Default.GetService<IDataService>();
-                var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+                return;
+            }
 
-                if (dataService == null || mainViewModel == null)
+            var dataService = Ioc.Default.GetService<IDataService>();
+            var mainViewModel = Ioc.Default.GetService<MainViewModel>();
+
+            if (dataService == null || mainViewModel == null)
+            {
+                return;
+            }
+
+            var childrenToAdd = new List<HierarchyViewModel>();
+
+            foreach (var hierarchy in dataService.GetChildren(_hierarchy))
+            {
+                switch (hierarchy.NodeTypeId)
                 {
-                    return; 
+                    case (int)Enums.NodeType.Facility:
+                        childrenToAdd.Add(new FacilityViewModel(this, hierarchy));
+                        break;
+                    case (int)Enums.NodeType.Well:
+                        childrenToAdd.Add(new WellViewModel(this, hierarchy));
+                        break;
+                    case (int)Enums.NodeType.RunSheet:
+                        if (mainViewModel.TreeMode == TreeMode.Setup)
+                        {
+                            childrenToAdd.Add(new RunSheetViewModel(this, hierarchy));
+                        }
+                        break;
+                    case (int)Enums.NodeType.ContextTag:
+                        if (mainViewModel.TreeMode == TreeMode.Setup)
+                        {
+                            childrenToAdd.Add(new ContextTagViewModel(this, hierarchy));
+                        }
+                        break;
+                    default:
+                        childrenToAdd.Add(new HierarchyViewModel(this, hierarchy));
+                        break;
                 }
+            }
 
-                foreach (var hierarchy in dataService.GetChildren(_hierarchy))
-                {
-
-                    switch (hierarchy.NodeTypeId)
-                    {
-                        case (int)Enums.NodeType.Facility:
-                            _children.Add(new FacilityViewModel(this, hierarchy));
-                            break;
-                        case (int)Enums.NodeType.Well:
-                            _children.Add(new WellViewModel(this, hierarchy));
-                            break;
-                        case (int)Enums.NodeType.RunSheet:
-                            if (mainViewModel.TreeMode == TreeMode.Setup)
-                            {
-                                _children.Add(new RunSheetViewModel(this, hierarchy));
-                            }
-                            break;
-                        case (int)Enums.NodeType.ContextTag:
-                            if (mainViewModel.TreeMode == TreeMode.Setup)
-                            {
-                                _children.Add(new ContextTagViewModel(this, hierarchy));
-                            }
-                            break;
-                        default:
-                            _children.Add(new HierarchyViewModel(this, hierarchy));
-                            break;
-                    }
-                }
+            foreach (var child in childrenToAdd)
+            {
+                _children.Add(child);
             }
         }
 

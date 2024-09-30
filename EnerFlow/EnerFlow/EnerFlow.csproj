@@ -71,6 +71,8 @@
     <None Remove="Images\Document_24x24.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
+    <None Remove="Images\Equipment_16x16.png" />
+    <None Remove="Images\Equipment_24x24.png" />
     <None Remove="Images\Events_16x16.png" />
     <None Remove="Images\Events_24x24.png" />
     <None Remove="Images\Exceptions.png" />
@@ -160,6 +162,8 @@
     <None Remove="Images\Unlinked_24x24.png" />
     <None Remove="Images\User_16x16.png" />
     <None Remove="Images\User_24x24.png" />
+    <None Remove="Images\Vessel_16x16.png" />
+    <None Remove="Images\Vessel_24x24.png" />
     <None Remove="Images\Visualizations_16x16.png" />
     <None Remove="Images\Visualizations_24x24.png" />
     <None Remove="Images\Wells_16x16.png" />
@@ -256,6 +260,8 @@
     <Resource Include="Images\Devices_16x16.png" />
     <Resource Include="Images\Devices_24x24.png" />
     <Resource Include="Images\EF_Icon.png" />
+    <Resource Include="Images\Equipment_16x16.png" />
+    <Resource Include="Images\Equipment_24x24.png" />
     <Resource Include="Images\Exceptions.png" />
     <Resource Include="Images\Exceptions_White.png" />
     <Resource Include="Images\Field.png" />
@@ -306,6 +312,8 @@
     <Resource Include="Images\TurbineMeter_48x48.png" />
     <Resource Include="Images\UltrasonicMeter_48x48.png" />
     <Resource Include="Images\Ungroup.png" />
+    <Resource Include="Images\Vessel_16x16.png" />
+    <Resource Include="Images\Vessel_24x24.png" />
     <SplashScreen Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />

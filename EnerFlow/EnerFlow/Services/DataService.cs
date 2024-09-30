@@ -1,5 +1,4 @@
 ﻿using EnerFlow.Data;
-using EnerFlow.Enums;
 using EnerFlow.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
@@ -41,6 +40,12 @@ namespace EnerFlow.Services
                 .Include(hierarchy => hierarchy.Screens)
                 .Include(hierarchy => hierarchy.Diagrams)
                 .Include(hierarchy => hierarchy.Documents)
+                .Include(hierarchy => hierarchy.Folders)
+                .Include(hierarchy => hierarchy.Meters)
+                .Include(hierarchy => hierarchy.Pumps)
+                .Include(hierarchy => hierarchy.Tanks)
+                .Include(hierarchy => hierarchy.Vessels)
+                .Include(hierarchy => hierarchy.Equipment)
                 .OrderBy(h => h.Name));
         }
 
@@ -124,9 +129,30 @@ namespace EnerFlow.Services
                     case Enums.NodeType.Document:
                         Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
                         break;
+                    case Enums.NodeType.Folder:
+                        Context.Documents.Remove(Context.Documents.First(f => f.HierarchyId == hierarchyId));
+                        break;
+                    case Enums.NodeType.Meter:
+                        Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
+                        break;
+                    case Enums.NodeType.Pump:
+                        Context.Documents.Remove(Context.Documents.First(p => p.HierarchyId == hierarchyId));
+                        break;
+                    case Enums.NodeType.Tank:
+                        Context.Documents.Remove(Context.Documents.First(t => t.HierarchyId == hierarchyId));
+                        break;
+                    case Enums.NodeType.Vessel:
+                        Context.Documents.Remove(Context.Documents.First(v => v.HierarchyId == hierarchyId));
+                        break;
+                    case Enums.NodeType.Equipment:
+                        Context.Documents.Remove(Context.Documents.First(e => e.HierarchyId == hierarchyId));
+                        break;
+                    default:
+                        Context.Hierarchies.Remove(hierarchy);
+                        break;
                 }
 
-                Context.Hierarchies.Remove(hierarchy);
+
                 Context.SaveChanges();
 
             }

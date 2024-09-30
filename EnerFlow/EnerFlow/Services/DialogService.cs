@@ -316,6 +316,210 @@ namespace EnerFlow.Services
             }
         }
 
+        public void ShowNewSerialPortChannelTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new serial port channel tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var serialPortChannelTag = new SerialPortChannelTag();
+            var serialPortChannelTagViewModel = new SerialPortChannelTagViewModel(parentHierarchyViewModel, new Hierarchy(), serialPortChannelTag)
+            {
+                Name = "New Serial Port Channel Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewSerialPortChannelTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = serialPortChannelTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                serialPortChannelTagViewModel.DisableAutoSave = false;
+                dataService.Context.SerialPortChannelTags.Add(serialPortChannelTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, serialPortChannelTagViewModel.Hierarchy, Enums.NodeType.SerialPortChannelTag);
+                parentHierarchyViewModel.Children.Add(serialPortChannelTagViewModel);
+            }
+        }
+
+        public void ShowNewIpChannelTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new IP Channel Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var ipChannelTag = new IpChannelTag();
+            var ipChannelTagViewModel = new IpChannelTagViewModel(parentHierarchyViewModel, new Hierarchy(), ipChannelTag)
+            {
+                Name = "New IP Channel",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewIpChannelTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = ipChannelTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                ipChannelTagViewModel.DisableAutoSave = false;
+                dataService.Context.IpChannelTags.Add(ipChannelTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, ipChannelTagViewModel.Hierarchy, Enums.NodeType.IpChannelTag);
+                parentHierarchyViewModel.Children.Add(ipChannelTagViewModel);
+            }
+        }
+
+        public void ShowNewDeviceTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Device Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var deviceTag = new DeviceTag();
+            var deviceTagViewModel = new DeviceTagViewModel(parentHierarchyViewModel, new Hierarchy(), deviceTag)
+            {
+                Name = "New Device Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewDeviceTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = deviceTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                deviceTagViewModel.DisableAutoSave = false;
+                dataService.Context.DeviceTags.Add(deviceTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, deviceTagViewModel.Hierarchy, Enums.NodeType.DeviceTag);
+                parentHierarchyViewModel.Children.Add(deviceTagViewModel);
+            }
+        }
+
+        public void ShowNewAnalogIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Analog IO Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var analogIoTag = new AnalogIoTag();
+            var analogIoTagViewModel = new AnalogIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), analogIoTag)
+            {
+                Name = "New Analog IO Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewAnalogIoTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = analogIoTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                analogIoTagViewModel.DisableAutoSave = false;
+                dataService.Context.AnalogIoTags.Add(analogIoTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, analogIoTagViewModel.Hierarchy, Enums.NodeType.AnalogIoTag);
+                parentHierarchyViewModel.Children.Add(analogIoTagViewModel);
+            }
+        }
+
+        public void ShowNewDigitalIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Digital IO Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var digitalIoTag = new DigitalIoTag();
+            var digitalIoTagViewModel = new DigitalIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), digitalIoTag)
+            {
+                Name = "New Digital IO Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewContextTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = digitalIoTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                digitalIoTagViewModel.DisableAutoSave = false;
+                dataService.Context.DigitalIoTags.Add(digitalIoTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, digitalIoTagViewModel.Hierarchy, Enums.NodeType.DigitalIoTag);
+                parentHierarchyViewModel.Children.Add(digitalIoTagViewModel);
+            }
+        }
+
+        public void ShowNewStringIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new String IO Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var stringIoTag = new StringIoTag();
+            var stringIoTagViewModel = new StringIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), stringIoTag)
+            {
+                Name = "New String IO Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewStringIoTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = stringIoTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                stringIoTagViewModel.DisableAutoSave = false;
+                dataService.Context.StringIoTags.Add(stringIoTag);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, stringIoTagViewModel.Hierarchy, Enums.NodeType.StringIoTag);
+                parentHierarchyViewModel.Children.Add(stringIoTagViewModel);
+            }
+        }
+
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
@@ -382,6 +586,13 @@ namespace EnerFlow.Services
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
+                case Enums.NodeType.RunSheet:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Run Sheet?", "Delete Run Sheet"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
                 case Enums.NodeType.ContextTag:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Context Tag?", "Delete Context Tag"))
                     {
@@ -389,8 +600,106 @@ namespace EnerFlow.Services
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case Enums.NodeType.RunSheet:
+                case Enums.NodeType.SerialPortChannelTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Serial Port Channel Tag?", "Delete Serial Port Channel Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.IpChannelTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this IP Channel Tag?", "Delete IP Channel Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.DeviceTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Device Tag?", "Delete Device Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.AnalogIoTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Analog IO Tag?", "Delete Analog IO Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.DigitalIoTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Digital IO Tag?", "Delete Digital IO Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.StringIoTag:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this String IO Tag?", "Delete String IO Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Screen:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Screen?", "Delete Screen"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Diagram:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Run Sheet?", "Delete Run Sheet"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Document:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Document?", "Delete Document"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Folder:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Folder?", "Delete Folder"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Meter:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Meter?", "Delete Meter"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Pump:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Pump?", "Delete Pump"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Tank:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Tank?", "Delete Tank"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Vessel:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Vessel?", "Delete Vessel"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
+                case Enums.NodeType.Equipment:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this Equipment?", "Delete Equipment"))
                     {
                         dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
