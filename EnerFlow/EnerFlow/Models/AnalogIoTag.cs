@@ -27,7 +27,7 @@ public partial class AnalogIoTag
 
     public bool? IsCalculated { get; set; }
 
-    public string? Code { get; set; }
+    public string? Script { get; set; }
 
     public double? UnscaledMinimum { get; set; }
 

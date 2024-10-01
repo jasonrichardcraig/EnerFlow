@@ -89,6 +89,11 @@ namespace EnerFlow.Selectors
         public DataTemplate? StringIoTagTemplate { get; set; }
 
         /// <summary>
+        /// Gets or sets the DataTemplate for the Meter Run I/O Tag node type.
+        /// </summary>
+        public DataTemplate? MeterRunTemplate { get; set; }
+
+        /// <summary>
         /// Gets or sets the DataTemplate for the Screen node type.
         /// </summary>
         public DataTemplate? ScreenTemplate { get; set; }
@@ -159,12 +164,13 @@ namespace EnerFlow.Selectors
                 NodeType.Well => WellTemplate ?? base.SelectTemplate(item, container),
                 NodeType.RunSheet => RunSheetTemplate ?? base.SelectTemplate(item, container),
                 NodeType.ContextTag => ContextTagTemplate ?? base.SelectTemplate(item, container),
-                NodeType.SerialPortChannelTag => SerialPortChannelTagTemplate ?? base.SelectTemplate(item, container),
-                NodeType.IpChannelTag => IpChannelTagTemplate ?? base.SelectTemplate(item, container),
-                NodeType.DeviceTag => DeviceTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.SerialPortChannel => SerialPortChannelTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.IpChannel => IpChannelTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.Device => DeviceTagTemplate ?? base.SelectTemplate(item, container),
                 NodeType.AnalogIoTag => AnalogIoTagTemplate ?? base.SelectTemplate(item, container),
                 NodeType.DigitalIoTag => DigitalIoTagTemplate ?? base.SelectTemplate(item, container),
                 NodeType.StringIoTag => StringIoTagTemplate ?? base.SelectTemplate(item, container),
+                NodeType.MeterRun => MeterRunTemplate ?? base.SelectTemplate(item, container),
                 NodeType.Screen => ScreenTemplate ?? base.SelectTemplate(item, container),
                 NodeType.Diagram => DiagramTemplate ?? base.SelectTemplate(item, container),
                 NodeType.Document => DocumentTemplate ?? base.SelectTemplate(item, container),

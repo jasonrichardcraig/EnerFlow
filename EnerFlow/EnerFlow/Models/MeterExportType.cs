@@ -9,5 +9,5 @@ public partial class MeterExportType
 
     public string? Name { get; set; }
 
-    public virtual ICollection<MeterRunTag> MeterRunTags { get; set; } = new List<MeterRunTag>();
+    public virtual ICollection<MeterRun> MeterRuns { get; set; } = new List<MeterRun>();
 }

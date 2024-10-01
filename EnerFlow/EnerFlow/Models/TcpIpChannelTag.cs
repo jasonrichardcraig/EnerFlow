@@ -29,7 +29,5 @@ public partial class TcpIpChannelTag
 
     public int? WriteTimeout { get; set; }
 
-    public virtual ICollection<DeviceTag> DeviceTags { get; set; } = new List<DeviceTag>();
-
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

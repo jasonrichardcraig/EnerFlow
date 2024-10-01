@@ -21,7 +21,7 @@ public partial class DigitalIoTag
 
     public bool? IsCalculated { get; set; }
 
-    public string? Code { get; set; }
+    public string? Script { get; set; }
 
     public int? AlarmPriorityId { get; set; }
 

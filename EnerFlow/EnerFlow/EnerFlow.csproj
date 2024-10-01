@@ -54,10 +54,8 @@
     <None Remove="Images\Database_24x24.png" />
     <None Remove="Images\DataServiceAlertIcon.png" />
     <None Remove="Images\Delete.png" />
-    <None Remove="Images\Devices_16x16.png" />
-    <None Remove="Images\Devices_24x24.png" />
-    <None Remove="Images\DeviceTag_16x16.png" />
-    <None Remove="Images\DeviceTag_24x24.png" />
+    <None Remove="Images\Device_16x16.png" />
+    <None Remove="Images\Device_24x24.png" />
     <None Remove="Images\Diagram_16x16.png" />
     <None Remove="Images\Diagram_24x24.png" />
     <None Remove="Images\DigitalIoTag_16x16.png" />
@@ -87,14 +85,16 @@
     <None Remove="Images\GenericDocument.png" />
     <None Remove="Images\Group.png" />
     <None Remove="Images\Home.png" />
-    <None Remove="Images\IpChannelTag_16x16.png" />
-    <None Remove="Images\IpChannelTag_24x24.png" />
+    <None Remove="Images\IpChannel_16x16.png" />
+    <None Remove="Images\IpChannel_24x24.png" />
     <None Remove="Images\Key_16x16.png" />
     <None Remove="Images\Key_24x24.png" />
     <None Remove="Images\Login_16x16.png" />
     <None Remove="Images\Login_24x24.png" />
     <None Remove="Images\Maps_16x16.png" />
     <None Remove="Images\Maps_24x24.png" />
+    <None Remove="Images\MeterRun_16x16.png" />
+    <None Remove="Images\MeterRun_24x24.png" />
     <None Remove="Images\Meters_16x16.png" />
     <None Remove="Images\Meters_24x24.png" />
     <None Remove="Images\NotConnected.png" />
@@ -134,8 +134,8 @@
     <None Remove="Images\Security_24x24.png" />
     <None Remove="Images\SendBackward.png" />
     <None Remove="Images\SendToBack.png" />
-    <None Remove="Images\SerialPortChannelTag_16x16.png" />
-    <None Remove="Images\SerialPortChannelTag_24x24.png" />
+    <None Remove="Images\SerialPortChannel_16x16.png" />
+    <None Remove="Images\SerialPortChannel_24x24.png" />
     <None Remove="Images\Server_16x16.png" />
     <None Remove="Images\Server_24x24.png" />
     <None Remove="Images\Settings.png" />
@@ -153,6 +153,8 @@
     <None Remove="Images\Tools.png" />
     <None Remove="Images\Tools_16x16.png" />
     <None Remove="Images\Tools_24x24.png" />
+    <None Remove="Images\TreeMode_16x16.png" />
+    <None Remove="Images\TreeMode_24x24.png" />
     <None Remove="Images\TurbineMeter_48x48.png" />
     <None Remove="Images\UltrasonicMeter_48x48.png" />
     <None Remove="Images\Ungroup.png" />
@@ -231,8 +233,8 @@
     <Resource Include="Images\Database_24x24.png" />
     <Resource Include="Images\DataServiceAlertIcon.png" />
     <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\DeviceTag_16x16.png" />
-    <Resource Include="Images\DeviceTag_24x24.png" />
+    <Resource Include="Images\Device_16x16.png" />
+    <Resource Include="Images\Device_24x24.png" />
     <Resource Include="Images\Diagram_16x16.png" />
     <Resource Include="Images\Diagram_24x24.png" />
     <Resource Include="Images\DigitalIoTag_16x16.png" />
@@ -257,8 +259,6 @@
     <Resource Include="Images\Channels_24x24.png" />
     <Resource Include="Images\Data Transfer_16x16.png" />
     <Resource Include="Images\Data Transfer_24x24.png" />
-    <Resource Include="Images\Devices_16x16.png" />
-    <Resource Include="Images\Devices_24x24.png" />
     <Resource Include="Images\EF_Icon.png" />
     <Resource Include="Images\Equipment_16x16.png" />
     <Resource Include="Images\Equipment_24x24.png" />
@@ -270,12 +270,14 @@
     <Resource Include="Images\Folder_24x24.png" />
     <Resource Include="Images\GenericDocument.png" />
     <Resource Include="Images\Group.png" />
-    <Resource Include="Images\IpChannelTag_16x16.png" />
-    <Resource Include="Images\IpChannelTag_24x24.png" />
+    <Resource Include="Images\IpChannel_16x16.png" />
+    <Resource Include="Images\IpChannel_24x24.png" />
     <Resource Include="Images\Key_16x16.png" />
     <Resource Include="Images\Key_24x24.png" />
     <Resource Include="Images\Login_16x16.png" />
     <Resource Include="Images\Login_24x24.png" />
+    <Resource Include="Images\MeterRun_16x16.png" />
+    <Resource Include="Images\MeterRun_24x24.png" />
     <Resource Include="Images\NotConnected.png" />
     <Resource Include="Images\OpenFolder.png" />
     <Resource Include="Images\OrificeMeter_16x16_White.png" />
@@ -301,8 +303,8 @@
     <Resource Include="Images\Screen_24x24.png" />
     <Resource Include="Images\SendBackward.png" />
     <Resource Include="Images\SendToBack.png" />
-    <Resource Include="Images\SerialPortChannelTag_16x16.png" />
-    <Resource Include="Images\SerialPortChannelTag_24x24.png" />
+    <Resource Include="Images\SerialPortChannel_16x16.png" />
+    <Resource Include="Images\SerialPortChannel_24x24.png" />
     <Resource Include="Images\Server_16x16.png" />
     <Resource Include="Images\Server_24x24.png" />
     <Resource Include="Images\StringIoTag_16x16.png" />
@@ -314,6 +316,8 @@
     <Resource Include="Images\Ungroup.png" />
     <Resource Include="Images\Vessel_16x16.png" />
     <Resource Include="Images\Vessel_24x24.png" />
+    <Resource Include="Images\TreeMode_16x16.png" />
+    <Resource Include="Images\TreeMode_24x24.png" />
     <SplashScreen Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />
@@ -373,6 +377,9 @@
     <Compile Update="Views\Dialogs\NewContextTagDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\NewMeterRunDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\NewRunSheetDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -392,6 +399,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserControls\Setup\ContextTagControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserControls\Setup\MeterRunControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserControls\Setup\RunSheetControl.xaml.cs">
@@ -414,6 +424,9 @@
 
   <ItemGroup>
     <Page Update="Views\Dialogs\NewFacilityDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\Setup\MeterRunControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UserControls\Setup\WellControl.xaml">

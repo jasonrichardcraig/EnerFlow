@@ -9,7 +9,7 @@ public partial class Meter
 
     public int HierarchyId { get; set; }
 
-    public int? MeterRunTagId { get; set; }
+    public int? MeterRunId { get; set; }
 
     public bool? IsChart { get; set; }
 
@@ -45,7 +45,7 @@ public partial class Meter
 
     public virtual MeterPurpose? MeterPurpose { get; set; }
 
-    public virtual MeterRunTag? MeterRunTag { get; set; }
+    public virtual MeterRun? MeterRun { get; set; }
 
     public virtual ICollection<PeriodicGasFlowRecord> PeriodicGasFlowRecords { get; set; } = new List<PeriodicGasFlowRecord>();
 

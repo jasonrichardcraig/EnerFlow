@@ -316,105 +316,105 @@ namespace EnerFlow.Services
             }
         }
 
-        public void ShowNewSerialPortChannelTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        public void ShowNewSerialPortChannelDialog(HierarchyViewModel parentHierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
 
             if (dataService == null)
             {
-                ShowErrorDialog("Unable to create new serial port channel tag. Required services are not available.", "Error");
+                ShowErrorDialog("Unable to create new Serial Port Channel. Required services are not available.", "Error");
                 return;
             }
 
-            var serialPortChannelTag = new SerialPortChannelTag();
-            var serialPortChannelTagViewModel = new SerialPortChannelTagViewModel(parentHierarchyViewModel, new Hierarchy(), serialPortChannelTag)
+            var serialPortChannel = new SerialPortChannel();
+            var serialPortChannelViewModel = new SerialPortChannelViewModel(parentHierarchyViewModel, new Hierarchy(), serialPortChannel)
             {
-                Name = "New Serial Port Channel Tag",
+                Name = "New Serial Port Channel",
                 DisableAutoSave = true
             };
 
-            var dialog = new NewSerialPortChannelTagDialog()
+            var dialog = new NewSerialPortChannelDialog()
             {
                 Owner = Application.Current.MainWindow,
-                DataContext = serialPortChannelTagViewModel
+                DataContext = serialPortChannelViewModel
             };
 
             var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == true)
             {
-                serialPortChannelTagViewModel.DisableAutoSave = false;
-                dataService.Context.SerialPortChannelTags.Add(serialPortChannelTag);
-                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, serialPortChannelTagViewModel.Hierarchy, Enums.NodeType.SerialPortChannelTag);
-                parentHierarchyViewModel.Children.Add(serialPortChannelTagViewModel);
+                serialPortChannelViewModel.DisableAutoSave = false;
+                dataService.Context.SerialPortChannels.Add(serialPortChannel);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, serialPortChannelViewModel.Hierarchy, Enums.NodeType.SerialPortChannel);
+                parentHierarchyViewModel.Children.Add(serialPortChannelViewModel);
             }
         }
 
-        public void ShowNewIpChannelTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        public void ShowNewIpChannelDialog(HierarchyViewModel parentHierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
 
             if (dataService == null)
             {
-                ShowErrorDialog("Unable to create new IP Channel Tag. Required services are not available.", "Error");
+                ShowErrorDialog("Unable to create new IP Channel. Required services are not available.", "Error");
                 return;
             }
 
-            var ipChannelTag = new IpChannelTag();
-            var ipChannelTagViewModel = new IpChannelTagViewModel(parentHierarchyViewModel, new Hierarchy(), ipChannelTag)
+            var ipChannel = new IpChannel();
+            var ipChannelViewModel = new IpChannelViewModel(parentHierarchyViewModel, new Hierarchy(), ipChannel)
             {
                 Name = "New IP Channel",
                 DisableAutoSave = true
             };
 
-            var dialog = new NewIpChannelTagDialog()
+            var dialog = new NewIpChannelDialog()
             {
                 Owner = Application.Current.MainWindow,
-                DataContext = ipChannelTagViewModel
+                DataContext = ipChannelViewModel
             };
 
             var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == true)
             {
-                ipChannelTagViewModel.DisableAutoSave = false;
-                dataService.Context.IpChannelTags.Add(ipChannelTag);
-                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, ipChannelTagViewModel.Hierarchy, Enums.NodeType.IpChannelTag);
-                parentHierarchyViewModel.Children.Add(ipChannelTagViewModel);
+                ipChannelViewModel.DisableAutoSave = false;
+                dataService.Context.IpChannels.Add(ipChannel);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, ipChannelViewModel.Hierarchy, Enums.NodeType.IpChannel);
+                parentHierarchyViewModel.Children.Add(ipChannelViewModel);
             }
         }
 
-        public void ShowNewDeviceTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        public void ShowNewDeviceDialog(HierarchyViewModel parentHierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
 
             if (dataService == null)
             {
-                ShowErrorDialog("Unable to create new Device Tag. Required services are not available.", "Error");
+                ShowErrorDialog("Unable to create new Device. Required services are not available.", "Error");
                 return;
             }
 
-            var deviceTag = new DeviceTag();
-            var deviceTagViewModel = new DeviceTagViewModel(parentHierarchyViewModel, new Hierarchy(), deviceTag)
+            var device = new Device();
+            var deviceViewModel = new DeviceViewModel(parentHierarchyViewModel, new Hierarchy(), device)
             {
-                Name = "New Device Tag",
+                Name = "New Device",
                 DisableAutoSave = true
             };
 
-            var dialog = new NewDeviceTagDialog()
+            var dialog = new NewDeviceDialog()
             {
                 Owner = Application.Current.MainWindow,
-                DataContext = deviceTagViewModel
+                DataContext = deviceViewModel
             };
 
             var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == true)
             {
-                deviceTagViewModel.DisableAutoSave = false;
-                dataService.Context.DeviceTags.Add(deviceTag);
-                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, deviceTagViewModel.Hierarchy, Enums.NodeType.DeviceTag);
-                parentHierarchyViewModel.Children.Add(deviceTagViewModel);
+                deviceViewModel.DisableAutoSave = false;
+                dataService.Context.Devices.Add(device);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, deviceViewModel.Hierarchy, Enums.NodeType.Device);
+                parentHierarchyViewModel.Children.Add(deviceViewModel);
             }
         }
 
@@ -520,6 +520,344 @@ namespace EnerFlow.Services
             }
         }
 
+        public void ShowNewMeterRunDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Meter Run. Required services are not available.", "Error");
+                return;
+            }
+
+            var meterRun = new MeterRun();
+            var meterRunViewModel = new MeterRunViewModel(parentHierarchyViewModel, new Hierarchy(), meterRun)
+            {
+                Name = "New Meter Run",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewMeterRunDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = meterRunViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                meterRunViewModel.DisableAutoSave = false;
+                dataService.Context.MeterRuns.Add(meterRun);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, meterRunViewModel.Hierarchy, Enums.NodeType.MeterRun);
+                parentHierarchyViewModel.Children.Add(meterRunViewModel);
+            }
+        }
+
+        public void ShowNewScreenDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Screen. Required services are not available.", "Error");
+                return;
+            }
+
+            var screen = new Screen();
+            var screenViewModel = new ScreenViewModel(parentHierarchyViewModel, new Hierarchy(), screen)
+            {
+                Name = "New Screen",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewScreenDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = screenViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                screenViewModel.DisableAutoSave = false;
+                dataService.Context.Screens.Add(screen);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, screenViewModel.Hierarchy, Enums.NodeType.Screen);
+                parentHierarchyViewModel.Children.Add(screenViewModel);
+            }
+        }
+
+        public void ShowNewDiagramDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Diagram. Required services are not available.", "Error");
+                return;
+            }
+
+            var diagram = new Diagram();
+            var diagramViewModel = new DiagramViewModel(parentHierarchyViewModel, new Hierarchy(), diagram)
+            {
+                Name = "New Diagram",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewDiagramDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = diagramViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                diagramViewModel.DisableAutoSave = false;
+                dataService.Context.Diagrams.Add(diagram);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, diagramViewModel.Hierarchy, Enums.NodeType.Diagram);
+                parentHierarchyViewModel.Children.Add(diagramViewModel);
+            }
+        }
+
+        public void ShowNewDocumentDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Document. Required services are not available.", "Error");
+                return;
+            }
+
+            var document = new Document();
+            var documentViewModel = new DocumentViewModel(parentHierarchyViewModel, new Hierarchy(), document)
+            {
+                Name = "New Document",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewDocumentDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = documentViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                documentViewModel.DisableAutoSave = false;
+                dataService.Context.Documents.Add(document);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, documentViewModel.Hierarchy, Enums.NodeType.Document);
+                parentHierarchyViewModel.Children.Add(documentViewModel);
+            }
+        }
+
+        public void ShowNewFolderDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Folder. Required services are not available.", "Error");
+                return;
+            }
+
+            var folder = new Folder();
+            var folderViewModel = new FolderViewModel(parentHierarchyViewModel, new Hierarchy(), folder)
+            {
+                Name = "New Folder",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewFolderDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = folderViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                folderViewModel.DisableAutoSave = false;
+                dataService.Context.Folders.Add(folder);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, folderViewModel.Hierarchy, Enums.NodeType.Folder);
+                parentHierarchyViewModel.Children.Add(folderViewModel);
+            }
+        }
+
+        public void ShowNewMeterDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Meter. Required services are not available.", "Error");
+                return;
+            }
+
+            var meter = new Meter();
+            var meterViewModel = new MeterViewModel(parentHierarchyViewModel, new Hierarchy(), meter)
+            {
+                Name = "New Meter",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewMeterDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = meterViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                meterViewModel.DisableAutoSave = false;
+                dataService.Context.Meters.Add(meter);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, meterViewModel.Hierarchy, Enums.NodeType.Meter);
+                parentHierarchyViewModel.Children.Add(meterViewModel);
+            }
+        }
+
+        public void ShowNewPumpDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Pump. Required services are not available.", "Error");
+                return;
+            }
+
+            var pump = new Pump();
+            var pumpViewModel = new PumpViewModel(parentHierarchyViewModel, new Hierarchy(), pump)
+            {
+                Name = "New Pump",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewPumpDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = pumpViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                pumpViewModel.DisableAutoSave = false;
+                dataService.Context.Pumps.Add(pump);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, pumpViewModel.Hierarchy, Enums.NodeType.Pump);
+                parentHierarchyViewModel.Children.Add(pumpViewModel);
+            }
+        }
+
+        public void ShowNewTankDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Tank. Required services are not available.", "Error");
+                return;
+            }
+
+            var tank = new Tank();
+            var tankViewModel = new TankViewModel(parentHierarchyViewModel, new Hierarchy(), tank)
+            {
+                Name = "New Tank",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewTankDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = tankViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                tankViewModel.DisableAutoSave = false;
+                dataService.Context.Tanks.Add(tank);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, tankViewModel.Hierarchy, Enums.NodeType.Tank);
+                parentHierarchyViewModel.Children.Add(tankViewModel);
+            }
+        }
+
+        public void ShowNewVesselDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Vessel. Required services are not available.", "Error");
+                return;
+            }
+
+            var vessel = new Vessel();
+            var vesselViewModel = new VesselViewModel(parentHierarchyViewModel, new Hierarchy(), vessel)
+            {
+                Name = "New Vessel",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewTankDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = vesselViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                vesselViewModel.DisableAutoSave = false;
+                dataService.Context.Vessels.Add(vessel);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, vesselViewModel.Hierarchy, Enums.NodeType.Vessel);
+                parentHierarchyViewModel.Children.Add(vesselViewModel);
+            }
+        }
+        public void ShowNewEquipmentDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Equipment. Required services are not available.", "Error");
+                return;
+            }
+
+            var equipment = new Equipment();
+            var equipmentViewModel = new EquipmentViewModel(parentHierarchyViewModel, new Hierarchy(), equipment)
+            {
+                Name = "New Equipment",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewEquipmentDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = equipmentViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                equipmentViewModel.DisableAutoSave = false;
+                dataService.Context.Equipment.Add(equipment);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, equipmentViewModel.Hierarchy, Enums.NodeType.Equipment);
+                parentHierarchyViewModel.Children.Add(equipmentViewModel);
+            }
+        }
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
@@ -600,21 +938,21 @@ namespace EnerFlow.Services
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case Enums.NodeType.SerialPortChannelTag:
+                case Enums.NodeType.SerialPortChannel:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Serial Port Channel Tag?", "Delete Serial Port Channel Tag"))
                     {
                         dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case Enums.NodeType.IpChannelTag:
+                case Enums.NodeType.IpChannel:
                     if (ShowConfirmationDialog("Are you sure you want to delete this IP Channel Tag?", "Delete IP Channel Tag"))
                     {
                         dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
-                case Enums.NodeType.DeviceTag:
+                case Enums.NodeType.Device:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Device Tag?", "Delete Device Tag"))
                     {
                         dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);

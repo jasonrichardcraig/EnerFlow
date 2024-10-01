@@ -36,6 +36,22 @@ namespace EnerFlow.ViewModels
             AddNewWellCommand = new RelayCommand(AddNewWell, CanAddNewItem);
             AddNewRunSheetCommand = new RelayCommand(AddNewRunSheet, CanAddNewItem);
             AddNewContextTagCommand = new RelayCommand(AddNewContextTag, CanAddNewItem);
+            AddNewSerialPortChannelCommand = new RelayCommand(AddNewSerialPortChannel, CanAddNewItem);
+            AddNewIpChannelCommand = new RelayCommand(AddNewIpChannel, CanAddNewItem);
+            AddNewDeviceCommand = new RelayCommand(AddNewDeviceTag, CanAddNewItem);
+            AddNewAnalogIoTagCommand = new RelayCommand(AddNewAnalogIoTag, CanAddNewItem);
+            AddNewDigitalIoTagCommand = new RelayCommand(AddNewDigitalIoTag, CanAddNewItem);
+            AddNewStringIoTagCommand = new RelayCommand(AddNewStringIoTag, CanAddNewItem);
+            AddNewMeterRunCommand = new RelayCommand(AddNewMeterRun, CanAddNewItem);
+            AddNewScreenCommand = new RelayCommand(AddNewScreen, CanAddNewItem);
+            AddNewDiagramCommand = new RelayCommand(AddNewDiagram, CanAddNewItem);
+            AddNewDocumentCommand = new RelayCommand(AddNewDocument, CanAddNewItem);
+            AddNewFolderCommand = new RelayCommand(AddNewFolder, CanAddNewItem);
+            AddNewMeterCommand = new RelayCommand(AddNewMeter, CanAddNewItem);
+            AddNewPumpCommand = new RelayCommand(AddNewPump, CanAddNewItem);
+            AddNewTankCommand = new RelayCommand(AddNewTank, CanAddNewItem);
+            AddNewVesselCommand = new RelayCommand(AddNewVessel, CanAddNewItem);
+            AddNewEquipmentCommand = new RelayCommand(AddNewEquipment, CanAddNewItem);
             DeleteCommand = new RelayCommand(Delete, CanDelete);
 
             _children.CollectionChanged += Children_CollectionChanged;
@@ -243,17 +259,19 @@ namespace EnerFlow.ViewModels
 
         public ICommand AddNewContextTagCommand { get; }
 
-        public ICommand AddNewSerialPortChannelTagCommand { get; }
+        public ICommand AddNewSerialPortChannelCommand { get; }
 
-        public ICommand AddNewIpChannelTagCommand { get; }
+        public ICommand AddNewIpChannelCommand { get; }
 
-        public ICommand AddNewDeviceTagCommand { get; }
+        public ICommand AddNewDeviceCommand { get; }
 
         public ICommand AddNewAnalogIoTagCommand { get; }
 
         public ICommand AddNewDigitalIoTagCommand { get; }
 
         public ICommand AddNewStringIoTagCommand { get; }
+
+        public ICommand AddNewMeterRunCommand { get; }
 
         public ICommand AddNewScreenCommand { get; }
 
@@ -421,6 +439,79 @@ namespace EnerFlow.ViewModels
         private void AddNewContextTag()
         {
             Ioc.Default.GetService<IDialogService>()?.ShowNewContextTagDialog(this);
+        }
+
+        private void AddNewSerialPortChannel()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewSerialPortChannelDialog(this);
+        }
+
+        private void AddNewIpChannel()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewIpChannelDialog(this);
+        }
+
+        private void AddNewDeviceTag()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewDeviceDialog(this);
+        }
+
+        private void AddNewAnalogIoTag()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewAnalogIoTagDialog(this);
+        }
+
+        private void AddNewDigitalIoTag()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewDigitalIoTagDialog(this);
+        }
+
+        private void AddNewStringIoTag()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewStringIoTagDialog(this);
+        }
+
+        private void AddNewMeterRun()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewMeterRunDialog(this);
+        }
+
+        private void AddNewScreen()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewScreenDialog(this);
+        }
+
+        private void AddNewDiagram()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewDiagramDialog(this);
+        }
+        private void AddNewDocument()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewDocumentDialog(this);
+        }
+        private void AddNewFolder()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewFolderDialog(this);
+        }
+        private void AddNewMeter()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewMeterDialog(this);
+        }
+        private void AddNewPump()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewPumpDialog(this);
+        }
+        private void AddNewTank()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewTankDialog(this);
+        }
+        private void AddNewVessel()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewVesselDialog(this);
+        }
+        private void AddNewEquipment()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowNewEquipmentDialog(this);
         }
 
         private void Refresh()

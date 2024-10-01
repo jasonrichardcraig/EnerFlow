@@ -25,27 +25,27 @@ namespace EnerFlow.Services
         {
             return new List<Hierarchy>(Context.Hierarchies
                 .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel())
-                .Include(hierarchy => hierarchy.NodeType)
-                .Include(hierarchy => hierarchy.Facilities)
-                .Include(hierarchy => hierarchy.Satellites)
-                .Include(hierarchy => hierarchy.Wells)
-                .Include(hierarchy => hierarchy.RunSheets)
-                .Include(hierarchy => hierarchy.ContextTags)
-                .Include(hierarchy => hierarchy.SerialPortChannelTags)
-                .Include(hierarchy => hierarchy.IpChannelTags)
-                .Include(hierarchy => hierarchy.DeviceTags)
-                .Include(hierarchy => hierarchy.AnalogIoTags)
-                .Include(hierarchy => hierarchy.DigitalIoTags)
-                .Include(hierarchy => hierarchy.StringIoTags)
-                .Include(hierarchy => hierarchy.Screens)
-                .Include(hierarchy => hierarchy.Diagrams)
-                .Include(hierarchy => hierarchy.Documents)
-                .Include(hierarchy => hierarchy.Folders)
-                .Include(hierarchy => hierarchy.Meters)
-                .Include(hierarchy => hierarchy.Pumps)
-                .Include(hierarchy => hierarchy.Tanks)
-                .Include(hierarchy => hierarchy.Vessels)
-                .Include(hierarchy => hierarchy.Equipment)
+                .Include(h => h.NodeType)
+                .Include(h => h.Facilities)
+                .Include(h => h.Wells)
+                .Include(h => h.RunSheets)
+                .Include(h => h.ContextTags)
+                .Include(h => h.SerialPortChannels)
+                .Include(h => h.IpChannels)
+                .Include(h => h.Devices)
+                .Include(h => h.AnalogIoTags)
+                .Include(h => h.DigitalIoTags)
+                .Include(h => h.StringIoTags)
+                .Include(h => h.MeterRuns)
+                .Include(h => h.Screens)
+                .Include(h => h.Diagrams)
+                .Include(h => h.Documents)
+                .Include(h => h.Folders)
+                .Include(h => h.Meters)
+                .Include(h => h.Pumps)
+                .Include(h => h.Tanks)
+                .Include(h => h.Vessels)
+                .Include(h => h.Equipment)
                 .OrderBy(h => h.Name));
         }
 
@@ -102,14 +102,14 @@ namespace EnerFlow.Services
                     case Enums.NodeType.ContextTag:
                         Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.SerialPortChannelTag:
-                        Context.SerialPortChannelTags.Remove(Context.SerialPortChannelTags.First(s => s.HierarchyId == hierarchyId));
+                    case Enums.NodeType.SerialPortChannel:
+                        Context.SerialPortChannels.Remove(Context.SerialPortChannels.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.IpChannelTag:
-                        Context.IpChannelTags.Remove(Context.IpChannelTags.First(i => i.HierarchyId == hierarchyId));
+                    case Enums.NodeType.IpChannel:
+                        Context.IpChannels.Remove(Context.IpChannels.First(i => i.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.DeviceTag:
-                        Context.DeviceTags.Remove(Context.DeviceTags.First(d => d.HierarchyId == hierarchyId));
+                    case Enums.NodeType.Device:
+                        Context.Devices.Remove(Context.Devices.First(d => d.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.AnalogIoTag:
                         Context.AnalogIoTags.Remove(Context.AnalogIoTags.First(a => a.HierarchyId == hierarchyId));

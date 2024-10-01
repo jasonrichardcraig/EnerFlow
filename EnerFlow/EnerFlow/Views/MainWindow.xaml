@@ -49,7 +49,10 @@
                         <MenuItem Header="_Map" 
                                   IsCheckable="True"
                                   IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}"/>
-                        <MenuItem Header="_Data Entry"
+                        <MenuItem Header="_Measurement"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}"/>
+                        <MenuItem Header="_Field Data Capture"
                                   IsCheckable="True"
                                   IsChecked="{Binding TreeMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}"/>
                         <MenuItem Header="_SCADA"
@@ -92,13 +95,13 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             SelectedIndex="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}}">
-                    <TabItem HeaderTemplate="{StaticResource MapTabHeaderDataTemplate}"
-                             Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
+                    <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
                         <wv2:WebView2 x:Name="MapWebView"
                                       NavigationCompleted="MapWebView_NavigationCompleted"
                                       WebMessageReceived="MapWebView_WebMessageReceived"
                                       Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
                     </TabItem>
+                    <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Measurment}"/>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=FieldDataCapture}"/>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=SCADA}"/>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Schematics}"/>
@@ -129,6 +132,13 @@
                     </StatusBarItem>
                     <StatusBarItem>
                         <TextBlock Text="{Binding Database}"/>
+                    </StatusBarItem>
+                    <Separator/>
+                    <StatusBarItem ToolTip="Tree Mode">
+                        <Image Source="/Images/TreeMode_16x16.png"/>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock Style="{StaticResource StatusBarTreeModeTextBlockStyle}"/>
                     </StatusBarItem>
                 </StatusBar>
             </Grid>

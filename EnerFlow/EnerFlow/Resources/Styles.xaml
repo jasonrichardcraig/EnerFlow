@@ -138,14 +138,14 @@
             <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=ContextTag}" Value="True">
                 <Setter Property="Source" Value="/Images/ContextTag_16x16.png"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SerialPortChannelTag}" Value="True">
-                <Setter Property="Source" Value="/Images/SerialPortChannelTag_16x16.png"/>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SerialPortChannel}" Value="True">
+                <Setter Property="Source" Value="/Images/SerialPortChannel_16x16.png"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=IpChannelTag}" Value="True">
-                <Setter Property="Source" Value="/Images/IpChannelTag_16x16.png"/>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=IpChannel}" Value="True">
+                <Setter Property="Source" Value="/Images/IpChannel_16x16.png"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=DeviceTag}" Value="True">
-                <Setter Property="Source" Value="/Images/DeviceTag_16x16.png"/>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Device}" Value="True">
+                <Setter Property="Source" Value="/Images/Device_16x16.png"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=AnalogIoTag}" Value="True">
                 <Setter Property="Source" Value="/Images/AnalogIoTag_16x16.png"/>
@@ -155,6 +155,9 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=StringIoTag}" Value="True">
                 <Setter Property="Source" Value="/Images/StringIoTag_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=MeterRun}" Value="True">
+                <Setter Property="Source" Value="/Images/MeterRun_16x16.png"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Screen}" Value="True">
                 <Setter Property="Source" Value="/Images/Screen_16x16.png"/>
@@ -183,9 +186,12 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="SetupTreeModeMenuItemVisibilityStyle" TargetType="MenuItem">
+    <!--<Style x:Key="SetupTreeModeMenuItemVisibilityStyle" TargetType="MenuItem">
         <Style.Triggers>
             <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
                 <Setter Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
@@ -208,6 +214,9 @@
             <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
                 <Setter Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
                 <Setter Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
@@ -221,6 +230,37 @@
                 <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
+    </Style>-->
+
+    <Style x:Key="StatusBarTreeModeTextBlockStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="Text" Value="Map"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="Text" Value="Measurement"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="Text" Value="Field Data Capture"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="Text" Value="SCADA"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="Text" Value="Schematics"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="Text" Value="Setup"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="DisabledIndicatorStyle" TargetType="TextBlock">
@@ -230,14 +270,6 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding IsDisabled}" Value="False">
                 <Setter Property="Visibility" Value="Collapsed"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
-                <Setter Property="Opacity" Value="0.2"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -263,29 +295,58 @@
         </Setter>
     </Style>
 
-    <!-- DataTemplate for the Map tab header -->
-    <DataTemplate x:Key="MapTabHeaderDataTemplate">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="24"
-                   Width="24"
-                   Margin="0,0,4,0"
-                   Source="/Images/Maps_24x24.png"/>
-            <TextBlock Text="Map"
-                       VerticalAlignment="Center"/>
-        </StackPanel>
-    </DataTemplate>
-
-    <!-- DataTemplate for the Setup tab header -->
-    <DataTemplate x:Key="SetupTabHeaderDataTemplate">
-        <StackPanel Orientation="Horizontal">
-            <Image Height="24"
-                   Width="24"
-                   Margin="0,0,4,0"
-                   Source="/Images/Tools_24x24.png"/>
-            <TextBlock Text="Setup"
-                       VerticalAlignment="Center"/>
-        </StackPanel>
-    </DataTemplate>
+    <Style x:Key="SystemImageStyle" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Refresh"
+                                  Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                       Width="16"
+                                       Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Company"
+                                  Command="{Binding AddNewCompanyCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                       Width="16"
+                                       Source="/Images/Company_16x16.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Disabled"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding IsDisabled}"/>
+                            <Separator/>
+                            <MenuItem Header="Refresh"
+                                  Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                       Width="16"
+                                       Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
     <!-- DataTemplate for the General tab header -->
     <DataTemplate x:Key="GeneralTabHeaderDataTemplate">
@@ -319,7 +380,6 @@
             <TextBlock Text="Regulatory" VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
-
 
     <!-- DataTemplate for the Units tab header -->
     <DataTemplate x:Key="UnitsTabHeaderDataTemplate">
@@ -373,39 +433,12 @@
     <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate"
                               DataType="{x:Type viewmodels:HierarchyViewModel}"
                               ItemsSource="{Binding Children}">
-        <Image Style="{StaticResource DisabledImageStyle}"
+        <Image Style="{StaticResource SystemImageStyle}"
                Height="16"
                Width="16"
                Margin="0,0,4,0"
                Source="/Images/System.png"
                ToolTip="System">
-            <Image.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Add Company"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
-                              Command="{Binding AddNewCompanyCommand}">
-                        <MenuItem.Icon>
-                            <Image Height="16"
-                                   Width="16"
-                                   Source="/Images/Company_16x16.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
-                    <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
-                              IsCheckable="True"
-                              IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
-                    <MenuItem Header="Refresh"
-                              Command="{Binding RefreshCommand}">
-                        <MenuItem.Icon>
-                            <Image Height="16"
-                                   Width="16"
-                                   Source="/Images/Refresh.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </Image.ContextMenu>
         </Image>
     </HierarchicalDataTemplate>
 
@@ -417,7 +450,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add District"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding AddNewDistrictCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -426,7 +459,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Delete Company"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -434,12 +467,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -474,7 +507,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Area"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding AddNewAreaCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -483,7 +516,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Delete District"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -491,12 +524,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -531,7 +564,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Field"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding AddNewFieldCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -540,7 +573,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Delete Area"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -548,12 +581,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -587,8 +620,7 @@
                     ToolTip="{Binding Description}">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}">
+                    <MenuItem Header="Add">
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
@@ -620,7 +652,6 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Delete Field"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -628,12 +659,11 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
-                    <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                    <Separator />
+                    <MenuItem Header="Disabled"  
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -668,7 +698,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}">
+                              >
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
@@ -690,25 +720,25 @@
                                    Source="/Images/Wells_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Serial Port Channel Tag"
-                                  Command="{Binding AddNewSerialPortChannelTagCommand}">
+                        <MenuItem Header="Serial Port Channel"
+                                  Command="{Binding AddNewSerialPortChannelCommand}">
                             <MenuItem.Icon>
                                 <Image Height="16"
                                    Width="16"
-                                   Source="/Images/SerialPortChannelTag_16x16.png"/>
+                                   Source="/Images/SerialPortChannel_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="IP Channel Tag"
-                                  Command="{Binding AddNewChannelTagCommand}">
+                        <MenuItem Header="IP Channel"
+                                  Command="{Binding AddNewIpChannelCommand}">
                             <MenuItem.Icon>
                                 <Image Height="16"
                                    Width="16"
-                                   Source="/Images/IpChannelTag_16x16.png"/>
+                                   Source="/Images/IpChannel_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Delete Facility"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -716,12 +746,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -753,31 +783,31 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}">
+                              >
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
                                    Source="/Images/Add_16x16.png"/>
                         </MenuItem.Icon>
-                        <MenuItem Header="Serial Port Channel Tag"
-                                  Command="{Binding AddNewSerialPortChannelTagCommand}">
+                        <MenuItem Header="Serial Port Channel"
+                                  Command="{Binding AddNewSerialPortChannelCommand}">
                             <MenuItem.Icon>
                                 <Image Height="16"
                                    Width="16"
-                                   Source="/Images/SerialPortChannelTag_16x16.png"/>
+                                   Source="/Images/SerialPortChannel_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="IP Channel Tag"
-                                  Command="{Binding AddNewChannelTagCommand}">
+                        <MenuItem Header="IP Channel"
+                                  Command="{Binding AddNewIpChannelCommand}">
                             <MenuItem.Icon>
                                 <Image Height="16"
                                    Width="16"
-                                   Source="/Images/IpChannelTag_16x16.png"/>
+                                   Source="/Images/IpChannel_16x16.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Delete Well"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -785,11 +815,11 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -821,7 +851,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Run Sheet"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -829,12 +859,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -866,7 +896,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}">
+                              >
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
@@ -906,7 +936,7 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Delete Context Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -914,12 +944,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -946,21 +976,21 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="SerialPortChannelTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+    <HierarchicalDataTemplate x:Key="SerialPortChannelTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Device"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding AddNewDeviceCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
-                                   Source="/Images/DeviceTag_16x16.png"/>
+                                   Source="/Images/Device_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Serial Port Channel Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                    <MenuItem Header="Delete Serial Port Channel"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -968,12 +998,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -993,28 +1023,28 @@
                    Height="16"
                    Width="16"
                    Margin="0,0,4,0"
-                   Source="/Images/SerialPortChannelTag_16x16.png"/>
+                   Source="/Images/SerialPortChannel_16x16.png"/>
             <TextBlock Style="{StaticResource DisabledTextStyle}"
                        Text="{Binding Name}"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="IpChannelTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+    <HierarchicalDataTemplate x:Key="IpChannelTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Device"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding AddNewDeviceCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
                                    Width="16"
-                                   Source="/Images/DeviceTag_16x16.png"/>
+                                   Source="/Images/Device_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete IP Channel Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                    <MenuItem Header="Delete IP Channel"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1022,12 +1052,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1054,7 +1084,7 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="DeviceTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+    <HierarchicalDataTemplate x:Key="DeviceTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.ContextMenu>
                 <ContextMenu>
@@ -1082,6 +1112,14 @@
                                    Source="/Images/StringIoTag_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Header="Meter Run"
+                              Command="{Binding AddNewMeterRunCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/MeterRun_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Context Tag"
                               Command="{Binding AddNewContextTagCommand}">
                         <MenuItem.Icon>
@@ -1090,8 +1128,8 @@
                                    Source="/Images/ContextTag_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Delete Device Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                    <MenuItem Header="Delete Device"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1099,12 +1137,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1124,7 +1162,7 @@
                    Height="16"
                    Width="16"
                    Margin="0,0,4,0"
-                   Source="/Images/DeviceTag_16x16.png"/>
+                   Source="/Images/Device_16x16.png"/>
             <TextBlock Style="{StaticResource DisabledTextStyle}"
                        Text="{Binding Name}"
                        VerticalAlignment="Center"/>
@@ -1136,7 +1174,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Analog IO Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1144,12 +1182,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1181,7 +1219,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Digital IO Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1189,12 +1227,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1226,7 +1264,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete String IO Tag"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1234,12 +1272,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1266,12 +1304,12 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <HierarchicalDataTemplate x:Key="ScreenTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+    <HierarchicalDataTemplate x:Key="MeterRunTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Delete Screen"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                    <MenuItem Header="Delete Meter Run"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1279,12 +1317,57 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/MeterRun_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="ScreenTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete Screen"
+                              
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Disabled"
+                              
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1316,7 +1399,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Diagram"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1324,12 +1407,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1361,7 +1444,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Document"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1369,12 +1452,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1406,7 +1489,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Folder"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1414,12 +1497,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1451,7 +1534,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Meter"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1459,12 +1542,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1496,7 +1579,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Pump"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1504,12 +1587,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1541,7 +1624,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Tank"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1549,12 +1632,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1586,7 +1669,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Vessel"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1594,12 +1677,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1631,7 +1714,7 @@
             <StackPanel.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete Equipment"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               Command="{Binding DeleteCommand}">
                         <MenuItem.Icon>
                             <Image Height="16"
@@ -1639,12 +1722,12 @@
                                    Source="/Images/Delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Disabled"
-                              Style="{StaticResource SetupTreeModeMenuItemVisibilityStyle}"
+                              
                               IsCheckable="True"
                               IsChecked="{Binding IsDisabled}"/>
-                    <Separator Style="{StaticResource SetupTreeModeSeparatorVisibilityStyle}"/>
+                    <Separator />
                     <MenuItem Header="Refresh"
                               Command="{Binding RefreshCommand}">
                         <MenuItem.Icon>
@@ -1681,12 +1764,13 @@
                                          WellTemplate="{StaticResource WellTreeViewItemDataTemplate}"
                                          RunSheetTemplate="{StaticResource RunSheetTreeViewItemDataTemplate}"
                                          ContextTagTemplate="{StaticResource ContextTagTreeViewItemDataTemplate}"
-                                         SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagTreeViewItemDataTemplate}"
-                                         IpChannelTagTemplate="{StaticResource IpChannelTagTreeViewItemDataTemplate}"
-                                         DeviceTagTemplate="{StaticResource DeviceTagTreeViewItemDataTemplate}"
+                                         SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTreeViewItemDataTemplate}"
+                                         IpChannelTagTemplate="{StaticResource IpChannelTreeViewItemDataTemplate}"
+                                         DeviceTagTemplate="{StaticResource DeviceTreeViewItemDataTemplate}"
                                          AnalogIoTagTemplate="{StaticResource AnalogIoTagTreeViewItemDataTemplate}"
                                          DigitalIoTagTemplate="{StaticResource DigitalIoTagTreeViewItemDataTemplate}"
                                          StringIoTagTemplate="{StaticResource StringIoTagTreeViewItemDataTemplate}"
+                                         MeterRunTemplate="{StaticResource MeterRunTreeViewItemDataTemplate}"
                                          ScreenTemplate="{StaticResource ScreenTreeViewItemDataTemplate}"
                                          DiagramTemplate="{StaticResource DiagramTreeViewItemDataTemplate}"
                                          DocumentTemplate="{StaticResource DocumentTreeViewItemDataTemplate}"
@@ -1737,16 +1821,16 @@
         <setupusercontrols:ContextTagControl/>
     </DataTemplate>
 
-    <DataTemplate x:Key="SerialPortChannelTagSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:SerialPortChannelTagControl/>
+    <DataTemplate x:Key="SerialPortChannelSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:SerialPortChannelControl/>
     </DataTemplate>
 
-    <DataTemplate x:Key="IpChannelTagSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:IpChannelTagControl/>
+    <DataTemplate x:Key="IpChannelSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:IpChannelControl/>
     </DataTemplate>
 
-    <DataTemplate x:Key="DeviceTagSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
-        <setupusercontrols:DeviceTagControl/>
+    <DataTemplate x:Key="DeviceSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:DeviceControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="AnalogIoTagSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -1759,6 +1843,10 @@
 
     <DataTemplate x:Key="StringIoTagSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
         <setupusercontrols:StringIoTagControl/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MeterRunSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
+        <setupusercontrols:MeterRunControl/>
     </DataTemplate>
 
     <DataTemplate x:Key="ScreenSetupTabDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}">
@@ -1807,12 +1895,13 @@
                                          WellTemplate="{StaticResource WellSetupTabDataTemplate}"
                                          RunSheetTemplate="{StaticResource RunSheetSetupTabDataTemplate}"
                                          ContextTagTemplate="{StaticResource ContextTagSetupTabDataTemplate}"
-                                         SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTagSetupTabDataTemplate}"
-                                         IpChannelTagTemplate="{StaticResource IpChannelTagSetupTabDataTemplate}"
-                                         DeviceTagTemplate="{StaticResource DeviceTagSetupTabDataTemplate}"
+                                         SerialPortChannelTagTemplate="{StaticResource SerialPortChannelSetupTabDataTemplate}"
+                                         IpChannelTagTemplate="{StaticResource IpChannelSetupTabDataTemplate}"
+                                         DeviceTagTemplate="{StaticResource DeviceSetupTabDataTemplate}"
                                          AnalogIoTagTemplate="{StaticResource AnalogIoTagSetupTabDataTemplate}"
                                          DigitalIoTagTemplate="{StaticResource DigitalIoTagSetupTabDataTemplate}"
                                          StringIoTagTemplate="{StaticResource StringIoTagSetupTabDataTemplate}"
+                                         MeterRunTemplate="{StaticResource MeterRunSetupTabDataTemplate}"
                                          ScreenTemplate="{StaticResource ScreenSetupTabDataTemplate}"
                                          DiagramTemplate="{StaticResource DiagramSetupTabDataTemplate}"
                                          FolderTemplate="{StaticResource FolderSetupTabDataTemplate}"

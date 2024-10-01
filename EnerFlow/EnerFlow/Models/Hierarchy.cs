@@ -30,7 +30,7 @@ public partial class Hierarchy
 
     public virtual ICollection<ContextTag> ContextTags { get; set; } = new List<ContextTag>();
 
-    public virtual ICollection<DeviceTag> DeviceTags { get; set; } = new List<DeviceTag>();
+    public virtual ICollection<Device> Devices { get; set; } = new List<Device>();
 
     public virtual ICollection<Diagram> Diagrams { get; set; } = new List<Diagram>();
 
@@ -44,9 +44,11 @@ public partial class Hierarchy
 
     public virtual ICollection<Folder> Folders { get; set; } = new List<Folder>();
 
-    public virtual ICollection<IpChannelTag> IpChannelTags { get; set; } = new List<IpChannelTag>();
+    public virtual ICollection<IpChannel> IpChannels { get; set; } = new List<IpChannel>();
 
     public virtual ICollection<MaintenanceRecord> MaintenanceRecords { get; set; } = new List<MaintenanceRecord>();
+
+    public virtual ICollection<MeterRun> MeterRuns { get; set; } = new List<MeterRun>();
 
     public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
 
@@ -60,11 +62,9 @@ public partial class Hierarchy
 
     public virtual ICollection<RunSheet> RunSheets { get; set; } = new List<RunSheet>();
 
-    public virtual ICollection<Satellite> Satellites { get; set; } = new List<Satellite>();
-
     public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
 
-    public virtual ICollection<SerialPortChannelTag> SerialPortChannelTags { get; set; } = new List<SerialPortChannelTag>();
+    public virtual ICollection<SerialPortChannel> SerialPortChannels { get; set; } = new List<SerialPortChannel>();
 
     public virtual ICollection<StringIoTag> StringIoTags { get; set; } = new List<StringIoTag>();
 
