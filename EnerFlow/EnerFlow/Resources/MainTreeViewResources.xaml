@@ -1,0 +1,2110 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:selectors="clr-namespace:EnerFlow.Selectors"
+                    xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels"
+                    xmlns:converters="clr-namespace:EnerFlow.Converters"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
+    <converters:FacilityTypeConverter x:Key="FacilityTypeConverter"/>
+
+    <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DisabledIndicatorStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FacilityTreeItemImageStyle" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=0}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=1}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=2}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=3}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=4}" Value="True">
+                <Setter Property="Source" Value="/Images/Pipeline_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=5}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=6}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=7}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=8}" Value="True">
+                <Setter Property="Source" Value="/Images/Pipeline_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=9}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=10}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedFacilityType, Converter={StaticResource FacilityTypeConverter}, ConverterParameter=11}" Value="True">
+                <Setter Property="Source" Value="/Images/Facilities_16x16.png"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <ContextMenu x:Key="DefaultTreeItemContextMenu">
+        <MenuItem Header="Refresh"
+                  Command="{Binding RefreshCommand}">
+            <MenuItem.Icon>
+                <Image Height="16"
+                       Width="16"
+                       Source="/Images/Refresh.png"/>
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <Style x:Key="SystemTreeViewItemImageStyle"
+           TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDisabled}" Value="True">
+                <Setter Property="Opacity" Value="0.2"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Company"
+                                  Command="{Binding AddNewCompanyCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                       Width="16"
+                                       Source="/Images/Company_16x16.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Disabled"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding IsDisabled}"/>
+                            <Separator/>
+                            <MenuItem Header="Refresh"
+                                  Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                       Width="16"
+                                       Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CompanyTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add District" 
+                              Command="{Binding AddNewDistrictCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/District.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete Company"  
+                              Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DistrictTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Area" 
+                              Command="{Binding AddNewAreaCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Area.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete District" 
+                              Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AreaTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Field"
+                                      Command="{Binding AddNewFieldCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Field.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete Area" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Disabled"
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator/>
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FieldTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Add_16x16.png"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="Folder"
+                                          Command="{Binding AddNewFolderCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Folder_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Run Sheet"
+                                          Command="{Binding AddNewRunSheetCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Runs_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Facility"
+                                          Command="{Binding AddNewFacilityCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Facilities_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="Delete Field"
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"  
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FacilityTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Add_16x16.png"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="Facility"
+                                          Command="{Binding AddNewFacilityCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Facilities_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Well"
+                                          Command="{Binding AddNewWellCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Wells_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Serial Port Channel"
+                                          Command="{Binding AddNewSerialPortChannelCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/SerialPortChannel_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="IP Channel"
+                                          Command="{Binding AddNewIpChannelCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/IpChannel_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="Delete Facility" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WellTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Add_16x16.png"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="Serial Port Channel"
+                                          Command="{Binding AddNewSerialPortChannelCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/SerialPortChannel_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="IP Channel"
+                                          Command="{Binding AddNewIpChannelCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/IpChannel_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="Delete Well" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="RunSheetTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Run Sheet" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"        
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ContextTagTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Add_16x16.png"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="Digital IO Tag"
+                                          Command="{Binding AddNewDigitalIoTagCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/DigitalIoTag_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Analog IO Tag"
+                                          Command="{Binding AddNewAnalogIoTagCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/AnalogIoTag_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="String IO Tag"
+                                          Command="{Binding AddNewStringIoTagCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/StringIoTag_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Context Tag"
+                                          Command="{Binding AddNewContextTagCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/ContextTag_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="Delete Context Tag"
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SerialPortChannelTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Device"       
+                                      Command="{Binding AddNewDeviceCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Device_16x16.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete Serial Port Channel"   
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="IpChannelTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Device"    
+                                      Command="{Binding AddNewDeviceCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Device_16x16.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete IP Channel"  
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"          
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DeviceTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Add Device"    
+                                      Command="{Binding AddNewDeviceCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Device_16x16.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete IP Channel"  
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled"          
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AnalogIoTagTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Analog IO Tag" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DigitalIoTagTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Digital IO Tag" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="StringIoTagTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete String IO Tag" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MeterRunTagTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Meter Run" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ScreenTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Screen" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DiagramTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Diagram" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DocumentTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Document" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FolderTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Folder" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MeterTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Meter" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PumpTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Pump" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="TankTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Tank" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="VesselTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Vessel" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="EquipmentTreeViewItemStackPanelStyle" TargetType="StackPanel">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Map}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Measurement}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=FieldDataCapture}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=SCADA}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Schematics}" Value="True">
+                <Setter Property="ContextMenu" Value="{StaticResource DefaultTreeItemContextMenu}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MainViewModel.TreeMode, Source={StaticResource Locator}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Setup}" Value="True">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Equipment" 
+                                      Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Disabled" 
+                                      IsCheckable="True"
+                                      IsChecked="{Binding IsDisabled}"/>
+                            <Separator />
+                            <MenuItem Header="Refresh"
+                                      Command="{Binding RefreshCommand}">
+                                <MenuItem.Icon>
+                                    <Image Height="16"
+                                           Width="16"
+                                           Source="/Images/Refresh.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <HierarchicalDataTemplate x:Key="SystemTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <Image Style="{StaticResource SystemTreeViewItemImageStyle}"
+               Height="16"
+               Width="16"
+               Margin="0,0,4,0"
+               Source="/Images/System.png"
+               ToolTip="System">
+        </Image>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="CompanyTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource CompanyTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Company_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="DistrictTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource DistrictTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/District.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="AreaTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Area.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="FieldTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource FieldTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Field.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="FacilityTreeViewItemDataTemplate"
+                              DataType="{x:Type viewmodels:HierarchyViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource FacilityTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource FacilityTreeItemImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0" />
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="WellTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource WellTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Wells_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="RunSheetTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource RunSheetTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Runs_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="ContextTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource ContextTagTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/ContextTag_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="SerialPortChannelTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource SerialPortChannelTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/SerialPortChannel_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="IpChannelTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource IpChannelTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/IpChannelTag_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="DeviceTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Digital IO Tag"
+                              Command="{Binding AddNewDigitalIoTagCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/DigitalIoTag_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Analog IO Tag"
+                                  Command="{Binding AddNewAnalogIoTagCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/AnalogIoTag_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="String IO Tag"
+                                  Command="{Binding AddNewStringIoTagCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/StringIoTag_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Meter Run"
+                              Command="{Binding AddNewMeterRunCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/MeterRun_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Context Tag"
+                              Command="{Binding AddNewContextTagCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/ContextTag_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Delete Device"
+                              
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Disabled"
+                              
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator />
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Device_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="AnalogIoTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource AnalogIoTagTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/AnalogIoTag_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="DigitalIoTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/DigitalIoTag_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="StringIoTagTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource StringIoTagTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/StringIoTag_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="MeterRunTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource MeterRunTagTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/MeterRun_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="ScreenTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource ScreenTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Screen_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="DiagramTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource DiagramTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Diagram_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="DocumentTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource DocumentTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Document_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="FolderTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource FolderTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Folder_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="MeterTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource MeterTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Meters_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="PumpTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete Pump"
+                              
+                              Command="{Binding DeleteCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Disabled"
+                              
+                              IsCheckable="True"
+                              IsChecked="{Binding IsDisabled}"/>
+                    <Separator />
+                    <MenuItem Header="Refresh"
+                              Command="{Binding RefreshCommand}">
+                        <MenuItem.Icon>
+                            <Image Height="16"
+                                   Width="16"
+                                   Source="/Images/Refresh.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Pump_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="TankTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource TankTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Tank_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="VesselTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource VesselTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Vessel_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate x:Key="EquipmentTreeViewItemDataTemplate" DataType="{x:Type viewmodels:HierarchyViewModel}" ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource EquipmentTreeViewItemStackPanelStyle}"
+                    ToolTip="{Binding Description}">
+            <TextBlock Text="X"
+                       VerticalAlignment="Bottom"
+                       Foreground="Red"
+                       ToolTip="Disabled"
+                       Style="{StaticResource DisabledIndicatorStyle}"/>
+            <Image Style="{StaticResource DisabledImageStyle}"
+                   Height="16"
+                   Width="16"
+                   Margin="0,0,4,0"
+                   Source="/Images/Equipment_16x16.png"/>
+            <TextBlock Style="{StaticResource DisabledTextStyle}"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <selectors:HierarchyTemplateSelector x:Key="HierarchyTreeViewItemTemplateSelector"
+                                         SystemTemplate="{StaticResource SystemTreeViewItemDataTemplate}"
+                                         CompanyTemplate="{StaticResource CompanyTreeViewItemDataTemplate}"
+                                         DistrictTemplate="{StaticResource DistrictTreeViewItemDataTemplate}"
+                                         AreaTemplate="{StaticResource AreaTreeViewItemDataTemplate}"
+                                         FieldTemplate="{StaticResource FieldTreeViewItemDataTemplate}"
+                                         FacilityTemplate="{StaticResource FacilityTreeViewItemDataTemplate}"
+                                         WellTemplate="{StaticResource WellTreeViewItemDataTemplate}"
+                                         RunSheetTemplate="{StaticResource RunSheetTreeViewItemDataTemplate}"
+                                         ContextTagTemplate="{StaticResource ContextTagTreeViewItemDataTemplate}"
+                                         SerialPortChannelTagTemplate="{StaticResource SerialPortChannelTreeViewItemDataTemplate}"
+                                         IpChannelTagTemplate="{StaticResource IpChannelTreeViewItemDataTemplate}"
+                                         DeviceTagTemplate="{StaticResource DeviceTreeViewItemDataTemplate}"
+                                         AnalogIoTagTemplate="{StaticResource AnalogIoTagTreeViewItemDataTemplate}"
+                                         DigitalIoTagTemplate="{StaticResource DigitalIoTagTreeViewItemDataTemplate}"
+                                         StringIoTagTemplate="{StaticResource StringIoTagTreeViewItemDataTemplate}"
+                                         MeterRunTemplate="{StaticResource MeterRunTreeViewItemDataTemplate}"
+                                         ScreenTemplate="{StaticResource ScreenTreeViewItemDataTemplate}"
+                                         DiagramTemplate="{StaticResource DiagramTreeViewItemDataTemplate}"
+                                         DocumentTemplate="{StaticResource DocumentTreeViewItemDataTemplate}"
+                                         FolderTemplate="{StaticResource FolderTreeViewItemDataTemplate}"
+                                         MeterTemplate="{StaticResource MeterTreeViewItemDataTemplate}"
+                                         PumpTemplate="{StaticResource PumpTreeViewItemDataTemplate}"
+                                         TankTemplate="{StaticResource TankTreeViewItemDataTemplate}"
+                                         VesselTemplate="{StaticResource VesselTreeViewItemDataTemplate}"
+                                         EquipmentTemplate="{StaticResource EquipmentTreeViewItemDataTemplate}">
+
+    </selectors:HierarchyTemplateSelector>
+
+</ResourceDictionary>
