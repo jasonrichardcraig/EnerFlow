@@ -72,6 +72,8 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<Equipment> Equipment { get; set; }
 
+    public virtual DbSet<EquipmentStatus> EquipmentStatuses { get; set; }
+
     public virtual DbSet<EquipmentSubType> EquipmentSubTypes { get; set; }
 
     public virtual DbSet<EquipmentType> EquipmentTypes { get; set; }
@@ -1018,8 +1020,28 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
+            entity.Property(e => e.DateTimeCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EquipmentStatusId).HasColumnName("EquipmentStatusID");
             entity.Property(e => e.EquipmentSubTypeId).HasColumnName("EquipmentSubTypeID");
             entity.Property(e => e.HierarchyId).HasColumnName("HierarchyID");
+            entity.Property(e => e.Manufacturer)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+            entity.Property(e => e.Model)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+            entity.Property(e => e.Notes)
+                .HasMaxLength(512)
+                .IsUnicode(false);
+            entity.Property(e => e.SerialNumber)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.EquipmentStatus).WithMany(p => p.Equipment)
+                .HasForeignKey(d => d.EquipmentStatusId)
+                .HasConstraintName("FK_Equipment_EquipmentStatuses");
 
             entity.HasOne(d => d.EquipmentSubType).WithMany(p => p.Equipment)
                 .HasForeignKey(d => d.EquipmentSubTypeId)
@@ -1032,12 +1054,20 @@ public partial class EnerFlowContext : DbContext
                 .HasConstraintName("FK_Equipment_Hierarchy");
         });
 
+        modelBuilder.Entity<EquipmentStatus>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Description)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<EquipmentSubType>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.DateTimeCreated)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
             entity.Property(e => e.Description)
                 .HasMaxLength(128)
                 .IsUnicode(false);
@@ -1049,11 +1079,13 @@ public partial class EnerFlowContext : DbContext
             entity.HasOne(d => d.EquipmentType).WithMany(p => p.EquipmentSubTypes)
                 .HasForeignKey(d => d.EquipmentTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_EquipmentSubTypes_EquipmentTypes");
+                .HasConstraintName("FK_EquipmentSubTypes_EquipmentTypes1");
         });
 
         modelBuilder.Entity<EquipmentType>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_EquipmentTypes_1");
+
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");

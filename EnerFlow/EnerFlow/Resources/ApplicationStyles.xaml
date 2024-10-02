@@ -43,6 +43,9 @@
 
     <Style x:Key="SearchResultItemImageStyle" TargetType="Image">
         <Style.Triggers>
+            <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=System}" Value="True">
+                <Setter Property="Source" Value="/Images/System.png"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding NodeType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Company}" Value="True">
                 <Setter Property="Source" Value="/Images/Company_16x16.png"/>
             </DataTrigger>

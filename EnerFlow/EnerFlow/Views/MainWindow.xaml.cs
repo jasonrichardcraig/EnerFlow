@@ -181,5 +181,15 @@ namespace EnerFlow.Views
                 ((MainViewModel)DataContext).SelectedHierarchyViewModel = hierarchyViewModel;
             }
         }
+
+        private void NavigationTreeView_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case System.Windows.Input.Key.Delete:
+                    ((MainViewModel)DataContext).SelectedHierarchyViewModel?.DeleteCommand?.Execute(null);
+                    break;
+            }
+        }
     }
 }

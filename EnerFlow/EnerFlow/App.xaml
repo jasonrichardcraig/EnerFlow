@@ -12,7 +12,7 @@
                     <locators:ViewModelLocator x:Key="Locator" />
                     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
-                    <converters:InvertedBooleanConverter x:Key="InvertedBooleanyConverter"/>
+                    <converters:InvertedBooleanConverter x:Key="InvertedBooleanConverter"/>
                     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
                     <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
                     <converters:EnumToIntegerConverter x:Key="EnumToIntegerConverter"/>

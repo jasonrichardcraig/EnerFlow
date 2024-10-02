@@ -75,6 +75,7 @@
                 <TreeView x:Name="NavigationTreeView"
                           Grid.Row="1"
                           Grid.Column="0"
+                          KeyUp="NavigationTreeView_KeyUp"
                           SelectedItemChanged="NavigationTreeView_SelectedItemChanged"
                           ItemsSource="{Binding SystemHierarchyViewModel, Converter={StaticResource SystemTreeViewItemSourceConverter}}"
                           ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">

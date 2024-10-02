@@ -1,4 +1,7 @@
-﻿namespace EnerFlow.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace EnerFlow.Models;
 
 public partial class MeterRun
 {

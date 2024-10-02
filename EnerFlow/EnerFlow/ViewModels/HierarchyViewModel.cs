@@ -4,9 +4,11 @@ using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
@@ -124,6 +126,7 @@ namespace EnerFlow.ViewModels
 
         [Required]
         [MaxLength(255)]
+        [CustomValidation(typeof(HierarchyViewModel), nameof(ValidateName))]
         public string Name
         {
             get => _hierarchy.Name;
@@ -381,6 +384,36 @@ namespace EnerFlow.ViewModels
                     }
                     break;
             }
+        }
+
+        public static ValidationResult ValidateName(string name, ValidationContext context)
+        {
+            HierarchyViewModel instance = (HierarchyViewModel)context.ObjectInstance;
+
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                return new ValidationResult("Data service not found");
+            }
+
+            // Get the parent hierarchy (or level)
+            var parentId = instance.ParentHierarchyViewModel.Hierarchy.Node;
+
+            if (parentId == null)
+            {
+                return new ValidationResult("Parent hierarchy not found");
+            }
+
+            // Perform a check against the service/database for uniqueness within the level
+            bool isUnique = dataService.IsNameUniqueWithinHierarchy(name, parentId);
+
+            if (isUnique)
+            {
+                return ValidationResult.Success!;
+            }
+
+            return new ValidationResult("The name must be unique within the hierarchy level.");
         }
 
         private void OnIsDisabledChanged()

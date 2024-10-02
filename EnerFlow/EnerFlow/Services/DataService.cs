@@ -58,6 +58,11 @@ namespace EnerFlow.Services
             return Context.Hierarchies.First(h => h.Node == HierarchyId.GetRoot());
         }
 
+        public bool IsNameUniqueWithinHierarchy(string name, HierarchyId parentId)
+        {
+            return !Context.Hierarchies.Any(h => h.Node.IsDescendantOf(parentId) && h.Name == name);
+        }
+
         /// <summary>
         /// Adds a company hierarchy node to the root hierarchy.
         /// </summary>
@@ -120,6 +125,9 @@ namespace EnerFlow.Services
                     case Enums.NodeType.StringIoTag:
                         Context.StringIoTags.Remove(Context.StringIoTags.First(s => s.HierarchyId == hierarchyId));
                         break;
+                    case Enums.NodeType.MeterRun:
+                        Context.MeterRuns.Remove(Context.MeterRuns.First(m => m.HierarchyId == hierarchyId));
+                        break;
                     case Enums.NodeType.Screen:
                         Context.Screens.Remove(Context.Screens.First(s => s.HierarchyId == hierarchyId));
                         break;
@@ -147,14 +155,9 @@ namespace EnerFlow.Services
                     case Enums.NodeType.Equipment:
                         Context.Documents.Remove(Context.Documents.First(e => e.HierarchyId == hierarchyId));
                         break;
-                    default:
-                        Context.Hierarchies.Remove(hierarchy);
-                        break;
                 }
-
-
+                Context.Hierarchies.Remove(hierarchy);
                 Context.SaveChanges();
-
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnerFlow.Models;
 
-public partial class EquipmentSubType
+public partial class EquipmentStatus
 {
     public int Id { get; set; }
 
@@ -11,9 +11,5 @@ public partial class EquipmentSubType
 
     public string Description { get; set; } = null!;
 
-    public int EquipmentTypeId { get; set; }
-
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
-
-    public virtual EquipmentType EquipmentType { get; set; } = null!;
 }

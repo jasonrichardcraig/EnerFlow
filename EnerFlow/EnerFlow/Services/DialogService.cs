@@ -980,6 +980,13 @@ namespace EnerFlow.Services
                         hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
                     }
                     break;
+                case Enums.NodeType.MeterRun:
+                    if (ShowConfirmationDialog("Are you sure you want to delete this MeterRun?", "Delete String IO Tag"))
+                    {
+                        dataService.DeleteHierarchyNode(hierarchyViewModel.Hierarchy);
+                        hierarchyViewModel.ParentHierarchyViewModel.Children.Remove(hierarchyViewModel);
+                    }
+                    break;
                 case Enums.NodeType.Screen:
                     if (ShowConfirmationDialog("Are you sure you want to delete this Screen?", "Delete Screen"))
                     {
