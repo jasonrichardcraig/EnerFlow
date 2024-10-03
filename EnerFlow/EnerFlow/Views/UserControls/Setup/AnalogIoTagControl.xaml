@@ -65,6 +65,101 @@
                              Margin="10,10,10,20" />
                 </Grid>
             </TabItem>
+            <TabItem HeaderTemplate="{StaticResource ScalingTabHeaderDataTemplate}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="Unscaled"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Padding="10"
+                                  Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- UnscaledMinimum -->
+                                <TextBlock Text="Minimum"
+                                           Grid.Column="0"
+                                           Margin="10"/>
+                                <TextBox Grid.Column="1"
+                                         Grid.Row="0"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding UnscaledMinimum, Mode=TwoWay, NotifyOnValidationError=True}"
+                                         Margin="10"/>
+                                <!-- UnscaledMaximum -->
+                                <TextBlock Grid.Row="1"
+                                           Text="Maximum"
+                                           Margin="10"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding UnscaledMaximum, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Scaled"
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Padding="6"
+                                  Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- ScaledMinimum -->
+                                <TextBlock Text="Minimum"
+                                           Grid.Column="0"
+                                           Margin="10"/>
+                                <TextBox Grid.Column="1"
+                                         Grid.Row="0"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding ScaledMinimum, Mode=TwoWay, NotifyOnValidationError=True}"
+                                         Margin="10"/>
+                                <!-- ScaledMaximum -->
+                                <TextBlock Grid.Row="1"
+                                           Text="Maximum"
+                                           Margin="10"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding ScaledMaximum, ValidatesOnNotifyDataErrors=True}"
+                                         Margin="10"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Scaling Behaviour"
+                                  Grid.Column="0"
+                                  Grid.Row="2"
+                                  Padding="6"
+                                  Margin="10">
+                            <CheckBox Content="Clamp Scaled Value"
+                                      IsChecked="{Binding ClampScaledValue}"
+                                      Margin="10"/>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

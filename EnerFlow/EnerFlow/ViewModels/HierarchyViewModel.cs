@@ -329,24 +329,30 @@ namespace EnerFlow.ViewModels
 
             foreach (var hierarchy in dataService.GetChildren(_hierarchy))
             {
-                switch (hierarchy.NodeTypeId)
+                switch ((Enums.NodeType)hierarchy.NodeTypeId)
                 {
-                    case (int)Enums.NodeType.Facility:
+                    case Enums.NodeType.Facility:
                         childrenToAdd.Add(new FacilityViewModel(this, hierarchy));
                         break;
-                    case (int)Enums.NodeType.Well:
+                    case Enums.NodeType.Well:
                         childrenToAdd.Add(new WellViewModel(this, hierarchy));
                         break;
-                    case (int)Enums.NodeType.RunSheet:
+                    case Enums.NodeType.RunSheet:
                         if (mainViewModel.TreeMode == TreeMode.Setup)
                         {
                             childrenToAdd.Add(new RunSheetViewModel(this, hierarchy));
                         }
                         break;
-                    case (int)Enums.NodeType.ContextTag:
+                    case Enums.NodeType.ContextTag:
                         if (mainViewModel.TreeMode == TreeMode.Setup)
                         {
                             childrenToAdd.Add(new ContextTagViewModel(this, hierarchy));
+                        }
+                        break;
+                    case Enums.NodeType.AnalogIoTag:
+                        if (mainViewModel.TreeMode == TreeMode.Setup)
+                        {
+                            childrenToAdd.Add(new AnalogIoTagViewModel(this, hierarchy));
                         }
                         break;
                     default:
