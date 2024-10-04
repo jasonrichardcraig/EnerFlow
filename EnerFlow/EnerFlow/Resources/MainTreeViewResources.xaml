@@ -1589,6 +1589,7 @@
                               DataType="{x:Type viewmodels:HierarchyViewModel}"
                               ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal"
+                    Style="{StaticResource AreaTreeViewItemStackPanelStyle}"
                     ToolTip="{Binding Description}">
             <TextBlock Text="X"
                        VerticalAlignment="Bottom"

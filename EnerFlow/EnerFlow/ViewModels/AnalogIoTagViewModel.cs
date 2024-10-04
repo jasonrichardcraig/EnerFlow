@@ -18,6 +18,11 @@ namespace EnerFlow.ViewModels
         {
             _analogIoTag = analogIoTag;
             analogIoTag.Hierarchy = hierarchy;
+            UnscaledMinimum = 0;
+            UnscaledMaximum = 100;
+            ScaledMinimum = 0;
+            ScaledMaximum = 100;
+            ClampScaledValue = false;
         }
 
         public bool ByteSwap
@@ -140,9 +145,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "History Address Scan Interval must be greater than or equal to 0.")]
-        public int HistoryAddressScanInterval
+        public int? HistoryAddressScanInterval
         {
-            get => _analogIoTag.HistoryAddressScanInterval ?? 0;
+            get => _analogIoTag.HistoryAddressScanInterval;
             set
             {
                 ValidateProperty(value, nameof(HistoryAddressScanInterval));
@@ -218,9 +223,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Unscaled Minimum must be greater than or equal to -1.7976931348623157E+308.")]
-        public double UnscaledMinimum
+        public double? UnscaledMinimum
         {
-            get => _analogIoTag.UnscaledMinimum ?? double.MinValue;
+            get => _analogIoTag.UnscaledMinimum;
             set
             {
                 ValidateProperty(value, nameof(UnscaledMinimum));
@@ -238,9 +243,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Unscaled Maximum must be greater than or equal to -1.7976931348623157E+308.")]
-        public double UnscaledMaximum
+        public double? UnscaledMaximum
         {
-            get => _analogIoTag.UnscaledMaximum ?? double.MinValue;
+            get => _analogIoTag.UnscaledMaximum;
             set
             {
                 ValidateProperty(value, nameof(UnscaledMaximum));
@@ -258,9 +263,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Scaled Minimum must be greater than or equal to -1.7976931348623157E+308.")]
-        public double ScaledMinimum
+        public double? ScaledMinimum
         {
-            get => _analogIoTag.ScaledMinimum ?? double.MinValue;
+            get => _analogIoTag.ScaledMinimum;
             set
             {
                 ValidateProperty(value, nameof(ScaledMinimum));
@@ -278,9 +283,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Scaled Maximum must be greater than or equal to -1.7976931348623157E+308.")]
-        public double ScaledMaximum
+        public double? ScaledMaximum
         {
-            get => _analogIoTag.ScaledMaximum ?? double.MinValue;
+            get => _analogIoTag.ScaledMaximum;
             set
             {
                 ValidateProperty(value, nameof(ScaledMaximum));
@@ -297,9 +302,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool ClampScaledValue
+        public bool? ClampScaledValue
         {
-            get => _analogIoTag.ClampScaledValue ?? false;
+            get => _analogIoTag.ClampScaledValue;
             set
             {
                 ValidateProperty(value, nameof(ClampScaledValue));
@@ -316,9 +321,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool EnableLogging
+        public bool? EnableLogging
         {
-            get => _analogIoTag.EnableLogging ?? false;
+            get => _analogIoTag.EnableLogging;
             set
             {
                 ValidateProperty(value, nameof(EnableLogging));
@@ -337,7 +342,7 @@ namespace EnerFlow.ViewModels
 
         public AlarmPriority HighHighAlarmPriority
         {
-            get => _analogIoTag.HighHighAlarmPriority ?? new AlarmPriority();
+            get => _analogIoTag.HighHighAlarmPriority!;
             set
             {
                 ValidateProperty(value, nameof(HighHighAlarmPriority));
@@ -355,9 +360,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "High High Alarm Delay must be greater than or equal to 0.")]
-        public int HighHighAlarmDelay
+        public int? HighHighAlarmDelay
         {
-            get => _analogIoTag.HighHighAlarmDelay ?? 0;
+            get => _analogIoTag.HighHighAlarmDelay;
             set
             {
                 ValidateProperty(value, nameof(HighHighAlarmDelay));
@@ -375,9 +380,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "High High Alarm Setpoint must be greater than or equal to -1.7976931348623157E+308.")]
-        public double HighHighAlarmSetpoint
+        public double? HighHighAlarmSetpoint
         {
-            get => _analogIoTag.HighHighAlarmSetpoint ?? double.MinValue;
+            get => _analogIoTag.HighHighAlarmSetpoint;
             set
             {
                 ValidateProperty(value, nameof(HighHighAlarmSetpoint));
@@ -395,9 +400,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, double.MaxValue, ErrorMessage = "High High Alarm Deadband must be greater than or equal to 0.")]
-        public double HighHighAlarmDeadband
+        public double? HighHighAlarmDeadband
         {
-            get => _analogIoTag.HighHighAlarmDeadband ?? 0;
+            get => _analogIoTag.HighHighAlarmDeadband;
             set
             {
                 ValidateProperty(value, nameof(HighHighAlarmDeadband));
@@ -414,9 +419,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool HighHighAlarmDisable
+        public bool? HighHighAlarmDisable
         {
-            get => _analogIoTag.HighHighAlarmDisable ?? false;
+            get => _analogIoTag.HighHighAlarmDisable;
             set
             {
                 ValidateProperty(value, nameof(HighHighAlarmDisable));
@@ -435,7 +440,7 @@ namespace EnerFlow.ViewModels
 
         public AlarmPriority HighAlarmPriority
         {
-            get => _analogIoTag.HighAlarmPriority ?? new AlarmPriority();
+            get => _analogIoTag.HighAlarmPriority!;
             set
             {
                 ValidateProperty(value, nameof(HighAlarmPriority));
@@ -453,9 +458,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "High Alarm Delay must be greater than or equal to 0.")]
-        public int HighAlarmDelay
+        public int? HighAlarmDelay
         {
-            get => _analogIoTag.HighAlarmDelay ?? 0;
+            get => _analogIoTag.HighAlarmDelay;
             set
             {
                 ValidateProperty(value, nameof(HighAlarmDelay));
@@ -473,9 +478,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "High Alarm Setpoint must be greater than or equal to -1.7976931348623157E+308.")]
-        public double HighAlarmSetpoint
+        public double? HighAlarmSetpoint
         {
-            get => _analogIoTag.HighAlarmSetpoint ?? double.MinValue;
+            get => _analogIoTag.HighAlarmSetpoint;
             set
             {
                 ValidateProperty(value, nameof(HighAlarmSetpoint));
@@ -493,9 +498,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, double.MaxValue, ErrorMessage = "High Alarm Deadband must be greater than or equal to 0.")]
-        public double HighAlarmDeadband
+        public double? HighAlarmDeadband
         {
-            get => _analogIoTag.HighAlarmDeadband ?? 0;
+            get => _analogIoTag.HighAlarmDeadband;
             set
             {
                 ValidateProperty(value, nameof(HighAlarmDeadband));
@@ -512,9 +517,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool HighAlarmDisable
+        public bool? HighAlarmDisable
         {
-            get => _analogIoTag.HighAlarmDisable ?? false;
+            get => _analogIoTag.HighAlarmDisable;
             set
             {
                 ValidateProperty(value, nameof(HighAlarmDisable));
@@ -533,7 +538,7 @@ namespace EnerFlow.ViewModels
 
         public AlarmPriority LowAlarmPriority
         {
-            get => _analogIoTag.LowAlarmPriority ?? new AlarmPriority();
+            get => _analogIoTag.LowAlarmPriority!;
             set
             {
                 ValidateProperty(value, nameof(LowAlarmPriority));
@@ -551,9 +556,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "Low Alarm Delay must be greater than or equal to 0.")]
-        public int LowAlarmDelay
+        public int? LowAlarmDelay
         {
-            get => _analogIoTag.LowAlarmDelay ?? 0;
+            get => _analogIoTag.LowAlarmDelay;
             set
             {
                 ValidateProperty(value, nameof(LowAlarmDelay));
@@ -571,9 +576,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Low Alarm Setpoint must be greater than or equal to -1.7976931348623157E+308.")]
-        public double LowAlarmSetpoint
+        public double? LowAlarmSetpoint
         {
-            get => _analogIoTag.LowAlarmSetpoint ?? double.MinValue;
+            get => _analogIoTag.LowAlarmSetpoint;
             set
             {
                 ValidateProperty(value, nameof(LowAlarmSetpoint));
@@ -591,9 +596,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, double.MaxValue, ErrorMessage = "Low Alarm Deadband must be greater than or equal to 0.")]
-        public double LowAlarmDeadband
+        public double? LowAlarmDeadband
         {
-            get => _analogIoTag.LowAlarmDeadband ?? 0;
+            get => _analogIoTag.LowAlarmDeadband;
             set
             {
                 ValidateProperty(value, nameof(LowAlarmDeadband));
@@ -610,9 +615,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public bool LowAlarmDisable
+        public bool? LowAlarmDisable
         {
-            get => _analogIoTag.LowAlarmDisable ?? false;
+            get => _analogIoTag.LowAlarmDisable;
             set
             {
                 ValidateProperty(value, nameof(LowAlarmDisable));
@@ -631,7 +636,7 @@ namespace EnerFlow.ViewModels
 
         public AlarmPriority LowLowAlarmPriority
         {
-            get => _analogIoTag.LowLowAlarmPriority ?? new AlarmPriority();
+            get => _analogIoTag.LowLowAlarmPriority!;
             set
             {
                 ValidateProperty(value, nameof(LowLowAlarmPriority));
@@ -649,9 +654,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "Low Low Alarm Delay must be greater than or equal to 0.")]
-        public int LowLowAlarmDelay
+        public int? LowLowAlarmDelay
         {
-            get => _analogIoTag.LowLowAlarmDelay ?? 0;
+            get => _analogIoTag.LowLowAlarmDelay;
             set
             {
                 ValidateProperty(value, nameof(LowLowAlarmDelay));
@@ -669,9 +674,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Low Low Alarm Setpoint must be greater than or equal to -1.7976931348623157E+308.")]
-        public double LowLowAlarmSetpoint
+        public double? LowLowAlarmSetpoint
         {
-            get => _analogIoTag.LowLowAlarmSetpoint ?? double.MinValue;
+            get => _analogIoTag.LowLowAlarmSetpoint;
             set
             {
                 ValidateProperty(value, nameof(LowLowAlarmSetpoint));
@@ -709,9 +714,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "Display Order must be greater than or equal to 0.")]
-        public int DisplayOrder
+        public int? DisplayOrder
         {
-            get => _analogIoTag.DisplayOrder ?? 0;
+            get => _analogIoTag.DisplayOrder;
             set
             {
                 ValidateProperty(value, nameof(DisplayOrder));
@@ -729,9 +734,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "Number Of Digits After Decimal must be greater than or equal to 0.")]
-        public int NumberOfDigitsAfterDecimal
+        public int? NumberOfDigitsAfterDecimal
         {
-            get => _analogIoTag.NumberOfDigitsAfterDecimal ?? 0;
+            get => _analogIoTag.NumberOfDigitsAfterDecimal;
             set
             {
                 ValidateProperty(value, nameof(NumberOfDigitsAfterDecimal));
@@ -750,7 +755,7 @@ namespace EnerFlow.ViewModels
 
         public Unit Unit
         {
-            get => _analogIoTag.Unit ?? null!;
+            get => _analogIoTag.Unit!;
             set
             {
                 ValidateProperty(value, nameof(Unit));
@@ -769,7 +774,7 @@ namespace EnerFlow.ViewModels
 
         public TagValueEnumeration TagValueEnumeration
         {
-            get => _analogIoTag.TagValueEnumeration ?? null!;
+            get => _analogIoTag.TagValueEnumeration!;
             set
             {
                 ValidateProperty(value, nameof(TagValueEnumeration));

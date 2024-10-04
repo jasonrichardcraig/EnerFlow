@@ -18,15 +18,18 @@
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+        <StackPanel Orientation="Horizontal"
+                    ToolTip="Document"
+                    Grid.Column="0"
+                    Grid.Row="0">
             <Image Height="24"
                    Width="24"
                    Source="/Images/Document_24x24.png"
-                   Margin="10" />
-            <TextBlock Text="Document"
+                   Margin="10,10,4,10" />
+            <TextBlock Text="{Binding Name}"
                        FontSize="16"
                        FontWeight="Bold"
-                       Margin="10" />
+                       Margin="4,10,10,10" />
         </StackPanel>
 
         <!-- Tab Control Section -->
@@ -47,11 +50,10 @@
                     <Label Grid.Row="0" Grid.Column="0"
                            Content="Name:"
                            Margin="10" />
-                    <TextBox Grid.Row="0" Grid.Column="1"
-                             Style="{StaticResource ValidatedTextBoxStyle}"
-                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"
-                             Margin="10" />
-
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center">
+                        <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
+                    </StackPanel>
                     <Label Grid.Row="1" Grid.Column="0"
                            Content="Description:"
                            Margin="10" />

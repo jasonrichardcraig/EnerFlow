@@ -21,10 +21,10 @@ namespace EnerFlow.Services
         /// </summary>
         /// <param name="hierarchy">The parent hierarchy.</param>
         /// <returns>A list of child hierarchies.</returns>
-        public List<Hierarchy> GetChildren(Hierarchy hierarchy)
+        public List<Hierarchy> GetChildren(Hierarchy hierarchy, List<Enums.NodeType> nodeTypes)
         {
             return new List<Hierarchy>(Context.Hierarchies
-                .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel())
+                .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel() && nodeTypes.Contains((Enums.NodeType)h.NodeType.Id))
                 .Include(h => h.NodeType)
                 .Include(h => h.Facilities)
                 .Include(h => h.Wells)
@@ -58,9 +58,23 @@ namespace EnerFlow.Services
             return Context.Hierarchies.First(h => h.Node == HierarchyId.GetRoot());
         }
 
+        /// <summary>
+        /// Checks if the given name is unique within the specified hierarchy.
+        /// </summary>
+        /// <param name="name">The name to check.</param>
+        /// <param name="parentId">The parent hierarchy ID.</param>
+        /// <returns>True if the name is unique within the hierarchy, otherwise false.</returns>
         public bool IsNameUniqueWithinHierarchy(string name, HierarchyId parentId)
         {
             return !Context.Hierarchies.Any(h => h.Node.IsDescendantOf(parentId) && h.Name == name);
+        }
+
+        public HierarchyId GetSibling(HierarchyId hierarchyId)
+        {
+            return Context.Hierarchies
+                .Where(h => h.Node.GetAncestor(1) == hierarchyId.GetAncestor(1) && h.Node != hierarchyId)
+                .OrderBy(h => h.Name)
+                .FirstOrDefault()?.Node ?? HierarchyId.GetRoot();
         }
 
         /// <summary>
@@ -68,6 +82,7 @@ namespace EnerFlow.Services
         /// </summary>
         /// <param name="parentHierarchy">The parent hierarchy.</param>
         /// <param name="newHierarchy">The new hierarchy to add.</param>
+        /// <param name="hierarchyNodeType">The node type of the new hierarchy.</param>
         public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.NodeType hierarchyNodeType)
         {
             var lastChild = Context.Hierarchies
@@ -87,6 +102,10 @@ namespace EnerFlow.Services
             Context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a hierarchy node and its associated entities.
+        /// </summary>
+        /// <param name="hierarchy">The hierarchy to delete.</param>
         public void DeleteHierarchyNode(Hierarchy hierarchy)
         {
             try
@@ -138,22 +157,22 @@ namespace EnerFlow.Services
                         Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Folder:
-                        Context.Documents.Remove(Context.Documents.First(f => f.HierarchyId == hierarchyId));
+                        Context.Folders.Remove(Context.Folders.First(f => f.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Meter:
-                        Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
+                        Context.Meters.Remove(Context.Meters.First(d => d.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Pump:
-                        Context.Documents.Remove(Context.Documents.First(p => p.HierarchyId == hierarchyId));
+                        Context.Pumps.Remove(Context.Pumps.First(p => p.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Tank:
-                        Context.Documents.Remove(Context.Documents.First(t => t.HierarchyId == hierarchyId));
+                        Context.Tanks.Remove(Context.Tanks.First(t => t.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Vessel:
-                        Context.Documents.Remove(Context.Documents.First(v => v.HierarchyId == hierarchyId));
+                        Context.Vessels.Remove(Context.Vessels.First(v => v.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.Equipment:
-                        Context.Documents.Remove(Context.Documents.First(e => e.HierarchyId == hierarchyId));
+                        Context.Equipment.Remove(Context.Equipment.First(e => e.HierarchyId == hierarchyId));
                         break;
                 }
                 Context.Hierarchies.Remove(hierarchy);
@@ -165,6 +184,11 @@ namespace EnerFlow.Services
             }
         }
 
+        /// <summary>
+        /// Performs a search for hierarchies based on the given search text.
+        /// </summary>
+        /// <param name="searchText">The search text.</param>
+        /// <param name="searchResultsCallback">The callback function to receive the search results.</param>
         public void Search(string searchText, Action<IEnumerable<SearchResult>> searchResultsCallback)
         {
             if (searchText.Length > 0)

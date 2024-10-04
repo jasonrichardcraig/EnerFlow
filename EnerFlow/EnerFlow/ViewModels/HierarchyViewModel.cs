@@ -326,8 +326,111 @@ namespace EnerFlow.ViewModels
             }
 
             var childrenToAdd = new List<HierarchyViewModel>();
+            var selectedNodeTypes = new List<Enums.NodeType>();
 
-            foreach (var hierarchy in dataService.GetChildren(_hierarchy))
+            switch (mainViewModel.TreeMode)
+            {
+                case TreeMode.Map:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Meter);
+                    selectedNodeTypes.Add(Enums.NodeType.Pump);
+                    selectedNodeTypes.Add(Enums.NodeType.Tank);
+                    selectedNodeTypes.Add(Enums.NodeType.Vessel);
+                    selectedNodeTypes.Add(Enums.NodeType.Equipment);
+                    selectedNodeTypes.Add(Enums.NodeType.Folder);
+                    break;
+                case TreeMode.Measurement:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Meter);
+                    break;
+                case TreeMode.FieldDataCapture:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.RunSheet);
+                    break;
+                case TreeMode.SCADA:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.SerialPortChannel);
+                    selectedNodeTypes.Add(Enums.NodeType.IpChannel);
+                    selectedNodeTypes.Add(Enums.NodeType.Device);
+                    selectedNodeTypes.Add(Enums.NodeType.AnalogIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.DigitalIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.StringIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.ContextTag);
+                    selectedNodeTypes.Add(Enums.NodeType.MeterRun);
+                    selectedNodeTypes.Add(Enums.NodeType.Screen);
+                    break;
+                case TreeMode.Schematics:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Diagram);
+                    selectedNodeTypes.Add(Enums.NodeType.Document);
+                    selectedNodeTypes.Add(Enums.NodeType.Folder);
+                    break;
+                case TreeMode.Setup:
+                    selectedNodeTypes.Add(Enums.NodeType.System);
+                    selectedNodeTypes.Add(Enums.NodeType.Company);
+                    selectedNodeTypes.Add(Enums.NodeType.District);
+                    selectedNodeTypes.Add(Enums.NodeType.Area);
+                    selectedNodeTypes.Add(Enums.NodeType.Field);
+                    selectedNodeTypes.Add(Enums.NodeType.Facility);
+                    selectedNodeTypes.Add(Enums.NodeType.Well);
+                    selectedNodeTypes.Add(Enums.NodeType.RunSheet);
+                    selectedNodeTypes.Add(Enums.NodeType.SerialPortChannel);
+                    selectedNodeTypes.Add(Enums.NodeType.IpChannel);
+                    selectedNodeTypes.Add(Enums.NodeType.Device);
+                    selectedNodeTypes.Add(Enums.NodeType.AnalogIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.DigitalIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.StringIoTag);
+                    selectedNodeTypes.Add(Enums.NodeType.ContextTag);
+                    selectedNodeTypes.Add(Enums.NodeType.MeterRun);
+                    selectedNodeTypes.Add(Enums.NodeType.Screen);
+                    selectedNodeTypes.Add(Enums.NodeType.MeterRun);
+                    selectedNodeTypes.Add(Enums.NodeType.Diagram);
+                    selectedNodeTypes.Add(Enums.NodeType.Document);
+                    selectedNodeTypes.Add(Enums.NodeType.Folder);
+                    selectedNodeTypes.Add(Enums.NodeType.Meter);
+                    selectedNodeTypes.Add(Enums.NodeType.Pump);
+                    selectedNodeTypes.Add(Enums.NodeType.Tank);
+                    selectedNodeTypes.Add(Enums.NodeType.Vessel);
+                    selectedNodeTypes.Add(Enums.NodeType.Equipment);
+                    break;
+            }
+
+            foreach (var hierarchy in dataService.GetChildren(_hierarchy, selectedNodeTypes))
             {
                 switch ((Enums.NodeType)hierarchy.NodeTypeId)
                 {
@@ -337,25 +440,61 @@ namespace EnerFlow.ViewModels
                     case Enums.NodeType.Well:
                         childrenToAdd.Add(new WellViewModel(this, hierarchy));
                         break;
-                    case Enums.NodeType.RunSheet:
-                        if (mainViewModel.TreeMode == TreeMode.Setup)
-                        {
-                            childrenToAdd.Add(new RunSheetViewModel(this, hierarchy));
-                        }
+                    case Enums.NodeType.Equipment:
+                        childrenToAdd.Add(new EquipmentViewModel(this, hierarchy));
                         break;
-                    case Enums.NodeType.ContextTag:
-                        if (mainViewModel.TreeMode == TreeMode.Setup)
-                        {
-                            childrenToAdd.Add(new ContextTagViewModel(this, hierarchy));
-                        }
+                    case Enums.NodeType.Meter:
+                        childrenToAdd.Add(new MeterViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Pump:
+                        childrenToAdd.Add(new PumpViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Tank:
+                        childrenToAdd.Add(new TankViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Vessel:
+                        childrenToAdd.Add(new VesselViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.RunSheet:
+                        childrenToAdd.Add(new RunSheetViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.SerialPortChannel:
+                        childrenToAdd.Add(new SerialPortChannelViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.IpChannel:
+                        childrenToAdd.Add(new IpChannelViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Device:
+                        childrenToAdd.Add(new DeviceViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.DigitalIoTag:
+                        childrenToAdd.Add(new DigitalIoTagViewModel(this, hierarchy));
                         break;
                     case Enums.NodeType.AnalogIoTag:
-                        if (mainViewModel.TreeMode == TreeMode.Setup)
-                        {
-                            childrenToAdd.Add(new AnalogIoTagViewModel(this, hierarchy));
-                        }
+                        childrenToAdd.Add(new AnalogIoTagViewModel(this, hierarchy));
                         break;
-                    default:
+                    case Enums.NodeType.StringIoTag:
+                        childrenToAdd.Add(new StringIoTagViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.ContextTag:
+                        childrenToAdd.Add(new ContextTagViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.MeterRun:
+                        childrenToAdd.Add(new MeterRunViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Screen:
+                        childrenToAdd.Add(new ScreenViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Diagram:
+                        childrenToAdd.Add(new DiagramViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Document:
+                        childrenToAdd.Add(new DocumentViewModel(this, hierarchy));
+                        break;
+                    case Enums.NodeType.Folder:
+                        childrenToAdd.Add(new FolderViewModel(this, hierarchy));
+                        break;
+                    default:  // Company, District, Area, Field
                         childrenToAdd.Add(new HierarchyViewModel(this, hierarchy));
                         break;
                 }
