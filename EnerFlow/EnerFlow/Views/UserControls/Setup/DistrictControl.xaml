@@ -39,19 +39,19 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
                     <Label Grid.Row="0" Grid.Column="0"
                            Content="Name:"
                            Margin="10" />
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center">
-                        <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
-                    </StackPanel>
+                    <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
                     <Label Grid.Row="1" Grid.Column="0"
                            Content="Description:"
                            Margin="10" />
@@ -65,7 +65,6 @@
                              Margin="10,10,10,20" />
                 </Grid>
             </TabItem>
-
             <!-- Location Tab -->
             <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
@@ -75,34 +74,39 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0"
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
                                Content="Latitude:"
                                Margin="10" />
-                        <TextBox Grid.Row="0" Grid.Column="1"
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
-
-                        <Label Grid.Row="1" Grid.Column="0"
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
                                Content="Longitude:"
                                Margin="10" />
-                        <TextBox Grid.Row="1" Grid.Column="1"
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
-
-                        <Label Grid.Row="2" Grid.Column="0"
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
                                Content="Default Zoom Level:"
                                Margin="10" />
-                        <TextBox Grid.Row="2" Grid.Column="1"
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />

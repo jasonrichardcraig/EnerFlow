@@ -41,6 +41,14 @@ public partial class AnalogIoTag
 
     public bool? EnableLogging { get; set; }
 
+    public double? DisplayRangeMinimum { get; set; }
+
+    public double? DisplayRangeMaximum { get; set; }
+
+    public double? ExpectedRangeMinimum { get; set; }
+
+    public double? ExpectedRangeMaximum { get; set; }
+
     public int? HighHighAlarmPriorityId { get; set; }
 
     public int? HighHighAlarmDelay { get; set; }

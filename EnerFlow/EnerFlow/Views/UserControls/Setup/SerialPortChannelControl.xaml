@@ -50,10 +50,12 @@
                     <Label Grid.Row="0" Grid.Column="0"
                            Content="Name:"
                            Margin="10" />
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center">
-                        <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
-                    </StackPanel>
+                    <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
                     <Label Grid.Row="1" Grid.Column="0"
                            Content="Description:"
                            Margin="10" />

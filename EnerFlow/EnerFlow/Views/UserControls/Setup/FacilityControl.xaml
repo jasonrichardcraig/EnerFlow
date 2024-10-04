@@ -40,10 +40,12 @@
                                Grid.Column="0"
                                Content="Name:"
                                Margin="10" />
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center">
-                            <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
-                        </StackPanel>
+                        <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
                         <Label Grid.Row="1"
                                Grid.Column="0"
                                Content="Description:"
@@ -86,6 +88,7 @@
                                Margin="10" />
                         <ComboBox Grid.Row="0"
                                   Grid.Column="1"
+                                  VerticalAlignment="Center"
                                   ItemTemplate="{StaticResource FacilityTypeComboBoxItemDataTemplate}"
                                   ItemsSource="{Binding FacilityTypes}"
                                   SelectedValue="{Binding SelectedFacilityType}"
@@ -96,6 +99,7 @@
                                Margin="10" />
                         <ComboBox Grid.Row="1"
                                   Grid.Column="1"
+                                  VerticalAlignment="Center"
                                   ItemTemplate="{StaticResource FacilitySubTypeComboBoxItemDataTemplate}"
                                   ItemsSource="{Binding SelectedFacilityType.FacilitySubTypes}"
                                   SelectedValue="{Binding FacilitySubType}"
@@ -106,6 +110,7 @@
                                Margin="10" />
                         <ComboBox Grid.Row="2"
                                   Grid.Column="1"
+                                  VerticalAlignment="Center"
                                   ItemTemplate="{StaticResource EnergyDevelopmentCategoryTypesComboBoxItemDataTemplate}"
                                   ItemsSource="{Binding EnergyDevelopmentCategoryTypes}"
                                   SelectedValue="{Binding EnergyDevelopmentCategoryType}"
@@ -116,6 +121,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="3"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding UniqueFacilityIdentifier, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -125,6 +131,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="4"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding LocationName, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -134,6 +141,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="5"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding OperatorCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -143,6 +151,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="6"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding OperatorName, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -152,6 +161,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="7"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding LicenceNumber, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -161,6 +171,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="8"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding LicenseeCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -170,6 +181,7 @@
                                Margin="10" />
                         <ComboBox Grid.Row="9"
                                   Grid.Column="1"
+                                  VerticalAlignment="Center"
                                   DisplayMemberPath="Name"
                                   ItemsSource="{Binding WasteLocationTypes}"
                                   SelectedValue="{Binding WasteLocationType}"
@@ -197,6 +209,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="0"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -206,6 +219,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -215,6 +229,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="2"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />

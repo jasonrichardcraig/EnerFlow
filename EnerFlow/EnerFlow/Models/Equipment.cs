@@ -13,6 +13,8 @@ public partial class Equipment
 
     public string? SerialNumber { get; set; }
 
+    public string? AssetTag { get; set; }
+
     public string? Model { get; set; }
 
     public string? Manufacturer { get; set; }

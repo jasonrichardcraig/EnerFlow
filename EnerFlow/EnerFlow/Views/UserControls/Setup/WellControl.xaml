@@ -42,10 +42,12 @@
                                Grid.Column="0"
                                Content="Name:"
                                Margin="10" />
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center">
-                            <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
-                        </StackPanel>
+                        <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
                         <Label Grid.Row="1"
                                Grid.Column="0"
                                Content="Description:"
@@ -89,6 +91,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="0"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding FormattedUwi,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -98,6 +101,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding UnformattedUwi, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -107,6 +111,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="2"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding SurfaceLocation, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -116,6 +121,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="3"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding DownholeLocation, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -125,6 +131,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="4"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding FieldCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -134,6 +141,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="5"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding PoolCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -143,6 +151,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="6"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding LicenseNumber, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -152,6 +161,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="7"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding LicenseeCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -161,6 +171,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="8"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding AgentCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -170,6 +181,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="9"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding OperatorCode, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -196,6 +208,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="0"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -205,6 +218,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
@@ -214,6 +228,7 @@
                                Margin="10" />
                         <TextBox Grid.Row="2"
                                  Grid.Column="1"
+                                 VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />

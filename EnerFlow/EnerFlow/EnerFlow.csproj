@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\Address_16x16.png" />
+    <None Remove="Images\Address_24x24.png" />
     <None Remove="Images\Add_16x16.png" />
     <None Remove="Images\Add_24x24.png" />
     <None Remove="Images\Alarms_16x16.png" />
@@ -101,6 +103,8 @@
     <None Remove="Images\Notifications_16x16.png" />
     <None Remove="Images\Notifications_24x24.png" />
     <None Remove="Images\OpenFolder.png" />
+    <None Remove="Images\OperationalRange_16x16.png" />
+    <None Remove="Images\OperationalRange_24x24.png" />
     <None Remove="Images\OrificeMeter_16x16_White.png" />
     <None Remove="Images\OrificeMeter_24x24.png" />
     <None Remove="Images\OrificeMeter_24x24_White.png" />
@@ -132,6 +136,8 @@
     <None Remove="Images\Schematics_24x24.png" />
     <None Remove="Images\Screen_16x16.png" />
     <None Remove="Images\Screen_24x24.png" />
+    <None Remove="Images\Script_16x16.png" />
+    <None Remove="Images\Script_24x24.png" />
     <None Remove="Images\Security_16x16.png" />
     <None Remove="Images\Security_24x24.png" />
     <None Remove="Images\SendBackward.png" />
@@ -210,6 +216,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Address_16x16.png" />
+    <Resource Include="Images\Address_24x24.png" />
     <Resource Include="Images\Add_16x16.png" />
     <Resource Include="Images\Add_24x24.png" />
     <Resource Include="Images\AlignObjectsBottom.png" />
@@ -282,6 +290,8 @@
     <Resource Include="Images\MeterRun_24x24.png" />
     <Resource Include="Images\NotConnected.png" />
     <Resource Include="Images\OpenFolder.png" />
+    <Resource Include="Images\OperationalRange_16x16.png" />
+    <Resource Include="Images\OperationalRange_24x24.png" />
     <Resource Include="Images\OrificeMeter_16x16_White.png" />
     <Resource Include="Images\OrificeMeter_24x24.png" />
     <Resource Include="Images\OrificeMeter_24x24_White.png" />
@@ -299,6 +309,8 @@
     <Resource Include="Images\Regulatory_24x24.png" />
     <Resource Include="Images\Scale_16x16.png" />
     <Resource Include="Images\Scale_24x24.png" />
+    <Resource Include="Images\Script_16x16.png" />
+    <Resource Include="Images\Script_24x24.png" />
     <Resource Include="Images\Security_16x16.png" />
     <Resource Include="Images\Security_24x24.png" />
     <Resource Include="Images\System.png" />

@@ -33,12 +33,36 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Latitude:" Margin="10" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Latitude}" Margin="10" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Longitude:" Margin="10" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Longitude}" Margin="10" />
-                        <Label Grid.Row="2" Grid.Column="0" Content="Default Zoom Level:" Margin="10" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DefaultZoomLevel}" Margin="10" />
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="Latitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Content="Longitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Content="Default Zoom Level:"
+                               Margin="10" />
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>

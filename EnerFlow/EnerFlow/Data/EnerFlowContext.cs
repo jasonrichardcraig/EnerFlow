@@ -1020,6 +1020,9 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
+            entity.Property(e => e.AssetTag)
+                .HasMaxLength(64)
+                .IsUnicode(false);
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");

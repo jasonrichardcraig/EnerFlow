@@ -219,7 +219,7 @@
         </StackPanel>
     </DataTemplate>
 
-    <!-- DataTemplate for the Security tab header -->
+    <!-- DataTemplate for the Scaling tab header -->
     <DataTemplate x:Key="ScalingTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">
             <Image Height="24"
@@ -227,6 +227,28 @@
                    Margin="0,0,4,0"
                    Source="/Images/Scale_24x24.png"/>
             <TextBlock Text="Scaling"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AddressTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Address_24x24.png"/>
+            <TextBlock Text="IO"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OperationalRangesTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/OperationalRange_24x24.png"/>
+            <TextBlock Text="Operational Ranges"
                        VerticalAlignment="Center"/>
         </StackPanel>
     </DataTemplate>
