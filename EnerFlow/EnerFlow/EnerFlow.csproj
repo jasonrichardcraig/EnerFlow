@@ -64,6 +64,8 @@
     <None Remove="Images\DigitalIoTag_24x24.png" />
     <None Remove="Images\Disconnect_16x16.png" />
     <None Remove="Images\Disconnect_24x24.png" />
+    <None Remove="Images\Display_16x16.png" />
+    <None Remove="Images\Display_24x24.png" />
     <None Remove="Images\DistributeObjectsHorizontal.png" />
     <None Remove="Images\DistributeObjectsVertical.png" />
     <None Remove="Images\District.png" />
@@ -181,6 +183,7 @@
     <None Remove="WebView\css\Map.css" />
     <None Remove="WebView\js\Map.js" />
     <None Remove="WebView\Map.html" />
+    <None Remove="WebView\Monaco.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -191,6 +194,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebView\Map.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\Monaco.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -251,6 +257,8 @@
     <Resource Include="Images\DigitalIoTag_24x24.png" />
     <Resource Include="Images\Disconnect_16x16.png" />
     <Resource Include="Images\Disconnect_24x24.png" />
+    <Resource Include="Images\Display_16x16.png" />
+    <Resource Include="Images\Display_24x24.png" />
     <Resource Include="Images\DistributeObjectsHorizontal.png" />
     <Resource Include="Images\DistributeObjectsVertical.png" />
     <Resource Include="Images\District.png" />

@@ -253,6 +253,39 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="ScriptTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Script_24x24.png"/>
+            <TextBlock Text="Script"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AlarmTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Alarms_24x24.png"/>
+            <TextBlock Text="Alarming"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DisplayTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Display_24x24.png"/>
+            <TextBlock Text="Display"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
     <DataTemplate x:Key="FacilityTypeComboBoxItemDataTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Code}"/>

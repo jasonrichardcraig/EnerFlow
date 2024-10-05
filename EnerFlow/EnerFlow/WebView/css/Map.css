@@ -1,3 +1,8 @@
-﻿#map {
+﻿html, body {
+    overflow: hidden; /* Disable both horizontal and vertical scrolling */
+    height: 100%; /* Ensure the content fills the entire viewport */
+    margin: 0; /* Remove any margins */
+}
+#map {
     height: 100vh;
 }

@@ -24,5 +24,20 @@ namespace EnerFlow.Views.UserControls.Setup
         {
             InitializeComponent();
         }
+
+        private void MonacoWebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+
+        }
+
+        private void MonacoWebView_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
+        {
+
+        }
+
+        private void MonacoWebView_Initialized(object sender, EventArgs e)
+        {
+            MonacoWebView.Source = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Monaco.html"));
+        }
     }
 }

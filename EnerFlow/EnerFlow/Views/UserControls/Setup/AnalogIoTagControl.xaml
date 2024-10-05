@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="628">
     <Grid>
@@ -283,6 +284,17 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
+            <TabItem HeaderTemplate="{StaticResource ScriptTabHeaderDataTemplate}"
+                     Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <wv2:WebView2 x:Name="MonacoWebView"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      ScrollViewer.CanContentScroll="False"
+                                      Initialized="MonacoWebView_Initialized"
+                                      NavigationCompleted="MonacoWebView_NavigationCompleted"
+                                      WebMessageReceived="MonacoWebView_WebMessageReceived"
+                                      Visibility="{Binding MainViewModel.IsBusy, Source={StaticResource Locator}, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+            </TabItem>
             <TabItem HeaderTemplate="{StaticResource OperationalRangesTabHeaderDataTemplate}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
@@ -366,6 +378,11 @@
                         </GroupBox>
                     </Grid>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource AlarmTabHeaderDataTemplate}">
+                
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource DisplayTabHeaderDataTemplate}">
             </TabItem>
         </TabControl>
     </Grid>
