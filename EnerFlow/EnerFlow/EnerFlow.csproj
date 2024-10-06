@@ -181,22 +181,30 @@
     <None Remove="Images\Wells_16x16.png" />
     <None Remove="Images\Wells_24x24.png" />
     <None Remove="WebView\css\Map.css" />
+    <None Remove="WebView\css\ScriptEditor.css" />
     <None Remove="WebView\js\Map.js" />
+    <None Remove="WebView\js\ScriptEditor.js" />
     <None Remove="WebView\Map.html" />
-    <None Remove="WebView\Monaco.html" />
+    <None Remove="WebView\ScriptEditor.html" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="WebView\css\Map.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WebView\css\ScriptEditor.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WebView\js\Map.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\js\ScriptEditor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebView\Map.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WebView\Monaco.html">
+    <Content Include="WebView\ScriptEditor.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

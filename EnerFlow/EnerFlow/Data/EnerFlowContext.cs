@@ -452,6 +452,12 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.HistoryAddress)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.LineColor)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+            entity.Property(e => e.LineStyle)
+                .HasMaxLength(64)
+                .IsUnicode(false);
             entity.Property(e => e.LowAlarmPriorityId).HasColumnName("LowAlarmPriorityID");
             entity.Property(e => e.LowLowAlarmPriorityId).HasColumnName("LowLowAlarmPriorityID");
             entity.Property(e => e.ReadAddress)

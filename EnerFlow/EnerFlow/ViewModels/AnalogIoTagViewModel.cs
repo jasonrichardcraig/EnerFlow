@@ -30,16 +30,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ByteSwap ?? false;
             set
             {
-                ValidateProperty(value, nameof(ByteSwap));
-                var errors = GetErrors(nameof(ByteSwap));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ByteSwap != value)
                 {
-                    _analogIoTag.ByteSwap = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ByteSwap));
+                    var errors = GetErrors(nameof(ByteSwap));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ByteSwap = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -49,16 +52,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.WordSwap ?? false;
             set
             {
-                ValidateProperty(value, nameof(WordSwap));
-                var errors = GetErrors(nameof(WordSwap));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.WordSwap != value)
                 {
-                    _analogIoTag.WordSwap = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(WordSwap));
+                    var errors = GetErrors(nameof(WordSwap));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.WordSwap = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -70,16 +76,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.Deadband ?? 0;
             set
             {
-                ValidateProperty(value, nameof(Deadband));
-                var errors = GetErrors(nameof(Deadband));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.Deadband != value)
                 {
-                    _analogIoTag.Deadband = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(Deadband));
+                    var errors = GetErrors(nameof(Deadband));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.Deadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -90,16 +99,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ReadAddress ?? string.Empty;
             set
             {
-                ValidateProperty(value, nameof(ReadAddress));
-                var errors = GetErrors(nameof(ReadAddress));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ReadAddress != value)
                 {
-                    _analogIoTag.ReadAddress = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ReadAddress));
+                    var errors = GetErrors(nameof(ReadAddress));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ReadAddress = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -111,16 +123,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ReadAddressScanInterval ?? 0;
             set
             {
-                ValidateProperty(value, nameof(ReadAddressScanInterval));
-                var errors = GetErrors(nameof(ReadAddressScanInterval));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ReadAddressScanInterval != value)
                 {
-                    _analogIoTag.ReadAddressScanInterval = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ReadAddressScanInterval));
+                    var errors = GetErrors(nameof(ReadAddressScanInterval));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ReadAddressScanInterval = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -130,16 +145,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HistoryAddress ?? string.Empty;
             set
             {
-                ValidateProperty(value, nameof(HistoryAddress));
-                var errors = GetErrors(nameof(HistoryAddress));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HistoryAddress != value)
                 {
-                    _analogIoTag.HistoryAddress = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HistoryAddress));
+                    var errors = GetErrors(nameof(HistoryAddress));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HistoryAddress = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -150,16 +168,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HistoryAddressScanInterval;
             set
             {
-                ValidateProperty(value, nameof(HistoryAddressScanInterval));
-                var errors = GetErrors(nameof(HistoryAddressScanInterval));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HistoryAddressScanInterval != value)
                 {
-                    _analogIoTag.HistoryAddressScanInterval = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HistoryAddressScanInterval));
+                    var errors = GetErrors(nameof(HistoryAddressScanInterval));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HistoryAddressScanInterval = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -169,16 +190,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.WriteAddress ?? string.Empty;
             set
             {
-                ValidateProperty(value, nameof(WriteAddress));
-                var errors = GetErrors(nameof(WriteAddress));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.WriteAddress != value)
                 {
-                    _analogIoTag.WriteAddress = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(WriteAddress));
+                    var errors = GetErrors(nameof(WriteAddress));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.WriteAddress = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -189,16 +213,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.IsCalculated ?? false;
             set
             {
-                ValidateProperty(value, nameof(IsCalculated));
-                var errors = GetErrors(nameof(IsCalculated));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.IsCalculated != value)
                 {
-                    _analogIoTag.IsCalculated = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(IsCalculated));
+                    var errors = GetErrors(nameof(IsCalculated));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.IsCalculated = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -208,16 +235,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.Script ?? string.Empty;
             set
             {
-                ValidateProperty(value, nameof(Script));
-                var errors = GetErrors(nameof(Script));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.Script != value)
                 {
-                    _analogIoTag.Script = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(Script));
+                    var errors = GetErrors(nameof(Script));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.Script = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -228,16 +258,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.UnscaledMinimum;
             set
             {
-                ValidateProperty(value, nameof(UnscaledMinimum));
-                var errors = GetErrors(nameof(UnscaledMinimum));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.UnscaledMinimum != value)
                 {
-                    _analogIoTag.UnscaledMinimum = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(UnscaledMinimum));
+                    var errors = GetErrors(nameof(UnscaledMinimum));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.UnscaledMinimum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -248,16 +281,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.UnscaledMaximum;
             set
             {
-                ValidateProperty(value, nameof(UnscaledMaximum));
-                var errors = GetErrors(nameof(UnscaledMaximum));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.UnscaledMaximum != value)
                 {
-                    _analogIoTag.UnscaledMaximum = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(UnscaledMaximum));
+                    var errors = GetErrors(nameof(UnscaledMaximum));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.UnscaledMaximum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -268,16 +304,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ScaledMinimum;
             set
             {
-                ValidateProperty(value, nameof(ScaledMinimum));
-                var errors = GetErrors(nameof(ScaledMinimum));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ScaledMinimum != value)
                 {
-                    _analogIoTag.ScaledMinimum = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ScaledMinimum));
+                    var errors = GetErrors(nameof(ScaledMinimum));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ScaledMinimum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -288,16 +327,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ScaledMaximum;
             set
             {
-                ValidateProperty(value, nameof(ScaledMaximum));
-                var errors = GetErrors(nameof(ScaledMaximum));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ScaledMaximum != value)
                 {
-                    _analogIoTag.ScaledMaximum = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ScaledMaximum));
+                    var errors = GetErrors(nameof(ScaledMaximum));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ScaledMaximum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -307,16 +349,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ClampScaledValue;
             set
             {
-                ValidateProperty(value, nameof(ClampScaledValue));
-                var errors = GetErrors(nameof(ClampScaledValue));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ClampScaledValue != value)
                 {
-                    _analogIoTag.ClampScaledValue = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ClampScaledValue));
+                    var errors = GetErrors(nameof(ClampScaledValue));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ClampScaledValue = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -326,16 +371,110 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.EnableLogging;
             set
             {
-                ValidateProperty(value, nameof(EnableLogging));
-                var errors = GetErrors(nameof(EnableLogging));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.EnableLogging != value)
                 {
-                    _analogIoTag.EnableLogging = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(EnableLogging));
+                    var errors = GetErrors(nameof(EnableLogging));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.EnableLogging = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double? DisplayRangeMinimum
+        {
+            get => _analogIoTag.DisplayRangeMinimum;
+            set
+            {
+                if (_analogIoTag.DisplayRangeMinimum != value)
+                {
+                    ValidateProperty(value, nameof(DisplayRangeMinimum));
+                    var errors = GetErrors(nameof(DisplayRangeMinimum));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.DisplayRangeMinimum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+        }
+
+        public double? DisplayRangeMaximum
+        {
+            get => _analogIoTag.DisplayRangeMaximum;
+            set
+            {
+                if (_analogIoTag.DisplayRangeMaximum != value)
+                {
+                    ValidateProperty(value, nameof(DisplayRangeMaximum));
+                    var errors = GetErrors(nameof(DisplayRangeMaximum));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.DisplayRangeMaximum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public double? ExpectedRangeMinimum
+        {
+            get => _analogIoTag.ExpectedRangeMinimum;
+            set
+            {
+                if (_analogIoTag.ExpectedRangeMinimum != value)
+                {
+                    ValidateProperty(value, nameof(ExpectedRangeMinimum));
+                    var errors = GetErrors(nameof(ExpectedRangeMinimum));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.ExpectedRangeMinimum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+
+            }
+
+        }
+
+        public double? ExpectedRangeMaximum
+        {
+            get => _analogIoTag.ExpectedRangeMaximum;
+            set
+            {
+                if (_analogIoTag.ExpectedRangeMaximum != value)
+                {
+                    ValidateProperty(value, nameof(ExpectedRangeMaximum));
+                    var errors = GetErrors(nameof(ExpectedRangeMaximum));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.ExpectedRangeMaximum = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
                 }
             }
         }
@@ -345,16 +484,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighHighAlarmPriority!;
             set
             {
-                ValidateProperty(value, nameof(HighHighAlarmPriority));
-                var errors = GetErrors(nameof(HighHighAlarmPriority));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighHighAlarmPriority != value)
                 {
-                    _analogIoTag.HighHighAlarmPriority = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighHighAlarmPriority));
+                    var errors = GetErrors(nameof(HighHighAlarmPriority));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighHighAlarmPriority = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -365,16 +507,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighHighAlarmDelay;
             set
             {
-                ValidateProperty(value, nameof(HighHighAlarmDelay));
-                var errors = GetErrors(nameof(HighHighAlarmDelay));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighHighAlarmDelay != value)
                 {
-                    _analogIoTag.HighHighAlarmDelay = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighHighAlarmDelay));
+                    var errors = GetErrors(nameof(HighHighAlarmDelay));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighHighAlarmDelay = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -385,16 +530,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighHighAlarmSetpoint;
             set
             {
-                ValidateProperty(value, nameof(HighHighAlarmSetpoint));
-                var errors = GetErrors(nameof(HighHighAlarmSetpoint));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighHighAlarmSetpoint != value)
                 {
-                    _analogIoTag.HighHighAlarmSetpoint = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighHighAlarmSetpoint));
+                    var errors = GetErrors(nameof(HighHighAlarmSetpoint));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighHighAlarmSetpoint = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -405,16 +553,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighHighAlarmDeadband;
             set
             {
-                ValidateProperty(value, nameof(HighHighAlarmDeadband));
-                var errors = GetErrors(nameof(HighHighAlarmDeadband));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighHighAlarmDeadband != value)
                 {
-                    _analogIoTag.HighHighAlarmDeadband = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighHighAlarmDeadband));
+                    var errors = GetErrors(nameof(HighHighAlarmDeadband));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighHighAlarmDeadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -424,16 +575,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighHighAlarmDisable;
             set
             {
-                ValidateProperty(value, nameof(HighHighAlarmDisable));
-                var errors = GetErrors(nameof(HighHighAlarmDisable));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighHighAlarmDisable != value)
                 {
-                    _analogIoTag.HighHighAlarmDisable = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighHighAlarmDisable));
+                    var errors = GetErrors(nameof(HighHighAlarmDisable));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighHighAlarmDisable = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -443,16 +597,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighAlarmPriority!;
             set
             {
-                ValidateProperty(value, nameof(HighAlarmPriority));
-                var errors = GetErrors(nameof(HighAlarmPriority));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighAlarmPriority != value)
                 {
-                    _analogIoTag.HighAlarmPriority = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighAlarmPriority));
+                    var errors = GetErrors(nameof(HighAlarmPriority));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighAlarmPriority = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -463,16 +620,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighAlarmDelay;
             set
             {
-                ValidateProperty(value, nameof(HighAlarmDelay));
-                var errors = GetErrors(nameof(HighAlarmDelay));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighAlarmDelay != value)
                 {
-                    _analogIoTag.HighAlarmDelay = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighAlarmDelay));
+                    var errors = GetErrors(nameof(HighAlarmDelay));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighAlarmDelay = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -483,16 +643,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighAlarmSetpoint;
             set
             {
-                ValidateProperty(value, nameof(HighAlarmSetpoint));
-                var errors = GetErrors(nameof(HighAlarmSetpoint));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighAlarmSetpoint != value)
                 {
-                    _analogIoTag.HighAlarmSetpoint = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighAlarmSetpoint));
+                    var errors = GetErrors(nameof(HighAlarmSetpoint));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighAlarmSetpoint = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -503,16 +666,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighAlarmDeadband;
             set
             {
-                ValidateProperty(value, nameof(HighAlarmDeadband));
-                var errors = GetErrors(nameof(HighAlarmDeadband));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighAlarmDeadband != value)
                 {
-                    _analogIoTag.HighAlarmDeadband = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighAlarmDeadband));
+                    var errors = GetErrors(nameof(HighAlarmDeadband));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighAlarmDeadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -522,16 +688,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.HighAlarmDisable;
             set
             {
-                ValidateProperty(value, nameof(HighAlarmDisable));
-                var errors = GetErrors(nameof(HighAlarmDisable));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.HighAlarmDisable != value)
                 {
-                    _analogIoTag.HighAlarmDisable = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(HighAlarmDisable));
+                    var errors = GetErrors(nameof(HighAlarmDisable));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.HighAlarmDisable = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -541,16 +710,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowAlarmPriority!;
             set
             {
-                ValidateProperty(value, nameof(LowAlarmPriority));
-                var errors = GetErrors(nameof(LowAlarmPriority));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowAlarmPriority != value)
                 {
-                    _analogIoTag.LowAlarmPriority = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowAlarmPriority));
+                    var errors = GetErrors(nameof(LowAlarmPriority));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowAlarmPriority = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -561,16 +733,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowAlarmDelay;
             set
             {
-                ValidateProperty(value, nameof(LowAlarmDelay));
-                var errors = GetErrors(nameof(LowAlarmDelay));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowAlarmDelay != value)
                 {
-                    _analogIoTag.LowAlarmDelay = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowAlarmDelay));
+                    var errors = GetErrors(nameof(LowAlarmDelay));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowAlarmDelay = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -581,16 +756,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowAlarmSetpoint;
             set
             {
-                ValidateProperty(value, nameof(LowAlarmSetpoint));
-                var errors = GetErrors(nameof(LowAlarmSetpoint));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowAlarmSetpoint != value)
                 {
-                    _analogIoTag.LowAlarmSetpoint = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowAlarmSetpoint));
+                    var errors = GetErrors(nameof(LowAlarmSetpoint));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowAlarmSetpoint = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -601,16 +779,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowAlarmDeadband;
             set
             {
-                ValidateProperty(value, nameof(LowAlarmDeadband));
-                var errors = GetErrors(nameof(LowAlarmDeadband));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowAlarmDeadband != value)
                 {
-                    _analogIoTag.LowAlarmDeadband = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowAlarmDeadband));
+                    var errors = GetErrors(nameof(LowAlarmDeadband));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowAlarmDeadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -620,16 +801,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowAlarmDisable;
             set
             {
-                ValidateProperty(value, nameof(LowAlarmDisable));
-                var errors = GetErrors(nameof(LowAlarmDisable));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowAlarmDisable != value)
                 {
-                    _analogIoTag.LowAlarmDisable = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowAlarmDisable));
+                    var errors = GetErrors(nameof(LowAlarmDisable));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowAlarmDisable = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -639,16 +823,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowLowAlarmPriority!;
             set
             {
-                ValidateProperty(value, nameof(LowLowAlarmPriority));
-                var errors = GetErrors(nameof(LowLowAlarmPriority));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowLowAlarmPriority != value)
                 {
-                    _analogIoTag.LowLowAlarmPriority = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowLowAlarmPriority));
+                    var errors = GetErrors(nameof(LowLowAlarmPriority));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowLowAlarmPriority = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -659,16 +846,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowLowAlarmDelay;
             set
             {
-                ValidateProperty(value, nameof(LowLowAlarmDelay));
-                var errors = GetErrors(nameof(LowLowAlarmDelay));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowLowAlarmDelay != value)
                 {
-                    _analogIoTag.LowLowAlarmDelay = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowLowAlarmDelay));
+                    var errors = GetErrors(nameof(LowLowAlarmDelay));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowLowAlarmDelay = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -679,16 +869,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowLowAlarmSetpoint;
             set
             {
-                ValidateProperty(value, nameof(LowLowAlarmSetpoint));
-                var errors = GetErrors(nameof(LowLowAlarmSetpoint));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowLowAlarmSetpoint != value)
                 {
-                    _analogIoTag.LowLowAlarmSetpoint = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowLowAlarmSetpoint));
+                    var errors = GetErrors(nameof(LowLowAlarmSetpoint));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowLowAlarmSetpoint = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -699,16 +892,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.LowLowAlarmDeadband ?? 0;
             set
             {
-                ValidateProperty(value, nameof(LowLowAlarmDeadband));
-                var errors = GetErrors(nameof(LowLowAlarmDeadband));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.LowLowAlarmDeadband != value)
                 {
-                    _analogIoTag.LowLowAlarmDeadband = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(LowLowAlarmDeadband));
+                    var errors = GetErrors(nameof(LowLowAlarmDeadband));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.LowLowAlarmDeadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -719,16 +915,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.DisplayOrder;
             set
             {
-                ValidateProperty(value, nameof(DisplayOrder));
-                var errors = GetErrors(nameof(DisplayOrder));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.DisplayOrder != value)
                 {
-                    _analogIoTag.DisplayOrder = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(DisplayOrder));
+                    var errors = GetErrors(nameof(DisplayOrder));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.DisplayOrder = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -739,16 +938,107 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.NumberOfDigitsAfterDecimal;
             set
             {
-                ValidateProperty(value, nameof(NumberOfDigitsAfterDecimal));
-                var errors = GetErrors(nameof(NumberOfDigitsAfterDecimal));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.NumberOfDigitsAfterDecimal != value)
                 {
-                    _analogIoTag.NumberOfDigitsAfterDecimal = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(NumberOfDigitsAfterDecimal));
+                    var errors = GetErrors(nameof(NumberOfDigitsAfterDecimal));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.NumberOfDigitsAfterDecimal = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool? UseDefaultTrendStyle
+        {
+            get => _analogIoTag.UseDefaultTrendStyle;
+            set
+            {
+                if (_analogIoTag.UseDefaultTrendStyle != value)
+                {
+                    ValidateProperty(value, nameof(UseDefaultTrendStyle));
+                    var errors = GetErrors(nameof(UseDefaultTrendStyle));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.UseDefaultTrendStyle = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public string LineStyle
+        {
+            get => _analogIoTag.LineStyle ?? string.Empty;
+            set
+            {
+                if (_analogIoTag.LineStyle != value)
+                {
+                    ValidateProperty(value, nameof(LineStyle));
+                    var errors = GetErrors(nameof(LineStyle));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.LineStyle = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public int? LineWidth
+        {
+            get => _analogIoTag.LineWidth;
+            set
+            {
+                if (_analogIoTag.LineWidth != value)
+                {
+                    ValidateProperty(value, nameof(LineWidth));
+                    var errors = GetErrors(nameof(LineWidth));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.LineWidth = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public string LineColor
+        {
+            get => _analogIoTag.LineColor ?? string.Empty;
+            set
+            {
+                if (_analogIoTag.LineColor != value)
+                {
+                    ValidateProperty(value, nameof(LineColor));
+                    var errors = GetErrors(nameof(LineColor));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.LineColor = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
                 }
             }
         }
@@ -758,16 +1048,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.Unit!;
             set
             {
-                ValidateProperty(value, nameof(Unit));
-                var errors = GetErrors(nameof(Unit));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.Unit != value)
                 {
-                    _analogIoTag.Unit = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(Unit));
+                    var errors = GetErrors(nameof(Unit));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.Unit = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -777,16 +1070,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.TagValueEnumeration!;
             set
             {
-                ValidateProperty(value, nameof(TagValueEnumeration));
-                var errors = GetErrors(nameof(TagValueEnumeration));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.TagValueEnumeration != value)
                 {
-                    _analogIoTag.TagValueEnumeration = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(TagValueEnumeration));
+                    var errors = GetErrors(nameof(TagValueEnumeration));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.TagValueEnumeration = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }
@@ -801,16 +1097,19 @@ namespace EnerFlow.ViewModels
             get => _analogIoTag.ManualData;
             set
             {
-                ValidateProperty(value, nameof(ManualData));
-                var errors = GetErrors(nameof(ManualData));
-                if (errors == null || !errors.Cast<object>().Any())
+                if (_analogIoTag.ManualData != value)
                 {
-                    _analogIoTag.ManualData = value;
-                    if (!DisableAutoSave)
+                    ValidateProperty(value, nameof(ManualData));
+                    var errors = GetErrors(nameof(ManualData));
+                    if (errors == null || !errors.Cast<object>().Any())
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        _analogIoTag.ManualData = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
                     }
-                    OnPropertyChanged();
                 }
             }
         }

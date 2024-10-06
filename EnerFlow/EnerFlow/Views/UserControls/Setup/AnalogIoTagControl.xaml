@@ -75,6 +75,7 @@
                               Grid.Row="2"
                               Grid.Column="1"
                               Margin="10"
+                              IsChecked="{Binding IsCalculated}"
                               VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
@@ -117,52 +118,61 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*" MinWidth="128" />
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="80" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="160" />
+                                    <ColumnDefinition Width="160" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Address:"
+                                <Label Content="Address"
                                        Grid.Column="0"
-                                       Margin="10"/>
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
                                 <TextBox Text="{Binding ReadAddress, ValidatesOnNotifyDataErrors=True}"
                                          VerticalAlignment="Center"
-                                         Grid.Column="1"
-                                         Margin="10"/>
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="2"
+                                         Margin="10,0,10,10"/>
                                 <Button Content=" ... "
                                         Command="{Binding ReadCommand}"
                                         VerticalAlignment="Center"
                                         Grid.Column="2"
-                                        Margin="10"/>
+                                        Grid.Row="1"
+                                        Margin="10,0,10,10"/>
                                 <Label Content="Deadband"
-                                       Margin="10"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"
                                        Grid.Column="3"/>
                                 <TextBox Text="{Binding Deadband, ValidatesOnNotifyDataErrors=True}"
                                          VerticalAlignment="Center"
-                                         Margin="10"
-                                         Grid.Column="4"/>
-                                <Label Content="Read Interval (ms):"
-                                       Grid.Column="5"
-                                       Margin="10"/>
+                                         Margin="10,0,10,10"
+                                         Grid.Column="3"
+                                         Grid.Row="1"/>
+                                <Label Content="Read Interval (ms)"
+                                       Grid.Column="4"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
                                 <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
                                          VerticalAlignment="Center"
-                                         Grid.Column="6"
+                                         Grid.Column="4"
+                                         Grid.Row="1"
                                          Text="{Binding ReadInterval, ValidatesOnNotifyDataErrors=True}"
-                                         Margin="10"/>
-                                <Label Content="History Address:"
+                                         Margin="10,0,10,10"/>
+                                <Label Content="History Address"
                                        Grid.Column="0"
-                                       Grid.Row="1"
-                                       Margin="10"/>
+                                       Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
                                 <TextBox Text="{Binding HistoryAddress, ValidatesOnNotifyDataErrors=True}"
                                          VerticalAlignment="Center"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="7"
-                                         Grid.Row="1"
-                                         Margin="10"/>
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Grid.Row="3"
+                                         Margin="10,0,10,10"/>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="Write Settings"
@@ -172,16 +182,20 @@
                                   Margin="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Content="Address:"
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Address"
                                        Grid.Column="0"
-                                       Margin="10"/>
+                                       Margin="10,0,10,0"/>
                                 <TextBox Text="{Binding WriteAddress, ValidatesOnNotifyDataErrors=True}"
                                          VerticalAlignment="Center"
-                                         Grid.Column="1"
-                                         Margin="10"/>
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         Margin="10,0,10,10"/>
                             </Grid>
                         </GroupBox>
                     </Grid>
@@ -286,14 +300,12 @@
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource ScriptTabHeaderDataTemplate}"
                      Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <wv2:WebView2 x:Name="MonacoWebView"
+                <wv2:WebView2 x:Name="ScriptEditorWebView"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch"
-                                      ScrollViewer.CanContentScroll="False"
-                                      Initialized="MonacoWebView_Initialized"
-                                      NavigationCompleted="MonacoWebView_NavigationCompleted"
-                                      WebMessageReceived="MonacoWebView_WebMessageReceived"
-                                      Visibility="{Binding MainViewModel.IsBusy, Source={StaticResource Locator}, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+                                      Initialized="ScriptEditorWebView_Initialized"
+                                      NavigationCompleted="ScriptEditorWebView_NavigationCompleted"
+                                      WebMessageReceived="ScriptEditorWebView_WebMessageReceived"/>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource OperationalRangesTabHeaderDataTemplate}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
@@ -307,7 +319,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <GroupBox Header="Risplay Range"
+                        <GroupBox Header="Display Range"
                                   Grid.Row="0"
                                   Grid.Column="0"
                                   Padding="10"
@@ -380,7 +392,293 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource AlarmTabHeaderDataTemplate}">
-                
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <GroupBox Grid.Row="0"
+                                  Grid.Column="0"
+                                  Padding="10"
+                                  Margin="10">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="HighHighAlarmCheckBox" Content="High High Alarm"/>
+                            </GroupBox.Header>
+                            <Grid IsEnabled="{Binding ElementName=HighHighAlarmCheckBox, Path=IsChecked}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- Priority -->
+                                <Label Content="Priority"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Margin="10,0,10,0"/>
+                                <ComboBox Grid.Column="0"
+                                          Grid.Row="1"
+                                          VerticalAlignment="Center"
+                                          Margin="10,0,10,10">
+                                    <ComboBoxItem IsSelected="True" Content="[1] Critical"/>
+                                </ComboBox>
+                                <!-- Delay -->
+                                <Label Grid.Row="0"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Delay (seconds)"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding HighHighAlarmDelay, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                                <!-- Setpoint -->
+                                <Label Content="Setpoint"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Column="0"
+                                         Grid.Row="3"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding HighHighAlarmSetpoint, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Margin="10,0,10,10"/>
+                                <!-- Delay -->
+                                <Label Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Deadband"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding HighHighAlarmDeadband, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="1"
+                                  Grid.Column="0"
+                                  Padding="10"
+                                  Margin="10">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="HighAlarmCheckBox" Content="High Alarm"/>
+                            </GroupBox.Header>
+                            <Grid IsEnabled="{Binding ElementName=HighAlarmCheckBox, Path=IsChecked}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- Priority -->
+                                <Label Content="Priority"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Margin="10,0,10,0"/>
+                                <ComboBox Grid.Column="0"
+                                          Grid.Row="1"
+                                          VerticalAlignment="Center"
+                                          Margin="10,0,10,10">
+                                    <ComboBoxItem IsSelected="True" Content="[2] High"/>
+                                </ComboBox>
+                                <!-- Delay -->
+                                <Label Grid.Row="0"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Delay (seconds)"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding HighAlarmDelay, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                                <!-- Setpoint -->
+                                <Label Content="Setpoint"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Column="0"
+                                         Grid.Row="3"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding HighAlarmSetpoint, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Margin="10,0,10,10"/>
+                                <!-- Delay -->
+                                <Label Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Deadband"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding HighAlarmDeadband, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="2"
+                                  Grid.Column="0"
+                                  Padding="10"
+                                  Margin="10">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="LowAlarmCheckBox" Content="Low Alarm"/>
+                            </GroupBox.Header>
+                            <Grid IsEnabled="{Binding ElementName=LowAlarmCheckBox, Path=IsChecked}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- Priority -->
+                                <Label Content="Priority"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Margin="10,0,10,0"/>
+                                <ComboBox Grid.Column="0"
+                                          Grid.Row="1"
+                                          VerticalAlignment="Center"
+                                          Margin="10,0,10,10">
+                                    <ComboBoxItem IsSelected="True" Content="[2] Warning"/>
+                                </ComboBox>
+                                <!-- Delay -->
+                                <Label Grid.Row="0"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Delay (seconds)"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding LowAlarmDelay, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                                <!-- Setpoint -->
+                                <Label Content="Setpoint"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Column="0"
+                                         Grid.Row="3"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding LowAlarmSetpoint, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Margin="10,0,10,10"/>
+                                <!-- Delay -->
+                                <Label Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Deadband"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding LowAlarmDeadband, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="3"
+                                  Grid.Column="0"
+                                  Padding="10"
+                                  Margin="10">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="LowLowAlarmCheckBox" Content="Low Low Alarm"/>
+                            </GroupBox.Header>
+                            <Grid IsEnabled="{Binding ElementName=LowLowAlarmCheckBox, Path=IsChecked}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- Priority -->
+                                <Label Content="Priority"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Margin="10,0,10,0"/>
+                                <ComboBox Grid.Column="0"
+                                          Grid.Row="1"
+                                          VerticalAlignment="Center"
+                                          Margin="10,0,10,10">
+                                    <ComboBoxItem IsSelected="True" Content="[1] Critical"/>
+                                </ComboBox>
+                                <!-- Delay -->
+                                <Label Grid.Row="0"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Delay (seconds)"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding LowLowAlarmDelay, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                                <!-- Setpoint -->
+                                <Label Content="Setpoint"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Column="0"
+                                         Grid.Row="3"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding LowLowAlarmSetpoint, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Margin="10,0,10,10"/>
+                                <!-- Delay -->
+                                <Label Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Content="Deadband"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="2"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         Text="{Binding LowLowAlarmDeadband, ValidatesOnNotifyDataErrors=True}" 
+                                         Margin="10,0,10,10"/>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource DisplayTabHeaderDataTemplate}">
             </TabItem>

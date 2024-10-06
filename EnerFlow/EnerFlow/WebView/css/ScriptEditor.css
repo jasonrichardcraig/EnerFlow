@@ -1,0 +1,11 @@
+﻿html, body {
+    overflow: hidden; /* Disable both horizontal and vertical scrolling */
+    height: 100%; /* Ensure the content fills the entire viewport */
+    margin: 0; /* Remove any margins */
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    border: 1px solid grey;
+}

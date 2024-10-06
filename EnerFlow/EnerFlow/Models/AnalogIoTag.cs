@@ -93,6 +93,14 @@ public partial class AnalogIoTag
 
     public int? NumberOfDigitsAfterDecimal { get; set; }
 
+    public bool? UseDefaultTrendStyle { get; set; }
+
+    public string? LineStyle { get; set; }
+
+    public int? LineWidth { get; set; }
+
+    public string? LineColor { get; set; }
+
     public int? UnitId { get; set; }
 
     public int? TagValueEnumerationId { get; set; }
