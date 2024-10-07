@@ -44,6 +44,8 @@ namespace EnerFlow.Services
                 DataContext = new SearchViewModel()
             };
 
+            searchDialog.SearchTextBox.Focus();
+
             searchDialog.ShowDialog();
         }
 

@@ -9,7 +9,12 @@
         xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Height="450" Width="800" Title="EnerFlow" Icon="\Images\EF_Icon.png" Loaded="Window_Loaded">
+        Height="450"
+        Width="800"
+        Title="EnerFlow"
+        Icon="\Images\EF_Icon.png"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <busyIndicator:BusyMask x:Name="BusyIndicator"
                         IsBusy="{Binding IsBusy}" 
                         IndicatorType="Grid" 

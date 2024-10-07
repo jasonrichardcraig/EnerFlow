@@ -5,6 +5,7 @@ using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
 using System.Windows;
 namespace EnerFlow.Views
 {
@@ -108,6 +109,8 @@ namespace EnerFlow.Views
                     dataService.Context.FacilityTypes.Load();
                     dataService.Context.FacilitySubTypes.Load();
                     dataService.Context.WasteLocationTypes.Load();
+                    dataService.Context.UnitClasses.Load();
+                    dataService.Context.Units.Load();
 
                 }
                 catch (Exception ex)
@@ -188,6 +191,17 @@ namespace EnerFlow.Views
             {
                 case System.Windows.Input.Key.Delete:
                     ((MainViewModel)DataContext).SelectedHierarchyViewModel?.DeleteCommand?.Execute(null);
+                    break;
+            }
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case System.Windows.Input.Key.F3:
+                    e.Handled = true;
+                    ((MainViewModel)DataContext).SearchCommand?.Execute(null);
                     break;
             }
         }

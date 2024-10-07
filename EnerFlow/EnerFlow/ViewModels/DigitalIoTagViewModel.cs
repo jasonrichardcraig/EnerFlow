@@ -21,5 +21,7 @@ namespace EnerFlow.ViewModels
             _digitalIoTag = digitalIoTag;
             digitalIoTag.Hierarchy = hierarchy;
         }
+
+
     }
 }

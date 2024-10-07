@@ -1,4 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:helpers="clr-namespace:EnerFlow.Helpers"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="TextBoxValidationErrorTemplate">
@@ -294,6 +295,12 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="AlarmPriorityComboBoxItemDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+        </StackPanel>
+    </DataTemplate>
+
     <DataTemplate x:Key="FacilitySubTypeComboBoxItemDataTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Code}"/>
@@ -331,5 +338,220 @@
                        VerticalAlignment="Center"/>
         </Grid>
     </DataTemplate>
+
+    <DataTemplate x:Key="UnitOfMeasureComboBoxItemTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text=" ("/>
+            <TextBlock Text="{Binding Symbol}"/>
+            <TextBlock Text=")"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <x:Array x:Key="LineStyles" Type="{x:Type helpers:LineStyle}">
+        <helpers:LineStyle Name="Solid">
+            <helpers:LineStyle.DashStyle>
+                <DashStyle/>
+            </helpers:LineStyle.DashStyle>
+        </helpers:LineStyle>
+        <helpers:LineStyle Name="Dot">
+            <helpers:LineStyle.DashStyle>
+                <DashStyle Dashes="1 2"/>
+            </helpers:LineStyle.DashStyle>
+        </helpers:LineStyle>
+        <helpers:LineStyle Name="Dashes">
+            <helpers:LineStyle.DashStyle>
+                <DashStyle Dashes="4 2"/>
+            </helpers:LineStyle.DashStyle>
+        </helpers:LineStyle>
+        <helpers:LineStyle Name="Dash Dot">
+            <helpers:LineStyle.DashStyle>
+                <DashStyle Dashes="4 2 1 2"/>
+            </helpers:LineStyle.DashStyle>
+        </helpers:LineStyle>
+        <helpers:LineStyle Name="Dash Dot Dot">
+            <helpers:LineStyle.DashStyle>
+                <DashStyle Dashes="4 2 1 2 1 2"/>
+            </helpers:LineStyle.DashStyle>
+        </helpers:LineStyle>
+    </x:Array>
+
+    <DataTemplate x:Key="LineStyleComboBoxItemTemplate">
+        <Canvas HorizontalAlignment="Stretch" Height="20">
+            <Line X1="0"
+                  Y1="10"
+                  X2="40"
+                  Y2="10"
+                  Stroke="Black"
+                  StrokeThickness="2"
+                  StrokeDashArray="{Binding DashStyle.Dashes}"/>
+        </Canvas>
+    </DataTemplate>
+
+    <!-- DataTemplate for Color ComboBox Items -->
+    <DataTemplate x:Key="ColorComboBoxItem">
+        <StackPanel Orientation="Horizontal">
+            <Rectangle Width="16" Height="16" Fill="{Binding Color}" Margin="0,0,4,0"/>
+            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- Style for Color ComboBox -->
+    <Style x:Key="ColorComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="ItemTemplate" Value="{StaticResource ColorComboBoxItem}"/>
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Height" Value="30"/>
+    </Style>
+
+    <!-- Style for Color Preview Border -->
+    <Style x:Key="ColorPreviewBorderStyle" TargetType="Border">
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <x:Array x:Key="AvailableColors" Type="{x:Type helpers:ColorItem}">
+        <helpers:ColorItem Name="AliceBlue" DisplayName="Alice Blue" Color="AliceBlue"/>
+        <helpers:ColorItem Name="AntiqueWhite" DisplayName="Antique White" Color="AntiqueWhite"/>
+        <helpers:ColorItem Name="Aqua" DisplayName="Aqua" Color="Aqua"/>
+        <helpers:ColorItem Name="Aquamarine" DisplayName="Aquamarine" Color="Aquamarine"/>
+        <helpers:ColorItem Name="Azure" DisplayName="Azure" Color="Azure"/>
+        <helpers:ColorItem Name="Beige" DisplayName="Beige" Color="Beige"/>
+        <helpers:ColorItem Name="Bisque" DisplayName="Bisque" Color="Bisque"/>
+        <helpers:ColorItem Name="Black" DisplayName="Black" Color="Black"/>
+        <helpers:ColorItem Name="BlanchedAlmond" DisplayName="Blanched Almond" Color="BlanchedAlmond"/>
+        <helpers:ColorItem Name="Blue" DisplayName="Blue" Color="Blue"/>
+        <helpers:ColorItem Name="BlueViolet" DisplayName="Blue Violet" Color="BlueViolet"/>
+        <helpers:ColorItem Name="Brown" DisplayName="Brown" Color="Brown"/>
+        <helpers:ColorItem Name="BurlyWood" DisplayName="Burly Wood" Color="BurlyWood"/>
+        <helpers:ColorItem Name="CadetBlue" DisplayName="Cadet Blue" Color="CadetBlue"/>
+        <helpers:ColorItem Name="Chartreuse" DisplayName="Chartreuse" Color="Chartreuse"/>
+        <helpers:ColorItem Name="Chocolate" DisplayName="Chocolate" Color="Chocolate"/>
+        <helpers:ColorItem Name="Coral" DisplayName="Coral" Color="Coral"/>
+        <helpers:ColorItem Name="CornflowerBlue" DisplayName="Cornflower Blue" Color="CornflowerBlue"/>
+        <helpers:ColorItem Name="Cornsilk" DisplayName="Cornsilk" Color="Cornsilk"/>
+        <helpers:ColorItem Name="Crimson" DisplayName="Crimson" Color="Crimson"/>
+        <helpers:ColorItem Name="Cyan" DisplayName="Cyan" Color="Cyan"/>
+        <helpers:ColorItem Name="DarkBlue" DisplayName="Dark Blue" Color="DarkBlue"/>
+        <helpers:ColorItem Name="DarkCyan" DisplayName="Dark Cyan" Color="DarkCyan"/>
+        <helpers:ColorItem Name="DarkGoldenrod" DisplayName="Dark Goldenrod" Color="DarkGoldenrod"/>
+        <helpers:ColorItem Name="DarkGray" DisplayName="Dark Gray" Color="DarkGray"/>
+        <helpers:ColorItem Name="DarkGreen" DisplayName="Dark Green" Color="DarkGreen"/>
+        <helpers:ColorItem Name="DarkKhaki" DisplayName="Dark Khaki" Color="DarkKhaki"/>
+        <helpers:ColorItem Name="DarkMagenta" DisplayName="Dark Magenta" Color="DarkMagenta"/>
+        <helpers:ColorItem Name="DarkOliveGreen" DisplayName="Dark Olive Green" Color="DarkOliveGreen"/>
+        <helpers:ColorItem Name="DarkOrange" DisplayName="Dark Orange" Color="DarkOrange"/>
+        <helpers:ColorItem Name="DarkOrchid" DisplayName="Dark Orchid" Color="DarkOrchid"/>
+        <helpers:ColorItem Name="DarkRed" DisplayName="Dark Red" Color="DarkRed"/>
+        <helpers:ColorItem Name="DarkSalmon" DisplayName="Dark Salmon" Color="DarkSalmon"/>
+        <helpers:ColorItem Name="DarkSeaGreen" DisplayName="Dark Sea Green" Color="DarkSeaGreen"/>
+        <helpers:ColorItem Name="DarkSlateBlue" DisplayName="Dark Slate Blue" Color="DarkSlateBlue"/>
+        <helpers:ColorItem Name="DarkSlateGray" DisplayName="Dark Slate Gray" Color="DarkSlateGray"/>
+        <helpers:ColorItem Name="DarkTurquoise" DisplayName="Dark Turquoise" Color="DarkTurquoise"/>
+        <helpers:ColorItem Name="DarkViolet" DisplayName="Dark Violet" Color="DarkViolet"/>
+        <helpers:ColorItem Name="DeepPink" DisplayName="Deep Pink" Color="DeepPink"/>
+        <helpers:ColorItem Name="DeepSkyBlue" DisplayName="Deep Sky Blue" Color="DeepSkyBlue"/>
+        <helpers:ColorItem Name="DimGray" DisplayName="Dim Gray" Color="DimGray"/>
+        <helpers:ColorItem Name="DodgerBlue" DisplayName="Dodger Blue" Color="DodgerBlue"/>
+        <helpers:ColorItem Name="Firebrick" DisplayName="Firebrick" Color="Firebrick"/>
+        <helpers:ColorItem Name="FloralWhite" DisplayName="Floral White" Color="FloralWhite"/>
+        <helpers:ColorItem Name="ForestGreen" DisplayName="Forest Green" Color="ForestGreen"/>
+        <helpers:ColorItem Name="Fuchsia" DisplayName="Fuchsia" Color="Fuchsia"/>
+        <helpers:ColorItem Name="Gainsboro" DisplayName="Gainsboro" Color="Gainsboro"/>
+        <helpers:ColorItem Name="GhostWhite" DisplayName="Ghost White" Color="GhostWhite"/>
+        <helpers:ColorItem Name="Gold" DisplayName="Gold" Color="Gold"/>
+        <helpers:ColorItem Name="Goldenrod" DisplayName="Goldenrod" Color="Goldenrod"/>
+        <helpers:ColorItem Name="Gray" DisplayName="Gray" Color="Gray"/>
+        <helpers:ColorItem Name="Green" DisplayName="Green" Color="Green"/>
+        <helpers:ColorItem Name="GreenYellow" DisplayName="Green Yellow" Color="GreenYellow"/>
+        <helpers:ColorItem Name="Honeydew" DisplayName="Honeydew" Color="Honeydew"/>
+        <helpers:ColorItem Name="HotPink" DisplayName="Hot Pink" Color="HotPink"/>
+        <helpers:ColorItem Name="IndianRed" DisplayName="Indian Red" Color="IndianRed"/>
+        <helpers:ColorItem Name="Indigo" DisplayName="Indigo" Color="Indigo"/>
+        <helpers:ColorItem Name="Ivory" DisplayName="Ivory" Color="Ivory"/>
+        <helpers:ColorItem Name="Khaki" DisplayName="Khaki" Color="Khaki"/>
+        <helpers:ColorItem Name="Lavender" DisplayName="Lavender" Color="Lavender"/>
+        <helpers:ColorItem Name="LavenderBlush" DisplayName="Lavender Blush" Color="LavenderBlush"/>
+        <helpers:ColorItem Name="LawnGreen" DisplayName="Lawn Green" Color="LawnGreen"/>
+        <helpers:ColorItem Name="LemonChiffon" DisplayName="Lemon Chiffon" Color="LemonChiffon"/>
+        <helpers:ColorItem Name="LightBlue" DisplayName="Light Blue" Color="LightBlue"/>
+        <helpers:ColorItem Name="LightCoral" DisplayName="Light Coral" Color="LightCoral"/>
+        <helpers:ColorItem Name="LightCyan" DisplayName="Light Cyan" Color="LightCyan"/>
+        <helpers:ColorItem Name="LightGoldenrodYellow" DisplayName="Light Goldenrod Yellow" Color="LightGoldenrodYellow"/>
+        <helpers:ColorItem Name="LightGray" DisplayName="Light Gray" Color="LightGray"/>
+        <helpers:ColorItem Name="LightGreen" DisplayName="Light Green" Color="LightGreen"/>
+        <helpers:ColorItem Name="LightPink" DisplayName="Light Pink" Color="LightPink"/>
+        <helpers:ColorItem Name="LightSalmon" DisplayName="Light Salmon" Color="LightSalmon"/>
+        <helpers:ColorItem Name="LightSeaGreen" DisplayName="Light Sea Green" Color="LightSeaGreen"/>
+        <helpers:ColorItem Name="LightSkyBlue" DisplayName="Light Sky Blue" Color="LightSkyBlue"/>
+        <helpers:ColorItem Name="LightSlateGray" DisplayName="Light Slate Gray" Color="LightSlateGray"/>
+        <helpers:ColorItem Name="LightSteelBlue" DisplayName="Light Steel Blue" Color="LightSteelBlue"/>
+        <helpers:ColorItem Name="LightYellow" DisplayName="Light Yellow" Color="LightYellow"/>
+        <helpers:ColorItem Name="Lime" DisplayName="Lime" Color="Lime"/>
+        <helpers:ColorItem Name="LimeGreen" DisplayName="Lime Green" Color="LimeGreen"/>
+        <helpers:ColorItem Name="Linen" DisplayName="Linen" Color="Linen"/>
+        <helpers:ColorItem Name="Magenta" DisplayName="Magenta" Color="Magenta"/>
+        <helpers:ColorItem Name="Maroon" DisplayName="Maroon" Color="Maroon"/>
+        <helpers:ColorItem Name="MediumAquamarine" DisplayName="Medium Aquamarine" Color="MediumAquamarine"/>
+        <helpers:ColorItem Name="MediumBlue" DisplayName="Medium Blue" Color="MediumBlue"/>
+        <helpers:ColorItem Name="MediumOrchid" DisplayName="Medium Orchid" Color="MediumOrchid"/>
+        <helpers:ColorItem Name="MediumPurple" DisplayName="Medium Purple" Color="MediumPurple"/>
+        <helpers:ColorItem Name="MediumSeaGreen" DisplayName="Medium Sea Green" Color="MediumSeaGreen"/>
+        <helpers:ColorItem Name="MediumSlateBlue" DisplayName="Medium Slate Blue" Color="MediumSlateBlue"/>
+        <helpers:ColorItem Name="MediumSpringGreen" DisplayName="Medium Spring Green" Color="MediumSpringGreen"/>
+        <helpers:ColorItem Name="MediumTurquoise" DisplayName="Medium Turquoise" Color="MediumTurquoise"/>
+        <helpers:ColorItem Name="MediumVioletRed" DisplayName="Medium Violet Red" Color="MediumVioletRed"/>
+        <helpers:ColorItem Name="MidnightBlue" DisplayName="Midnight Blue" Color="MidnightBlue"/>
+        <helpers:ColorItem Name="MintCream" DisplayName="Mint Cream" Color="MintCream"/>
+        <helpers:ColorItem Name="MistyRose" DisplayName="Misty Rose" Color="MistyRose"/>
+        <helpers:ColorItem Name="Moccasin" DisplayName="Moccasin" Color="Moccasin"/>
+        <helpers:ColorItem Name="NavajoWhite" DisplayName="Navajo White" Color="NavajoWhite"/>
+        <helpers:ColorItem Name="Navy" DisplayName="Navy" Color="Navy"/>
+        <helpers:ColorItem Name="OldLace" DisplayName="Old Lace" Color="OldLace"/>
+        <helpers:ColorItem Name="Olive" DisplayName="Olive" Color="Olive"/>
+        <helpers:ColorItem Name="OliveDrab" DisplayName="Olive Drab" Color="OliveDrab"/>
+        <helpers:ColorItem Name="Orange" DisplayName="Orange" Color="Orange"/>
+        <helpers:ColorItem Name="OrangeRed" DisplayName="Orange Red" Color="OrangeRed"/>
+        <helpers:ColorItem Name="Orchid" DisplayName="Orchid" Color="Orchid"/>
+        <helpers:ColorItem Name="PaleGoldenrod" DisplayName="Pale Goldenrod" Color="PaleGoldenrod"/>
+        <helpers:ColorItem Name="PaleGreen" DisplayName="Pale Green" Color="PaleGreen"/>
+        <helpers:ColorItem Name="PaleTurquoise" DisplayName="Pale Turquoise" Color="PaleTurquoise"/>
+        <helpers:ColorItem Name="PaleVioletRed" DisplayName="Pale Violet Red" Color="PaleVioletRed"/>
+        <helpers:ColorItem Name="PapayaWhip" DisplayName="Papaya Whip" Color="PapayaWhip"/>
+        <helpers:ColorItem Name="PeachPuff" DisplayName="Peach Puff" Color="PeachPuff"/>
+        <helpers:ColorItem Name="Peru" DisplayName="Peru" Color="Peru"/>
+        <helpers:ColorItem Name="Pink" DisplayName="Pink" Color="Pink"/>
+        <helpers:ColorItem Name="Plum" DisplayName="Plum" Color="Plum"/>
+        <helpers:ColorItem Name="PowderBlue" DisplayName="Powder Blue" Color="PowderBlue"/>
+        <helpers:ColorItem Name="Purple" DisplayName="Purple" Color="Purple"/>
+        <helpers:ColorItem Name="Red" DisplayName="Red" Color="Red"/>
+        <helpers:ColorItem Name="RosyBrown" DisplayName="Rosy Brown" Color="RosyBrown"/>
+        <helpers:ColorItem Name="RoyalBlue" DisplayName="Royal Blue" Color="RoyalBlue"/>
+        <helpers:ColorItem Name="SaddleBrown" DisplayName="Saddle Brown" Color="SaddleBrown"/>
+        <helpers:ColorItem Name="Salmon" DisplayName="Salmon" Color="Salmon"/>
+        <helpers:ColorItem Name="SandyBrown" DisplayName="Sandy Brown" Color="SandyBrown"/>
+        <helpers:ColorItem Name="SeaGreen" DisplayName="Sea Green" Color="SeaGreen"/>
+        <helpers:ColorItem Name="SeaShell" DisplayName="Sea Shell" Color="SeaShell"/>
+        <helpers:ColorItem Name="Sienna" DisplayName="Sienna" Color="Sienna"/>
+        <helpers:ColorItem Name="Silver" DisplayName="Silver" Color="Silver"/>
+        <helpers:ColorItem Name="SkyBlue" DisplayName="Sky Blue" Color="SkyBlue"/>
+        <helpers:ColorItem Name="SlateBlue" DisplayName="Slate Blue" Color="SlateBlue"/>
+        <helpers:ColorItem Name="SlateGray" DisplayName="Slate Gray" Color="SlateGray"/>
+        <helpers:ColorItem Name="Snow" DisplayName="Snow" Color="Snow"/>
+        <helpers:ColorItem Name="SpringGreen" DisplayName="Spring Green" Color="SpringGreen"/>
+        <helpers:ColorItem Name="SteelBlue" DisplayName="Steel Blue" Color="SteelBlue"/>
+        <helpers:ColorItem Name="Tan" DisplayName="Tan" Color="Tan"/>
+        <helpers:ColorItem Name="Teal" DisplayName="Teal" Color="Teal"/>
+        <helpers:ColorItem Name="Thistle" DisplayName="Thistle" Color="Thistle"/>
+        <helpers:ColorItem Name="Tomato" DisplayName="Tomato" Color="Tomato"/>
+        <helpers:ColorItem Name="Turquoise" DisplayName="Turquoise" Color="Turquoise"/>
+        <helpers:ColorItem Name="Violet" DisplayName="Violet" Color="Violet"/>
+        <helpers:ColorItem Name="Wheat" DisplayName="Wheat" Color="Wheat"/>
+        <helpers:ColorItem Name="White" DisplayName="White" Color="White"/>
+        <helpers:ColorItem Name="WhiteSmoke" DisplayName="White Smoke" Color="WhiteSmoke"/>
+        <helpers:ColorItem Name="Yellow" DisplayName="Yellow" Color="Yellow"/>
+        <helpers:ColorItem Name="YellowGreen" DisplayName="Yellow Green" Color="YellowGreen"/>
+    </x:Array>
 
 </ResourceDictionary>

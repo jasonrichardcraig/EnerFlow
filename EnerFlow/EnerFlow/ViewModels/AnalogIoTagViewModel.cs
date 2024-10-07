@@ -7,24 +7,83 @@ namespace EnerFlow.ViewModels
 {
     public class AnalogIoTagViewModel : HierarchyViewModel
     {
+        private UnitClass _selectdUnitClass = null!;
         private readonly AnalogIoTag _analogIoTag = null!;
 
         public AnalogIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _analogIoTag = hierarchy.AnalogIoTags.First();
+            _selectdUnitClass = _analogIoTag?.Unit?.UnitClass!;
         }
 
         public AnalogIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, AnalogIoTag analogIoTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _analogIoTag = analogIoTag;
+            _selectdUnitClass = _analogIoTag?.Unit?.UnitClass!;
+
+            var defaultAlarmPriority = Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.FirstOrDefault()!;
+
             analogIoTag.Hierarchy = hierarchy;
             UnscaledMinimum = 0;
             UnscaledMaximum = 100;
             ScaledMinimum = 0;
             ScaledMaximum = 100;
+            DisplayRangeMinimum = 0;
+            DisplayRangeMaximum = 100;
+            ExpectedRangeMinimum = 0;
+            ExpectedRangeMaximum = 100;
+            HighHighAlarmPriority = defaultAlarmPriority;
+            HighAlarmPriority = defaultAlarmPriority;
+            LowAlarmPriority = defaultAlarmPriority;
+            LowLowAlarmPriority = defaultAlarmPriority;
+            UseDefaultTrendStyle = true;
+            LineColor = "Black";
+            LineStyle = "Solid";
+            LineWidth = 1;
             ClampScaledValue = false;
         }
 
+        public List<AlarmPriority> AlarmPriorities => [.. Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.ToList()];
+
+        public List<UnitClass> UnitClasses => [.. Ioc.Default.GetService<IDataService>()?.Context.UnitClasses.OrderBy(u=>u.Name).ToList()];
+
+        public UnitClass SelectedUnitClass
+        {
+            get => _selectdUnitClass;
+            set
+            {
+                if (_selectdUnitClass != value)
+                {
+                    ValidateProperty(value, nameof(SelectedUnitClass));
+
+                    var errors = GetErrors(nameof(SelectedUnitClass));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _selectdUnitClass = value;
+                        OnPropertyChanged();
+                        Unit = _selectdUnitClass?.Units.FirstOrDefault()!;
+                    }
+                }
+            }
+        }
+
+        public bool EnableUnitsOfMeasure
+        {
+            get => Unit != null;
+            set
+            {
+                if (value && Unit == null)
+                {
+                    SelectedUnitClass = UnitClasses.FirstOrDefault()!;
+                }
+                else if (!value)
+                {
+                    SelectedUnitClass = null!;
+                    Unit = null!;
+                }
+            }
+        }
+        
         public bool ByteSwap
         {
             get => _analogIoTag.ByteSwap ?? false;
@@ -899,6 +958,28 @@ namespace EnerFlow.ViewModels
                     if (errors == null || !errors.Cast<object>().Any())
                     {
                         _analogIoTag.LowLowAlarmDeadband = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public bool? LowLowAlarmDisable
+        {
+            get => _analogIoTag.LowLowAlarmDisable;
+            set
+            {
+                if (_analogIoTag.LowLowAlarmDisable != value)
+                {
+                    ValidateProperty(value, nameof(LowLowAlarmDisable));
+                    var errors = GetErrors(nameof(LowLowAlarmDisable));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _analogIoTag.LowLowAlarmDisable = value;
                         if (!DisableAutoSave)
                         {
                             Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
