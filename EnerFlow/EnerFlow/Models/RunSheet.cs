@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class RunSheet
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public DateTime DateTimeCreated { get; set; }

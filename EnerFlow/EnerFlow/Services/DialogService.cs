@@ -147,7 +147,7 @@ namespace EnerFlow.Services
                 areaHierarchyViewModel.DisableAutoSave = false;
                 dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, Enums.NodeType.Area);
                 districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
-                districtHierarchyViewModel.IsSelected = true;   
+                districtHierarchyViewModel.IsSelected = true;
             }
         }
 
@@ -287,7 +287,7 @@ namespace EnerFlow.Services
                 dataService.Context.RunSheets.Add(runSheet);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, runSheetViewModel.Hierarchy, Enums.NodeType.RunSheet);
                 parentHierarchyViewModel.Children.Add(runSheetViewModel);
-                runSheetViewModel.IsSelected = true;    
+                runSheetViewModel.IsSelected = true;
             }
         }
 
@@ -357,7 +357,7 @@ namespace EnerFlow.Services
                 dataService.Context.SerialPortChannels.Add(serialPortChannel);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, serialPortChannelViewModel.Hierarchy, Enums.NodeType.SerialPortChannel);
                 parentHierarchyViewModel.Children.Add(serialPortChannelViewModel);
-                serialPortChannelViewModel.IsSelected = true;   
+                serialPortChannelViewModel.IsSelected = true;
             }
         }
 
@@ -431,6 +431,45 @@ namespace EnerFlow.Services
             }
         }
 
+        public void ShowNewDigitalIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
+        {
+            var dataService = Ioc.Default.GetService<IDataService>();
+
+            if (dataService == null)
+            {
+                ShowErrorDialog("Unable to create new Digital IO Tag. Required services are not available.", "Error");
+                return;
+            }
+
+            var digitalIoTagCurrentValue = new DigitalIoTagCurrentValue() { TimeStamp = DateTime.Now };
+            var digitalIoTag = new DigitalIoTag() { DigitalIoTagCurrentValue = digitalIoTagCurrentValue };
+
+            var digitalIoTagViewModel = new DigitalIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), digitalIoTag)
+            {
+                Name = "New Digital IO Tag",
+                DisableAutoSave = true
+            };
+
+            var dialog = new NewDigitalIoTagDialog()
+            {
+                Owner = Application.Current.MainWindow,
+                DataContext = digitalIoTagViewModel
+            };
+
+            var dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                digitalIoTagViewModel.DisableAutoSave = false;
+                dataService.Context.DigitalIoTags.Add(digitalIoTag);
+                dataService.Context.DigitalIoTagCurrentValues.Add(digitalIoTagCurrentValue);
+                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, digitalIoTagViewModel.Hierarchy, Enums.NodeType.DigitalIoTag);
+                parentHierarchyViewModel.Children.Add(digitalIoTagViewModel);
+                digitalIoTagViewModel.IsSelected = true;
+            }
+        }
+
+
         public void ShowNewAnalogIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
         {
             var dataService = Ioc.Default.GetService<IDataService>();
@@ -441,7 +480,8 @@ namespace EnerFlow.Services
                 return;
             }
 
-            var analogIoTag = new AnalogIoTag();
+            var analogIoTagCurrentValue = new AnalogIoTagCurrentValue() { TimeStamp = DateTime.Now };
+            var analogIoTag = new AnalogIoTag() { AnalogIoTagCurrentValue = analogIoTagCurrentValue };
             var analogIoTagViewModel = new AnalogIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), analogIoTag)
             {
                 Name = "New Analog IO Tag",
@@ -460,44 +500,10 @@ namespace EnerFlow.Services
             {
                 analogIoTagViewModel.DisableAutoSave = false;
                 dataService.Context.AnalogIoTags.Add(analogIoTag);
+                dataService.Context.AnalogIoTagCurrentValues.Add(analogIoTagCurrentValue);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, analogIoTagViewModel.Hierarchy, Enums.NodeType.AnalogIoTag);
                 parentHierarchyViewModel.Children.Add(analogIoTagViewModel);
                 analogIoTagViewModel.IsSelected = true;
-            }
-        }
-
-        public void ShowNewDigitalIoTagDialog(HierarchyViewModel parentHierarchyViewModel)
-        {
-            var dataService = Ioc.Default.GetService<IDataService>();
-
-            if (dataService == null)
-            {
-                ShowErrorDialog("Unable to create new Digital IO Tag. Required services are not available.", "Error");
-                return;
-            }
-
-            var digitalIoTag = new DigitalIoTag();
-            var digitalIoTagViewModel = new DigitalIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), digitalIoTag)
-            {
-                Name = "New Digital IO Tag",
-                DisableAutoSave = true
-            };
-
-            var dialog = new NewContextTagDialog()
-            {
-                Owner = Application.Current.MainWindow,
-                DataContext = digitalIoTagViewModel
-            };
-
-            var dialogResult = dialog.ShowDialog();
-
-            if (dialogResult == true)
-            {
-                digitalIoTagViewModel.DisableAutoSave = false;
-                dataService.Context.DigitalIoTags.Add(digitalIoTag);
-                dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, digitalIoTagViewModel.Hierarchy, Enums.NodeType.DigitalIoTag);
-                parentHierarchyViewModel.Children.Add(digitalIoTagViewModel);
-                digitalIoTagViewModel.IsSelected = true;
             }
         }
 
@@ -511,7 +517,8 @@ namespace EnerFlow.Services
                 return;
             }
 
-            var stringIoTag = new StringIoTag();
+            var stringIoTagCurrentValue = new StringIoTagCurrentValue() { TimeStamp = DateTime.Now };
+            var stringIoTag = new StringIoTag() { StringIoTagCurrentValue = stringIoTagCurrentValue };
             var stringIoTagViewModel = new StringIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), stringIoTag)
             {
                 Name = "New String IO Tag",
@@ -530,6 +537,7 @@ namespace EnerFlow.Services
             {
                 stringIoTagViewModel.DisableAutoSave = false;
                 dataService.Context.StringIoTags.Add(stringIoTag);
+                dataService.Context.StringIoTagCurrentValues.Add(stringIoTagCurrentValue);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, stringIoTagViewModel.Hierarchy, Enums.NodeType.StringIoTag);
                 parentHierarchyViewModel.Children.Add(stringIoTagViewModel);
                 stringIoTagViewModel.IsSelected = true;
@@ -567,7 +575,7 @@ namespace EnerFlow.Services
                 dataService.Context.MeterRuns.Add(meterRun);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, meterRunViewModel.Hierarchy, Enums.NodeType.MeterRun);
                 parentHierarchyViewModel.Children.Add(meterRunViewModel);
-                meterRunViewModel.IsSelected = true;    
+                meterRunViewModel.IsSelected = true;
             }
         }
 

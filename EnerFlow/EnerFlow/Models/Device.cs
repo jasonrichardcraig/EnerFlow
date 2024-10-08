@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class Device
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public int? InterPollDelay { get; set; }

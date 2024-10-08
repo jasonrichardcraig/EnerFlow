@@ -7,7 +7,7 @@ namespace EnerFlow.ViewModels
         private readonly Tank _tank = null!;
         public TankViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _tank = hierarchy.Tanks.First();
+            _tank = hierarchy.Tank!;
         }
 
         public TankViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Tank tank) : base(parentHierarchyViewModel, hierarchy)

@@ -8,7 +8,7 @@ namespace EnerFlow.ViewModels
 
         public ScreenViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _screen = hierarchy.Screens.First();
+            _screen = hierarchy.Screen!;
         }
 
         public ScreenViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Screen screen) : base(parentHierarchyViewModel, hierarchy)

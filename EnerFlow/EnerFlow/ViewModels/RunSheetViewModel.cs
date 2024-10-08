@@ -9,7 +9,7 @@ namespace EnerFlow.ViewModels
 
         public RunSheetViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _runSheet = hierarchy.RunSheets.First();
+            _runSheet = hierarchy.RunSheet!;
         }
 
         public RunSheetViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, RunSheet runSheet) : base(parentHierarchyViewModel, hierarchy)

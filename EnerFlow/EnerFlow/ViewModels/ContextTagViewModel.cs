@@ -9,7 +9,7 @@ namespace EnerFlow.ViewModels
 
         public ContextTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _contextTag = hierarchy.ContextTags.First();
+            _contextTag = hierarchy.ContextTag!;
         }
 
         public ContextTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, ContextTag contextTag) : base(parentHierarchyViewModel, hierarchy)

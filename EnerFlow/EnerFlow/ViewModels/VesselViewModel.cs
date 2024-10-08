@@ -7,7 +7,7 @@ namespace EnerFlow.ViewModels
         private readonly Vessel _vessel = null!;
         public VesselViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _vessel = hierarchy.Vessels.First();
+            _vessel = hierarchy.Vessel!;
         }
 
         public VesselViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Vessel vessel) : base(parentHierarchyViewModel, hierarchy)

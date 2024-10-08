@@ -8,7 +8,7 @@ namespace EnerFlow.ViewModels
 
         public SerialPortChannelViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _serialPortChannel = hierarchy.SerialPortChannels.First();
+            _serialPortChannel = hierarchy.SerialPortChannel!;
         }
 
         public SerialPortChannelViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, SerialPortChannel serialPortChannel) : base(parentHierarchyViewModel, hierarchy)

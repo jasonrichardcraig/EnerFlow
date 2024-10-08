@@ -14,7 +14,7 @@ namespace EnerFlow.ViewModels
 
         public FacilityViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _facility = hierarchy.Facilities.First();
+            _facility = hierarchy.Facility!;
             _selectdFacilityType = _facility.FacilitySubType?.FacilityType ?? FacilityTypes.First();
         }
 
@@ -25,9 +25,9 @@ namespace EnerFlow.ViewModels
             _selectdFacilityType = _facility.FacilitySubType?.FacilityType ?? FacilityTypes.First();
         }
 
-        public static List<FacilityType> FacilityTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.FacilityTypes];
+        public static List<FacilityType> FacilityTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.FacilityTypes.Local];
 
-        public static List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.EnergyDevelopmentCategoryTypes];
+        public static List<EnergyDevelopmentCategoryType> EnergyDevelopmentCategoryTypes => [.. Ioc.Default.GetService<IDataService>()?.Context.EnergyDevelopmentCategoryTypes.Local];
 
         public FacilityType SelectedFacilityType
         {

@@ -8,7 +8,7 @@ namespace EnerFlow.ViewModels
 
         public DeviceViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _device = hierarchy.Devices.First();
+            _device = hierarchy.Device!;
         }
 
         public DeviceViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Device device) : base(parentHierarchyViewModel, hierarchy)

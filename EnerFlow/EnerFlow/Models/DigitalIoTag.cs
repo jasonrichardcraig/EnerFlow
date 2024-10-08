@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class DigitalIoTag
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public string? ReadAddress { get; set; }
@@ -27,11 +25,23 @@ public partial class DigitalIoTag
 
     public bool? AlarmDisabled { get; set; }
 
+    public int? AlarmDelay { get; set; }
+
+    public bool? InvertState { get; set; }
+
     public string? TrueValueText { get; set; }
 
     public string? FalseValueText { get; set; }
 
-    public bool? IsBadQuality { get; set; }
+    public int? DisplayOrder { get; set; }
+
+    public bool? UseDefaultTrendStyle { get; set; }
+
+    public string? LineStyle { get; set; }
+
+    public int? LineWidth { get; set; }
+
+    public string? LineColor { get; set; }
 
     public bool? ManualData { get; set; }
 
@@ -39,7 +49,9 @@ public partial class DigitalIoTag
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+    public virtual AlarmPriority? AlarmPriority { get; set; }
+
+    public virtual DigitalIoTagCurrentValue? DigitalIoTagCurrentValue { get; set; }
 
     public virtual ICollection<DigitalIoTagValueHistory> DigitalIoTagValueHistories { get; set; } = new List<DigitalIoTagValueHistory>();
 

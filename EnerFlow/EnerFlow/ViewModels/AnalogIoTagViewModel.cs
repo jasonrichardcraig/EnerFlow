@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using System.ComponentModel.DataAnnotations;
@@ -12,40 +13,38 @@ namespace EnerFlow.ViewModels
 
         public AnalogIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _analogIoTag = hierarchy.AnalogIoTags.First();
+            _analogIoTag = hierarchy.AnalogIoTag!;
             _selectdUnitClass = _analogIoTag?.Unit?.UnitClass!;
+
+            ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
+            ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
+            ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
+
         }
 
         public AnalogIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, AnalogIoTag analogIoTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _analogIoTag = analogIoTag;
+            _analogIoTag.Hierarchy = hierarchy;
             _selectdUnitClass = _analogIoTag?.Unit?.UnitClass!;
 
-            var defaultAlarmPriority = Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.FirstOrDefault()!;
+            ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
+            ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
+            ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
 
-            analogIoTag.Hierarchy = hierarchy;
-            UnscaledMinimum = 0;
-            UnscaledMaximum = 100;
-            ScaledMinimum = 0;
-            ScaledMaximum = 100;
-            DisplayRangeMinimum = 0;
-            DisplayRangeMaximum = 100;
-            ExpectedRangeMinimum = 0;
-            ExpectedRangeMaximum = 100;
-            HighHighAlarmPriority = defaultAlarmPriority;
-            HighAlarmPriority = defaultAlarmPriority;
-            LowAlarmPriority = defaultAlarmPriority;
-            LowLowAlarmPriority = defaultAlarmPriority;
-            UseDefaultTrendStyle = true;
-            LineColor = "Black";
-            LineStyle = "Solid";
-            LineWidth = 1;
-            ClampScaledValue = false;
+            SetDefaultValues();
+
         }
 
-        public List<AlarmPriority> AlarmPriorities => [.. Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.ToList()];
+        public List<AlarmPriority> AlarmPriorities => [.. Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.Local.ToList()];
 
-        public List<UnitClass> UnitClasses => [.. Ioc.Default.GetService<IDataService>()?.Context.UnitClasses.OrderBy(u=>u.Name).ToList()];
+        public List<UnitClass> UnitClasses => [.. Ioc.Default.GetService<IDataService>()?.Context.UnitClasses.Local.OrderBy(u=>u.Name).ToList()];
+
+        public List<TagValueEnumeration> TagValueEnumerations => [.. Ioc.Default.GetService<IDataService>()?.Context.TagValueEnumerations.Local.ToList()];
+
+        public RelayCommand ShowReadAddressBrowserCommand { get; set; }
+        public RelayCommand ShowHistoryAddressBrowserCommand { get; set; }
+        public RelayCommand ShowWriteAddressBrowserCommand { get; set; }
 
         public UnitClass SelectedUnitClass
         {
@@ -83,7 +82,23 @@ namespace EnerFlow.ViewModels
                 }
             }
         }
-        
+
+        public bool UseEnums
+        {
+            get => TagValueEnumeration != null;
+            set
+            {
+                if (value && TagValueEnumeration == null)
+                {
+                    TagValueEnumeration = TagValueEnumerations.FirstOrDefault()!;
+                }
+                else if (!value)
+                {
+                    TagValueEnumeration = null!;
+                }
+            }
+        }
+
         public bool ByteSwap
         {
             get => _analogIoTag.ByteSwap ?? false;
@@ -152,7 +167,6 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "Read Address is required.")]
         public string ReadAddress
         {
             get => _analogIoTag.ReadAddress ?? string.Empty;
@@ -1204,5 +1218,64 @@ namespace EnerFlow.ViewModels
         {
             get => _analogIoTag.DateTimeCreated;
         }
+
+        private void ShowReadAddressBrowser()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");
+        }
+
+        private bool CanShowReadAddressBrowser()
+        {
+            return true;
+        }
+
+        private void ShowHistoryAddressBrowser()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");
+        }
+
+        private bool CanShowHistoryAddressBrowser()
+        {
+            return true;
+        }
+
+        private void ShowWriteAddressBrowser()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");
+        }
+
+        private bool CanShowWriteAddressBrowser()
+        {
+            return true;
+        }
+
+        private void SetDefaultValues()
+        {
+            var defaultAlarmPriority = Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.FirstOrDefault()!;
+
+            ByteSwap = false;
+            WordSwap = false;
+            ReadAddressScanInterval = 1000;
+            Deadband = 0;
+            HistoryAddressScanInterval = 60000;
+            UnscaledMinimum = 0;
+            UnscaledMaximum = 100;
+            ScaledMinimum = 0;
+            ScaledMaximum = 100;
+            DisplayRangeMinimum = 0;
+            DisplayRangeMaximum = 100;
+            ExpectedRangeMinimum = 0;
+            ExpectedRangeMaximum = 100;
+            HighHighAlarmPriority = defaultAlarmPriority;
+            HighAlarmPriority = defaultAlarmPriority;
+            LowAlarmPriority = defaultAlarmPriority;
+            LowLowAlarmPriority = defaultAlarmPriority;
+            UseDefaultTrendStyle = true;
+            LineColor = "Black";
+            LineStyle = "Solid";
+            LineWidth = 1;
+            ClampScaledValue = false;
+        }
+
     }
 }

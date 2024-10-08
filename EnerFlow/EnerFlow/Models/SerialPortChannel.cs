@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class SerialPortChannel
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public string? Name { get; set; }

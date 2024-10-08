@@ -8,7 +8,7 @@ namespace EnerFlow.ViewModels
 
         public DiagramViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _diagram = hierarchy.Diagrams.First();
+            _diagram = hierarchy.Diagram!;
         }
 
         public DiagramViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Diagram diagram) : base(parentHierarchyViewModel, hierarchy)

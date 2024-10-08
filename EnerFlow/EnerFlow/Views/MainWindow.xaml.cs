@@ -5,7 +5,6 @@ using EnerFlow.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
 using System.Windows;
 namespace EnerFlow.Views
 {
@@ -108,7 +107,11 @@ namespace EnerFlow.Views
                     // Load associated data
                     dataService.Context.FacilityTypes.Load();
                     dataService.Context.FacilitySubTypes.Load();
+                    dataService.Context.EnergyDevelopmentCategoryTypes.Load();
                     dataService.Context.WasteLocationTypes.Load();
+                    dataService.Context.TagValueEnumerations.Load();
+                    dataService.Context.TagValueEnumerationConstants.Load();
+                    dataService.Context.AlarmPriorities.Load();
                     dataService.Context.UnitClasses.Load();
                     dataService.Context.Units.Load();
 

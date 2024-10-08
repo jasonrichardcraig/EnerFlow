@@ -5,11 +5,7 @@ namespace EnerFlow.Models;
 
 public partial class Meter
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
-
-    public int? MeterRunId { get; set; }
 
     public bool? IsChart { get; set; }
 

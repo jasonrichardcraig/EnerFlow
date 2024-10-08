@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class Vessel
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public int VesselTypeId { get; set; }

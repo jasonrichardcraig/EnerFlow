@@ -12,7 +12,7 @@ namespace EnerFlow.ViewModels
         private readonly Pump _pump = null!;
         public PumpViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _pump = hierarchy.Pumps.First();
+            _pump = hierarchy.Pump!;
         }
 
         public PumpViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Pump pump) : base(parentHierarchyViewModel, hierarchy)

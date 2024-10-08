@@ -163,6 +163,34 @@
         </Setter>
     </Style>
 
+    <Style x:Key="DataQualityBorderStyle" TargetType="Border">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="True">
+                <Setter Property="Background" Value="Red"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="False">
+                <Setter Property="Background" Value="LimeGreen"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DataQualityTextBlockStyle" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="True">
+                <Setter Property="Text" Value="Bad Quality"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="False">
+                <Setter Property="Foreground" Value="Black"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsBadQuality}" Value="False">
+                <Setter Property="Text" Value="Good Quality"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- DataTemplate for the General tab header -->
     <DataTemplate x:Key="GeneralTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">

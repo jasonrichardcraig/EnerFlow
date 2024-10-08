@@ -12,7 +12,7 @@ namespace EnerFlow.ViewModels
         private readonly Equipment _equipment = null!;
         public EquipmentViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _equipment = hierarchy.Equipment.First();
+            _equipment = hierarchy.Equipment!;
         }
 
         public EquipmentViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Equipment equipment) : base(parentHierarchyViewModel, hierarchy)

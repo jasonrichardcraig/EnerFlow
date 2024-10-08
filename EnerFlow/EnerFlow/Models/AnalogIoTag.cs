@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class AnalogIoTag
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public bool? ByteSwap { get; set; }
@@ -113,7 +111,7 @@ public partial class AnalogIoTag
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+    public virtual AnalogIoTagCurrentValue? AnalogIoTagCurrentValue { get; set; }
 
     public virtual ICollection<AnalogIoTagValueHistory> AnalogIoTagValueHistories { get; set; } = new List<AnalogIoTagValueHistory>();
 

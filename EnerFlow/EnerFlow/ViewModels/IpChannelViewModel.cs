@@ -8,7 +8,7 @@ namespace EnerFlow.ViewModels
 
         public IpChannelViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _ipChannel = hierarchy.IpChannels.First();
+            _ipChannel = hierarchy.IpChannel!;
         }
 
         public IpChannelViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, IpChannel ipChannel) : base(parentHierarchyViewModel, hierarchy)

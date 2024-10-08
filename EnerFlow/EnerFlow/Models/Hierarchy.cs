@@ -26,51 +26,51 @@ public partial class Hierarchy
 
     public DateTime DateTimeCreated { get; set; }
 
-    public virtual ICollection<AnalogIoTag> AnalogIoTags { get; set; } = new List<AnalogIoTag>();
+    public virtual AnalogIoTag? AnalogIoTag { get; set; }
 
-    public virtual ICollection<ContextTag> ContextTags { get; set; } = new List<ContextTag>();
+    public virtual ContextTag? ContextTag { get; set; }
 
-    public virtual ICollection<Device> Devices { get; set; } = new List<Device>();
+    public virtual Device? Device { get; set; }
 
-    public virtual ICollection<Diagram> Diagrams { get; set; } = new List<Diagram>();
+    public virtual Diagram? Diagram { get; set; }
 
-    public virtual ICollection<DigitalIoTag> DigitalIoTags { get; set; } = new List<DigitalIoTag>();
+    public virtual DigitalIoTag? DigitalIoTag { get; set; }
 
-    public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+    public virtual Document? Document { get; set; }
 
-    public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
+    public virtual Equipment? Equipment { get; set; }
 
-    public virtual ICollection<Facility> Facilities { get; set; } = new List<Facility>();
+    public virtual Facility? Facility { get; set; }
 
-    public virtual ICollection<Folder> Folders { get; set; } = new List<Folder>();
+    public virtual Folder? Folder { get; set; }
 
-    public virtual ICollection<IpChannel> IpChannels { get; set; } = new List<IpChannel>();
+    public virtual IpChannel? IpChannel { get; set; }
 
     public virtual ICollection<MaintenanceRecord> MaintenanceRecords { get; set; } = new List<MaintenanceRecord>();
 
-    public virtual ICollection<MeterRun> MeterRuns { get; set; } = new List<MeterRun>();
+    public virtual Meter? Meter { get; set; }
 
-    public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
+    public virtual MeterRun? MeterRun { get; set; }
 
     public virtual NodeType NodeType { get; set; } = null!;
 
-    public virtual ICollection<Pump> Pumps { get; set; } = new List<Pump>();
+    public virtual Pump? Pump { get; set; }
+
+    public virtual RunSheet? RunSheet { get; set; }
 
     public virtual ICollection<RunSheetDailyLogEntry> RunSheetDailyLogEntries { get; set; } = new List<RunSheetDailyLogEntry>();
 
     public virtual ICollection<RunSheetItem> RunSheetItems { get; set; } = new List<RunSheetItem>();
 
-    public virtual ICollection<RunSheet> RunSheets { get; set; } = new List<RunSheet>();
+    public virtual Screen? Screen { get; set; }
 
-    public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
+    public virtual SerialPortChannel? SerialPortChannel { get; set; }
 
-    public virtual ICollection<SerialPortChannel> SerialPortChannels { get; set; } = new List<SerialPortChannel>();
+    public virtual StringIoTag? StringIoTag { get; set; }
 
-    public virtual ICollection<StringIoTag> StringIoTags { get; set; } = new List<StringIoTag>();
+    public virtual Tank? Tank { get; set; }
 
-    public virtual ICollection<Tank> Tanks { get; set; } = new List<Tank>();
+    public virtual Vessel? Vessel { get; set; }
 
-    public virtual ICollection<Vessel> Vessels { get; set; } = new List<Vessel>();
-
-    public virtual ICollection<Well> Wells { get; set; } = new List<Well>();
+    public virtual Well? Well { get; set; }
 }

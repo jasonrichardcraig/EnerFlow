@@ -6,7 +6,12 @@
         xmlns:setupusercontrols="clr-namespace:EnerFlow.Views.UserControls.Setup"
         xmlns:local="clr-namespace:EnerFlow.Views.Dialogs"
         mc:Ignorable="d"
-        Title="New Analog IO Tag" Icon="/Images/AnalogIoTag_16x16.png" Height="300" Width="480" WindowStartupLocation="CenterOwner" Topmost="True">
+        Title="New Analog IO Tag"
+        Icon="/Images/AnalogIoTag_16x16.png"
+        Height="480"
+        Width="700"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

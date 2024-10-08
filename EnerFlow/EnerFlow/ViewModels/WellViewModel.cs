@@ -12,7 +12,7 @@ namespace EnerFlow.ViewModels
 
         public WellViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _well = hierarchy.Wells.First();
+            _well = hierarchy.Well!;
         }
 
         public WellViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Well well) : base(parentHierarchyViewModel, hierarchy)

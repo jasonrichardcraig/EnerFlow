@@ -47,6 +47,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0"
                            Grid.Column="0"
@@ -69,11 +70,34 @@
                              AcceptsReturn="True"
                              TextWrapping="Wrap"
                              Margin="10,10,10,20" />
-                    <Label Grid.Row="2" Grid.Column="0"
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Content="Use Enums:"
+                           Margin="10" />
+                    <Grid Grid.Row="2"
+                          Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="UseEnumsCheckBox"
+                              Grid.Column="0"
+                              IsChecked="{Binding UseEnums}"
+                              VerticalAlignment="Center"
+                              Margin="10" />
+                        <ComboBox Grid.Column="1"
+                                  IsEnabled="{Binding ElementName=UseEnumsCheckBox, Path=IsChecked}"
+                                  ItemsSource="{Binding TagValueEnumerations}"
+                                  SelectedItem="{Binding TagValueEnumeration}"
+                                  DisplayMemberPath="Name"
+                                  Margin="10"/>
+                    </Grid>
+                    <Label Grid.Row="3" Grid.Column="0"
                            Content="Is Calculated:"
                            Margin="10" />
                     <CheckBox x:Name="IsCalculatedCheckBox"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="1"
                               Margin="10"
                               IsChecked="{Binding IsCalculated}"
@@ -84,7 +108,7 @@
                      Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
-                    <Grid>
+                    <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -92,14 +116,13 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <GroupBox Header="Endianess / Word Alignment"
                                   Grid.Row="0"
                                   Grid.Column="0"
+                                  HorizontalAlignment="Center"
                                   Padding="10"
-                                  Margin="10">
+                                  Margin="10,10,10,5">
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox Content="Byte Swap"
                                       IsChecked="{Binding ByteSwap}"
@@ -109,11 +132,11 @@
                                   Margin="10"/>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Read Settings"
+                        <GroupBox Header="IO Settings"
                                   Grid.Column="0"
-                                  Grid.Row="2"
+                                  Grid.Row="1"
                                   Padding="6"
-                                  Margin="10">
+                                  Margin="10,5,10,10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -127,8 +150,10 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Address"
+                                <Label Content="Read Address"
                                        Grid.Column="0"
                                        VerticalAlignment="Bottom"
                                        Margin="10,0,10,0"/>
@@ -139,30 +164,32 @@
                                          Grid.ColumnSpan="2"
                                          Margin="10,0,10,10"/>
                                 <Button Content=" ... "
-                                        Command="{Binding ReadCommand}"
+                                        Command="{Binding ShowReadAddressBrowserCommand}"
+                                        ToolTip="Address Browser"
                                         VerticalAlignment="Center"
                                         Grid.Column="2"
                                         Grid.Row="1"
                                         Margin="10,0,10,10"/>
-                                <Label Content="Deadband"
-                                       VerticalAlignment="Bottom"
-                                       Margin="10,0,10,0"
-                                       Grid.Column="3"/>
-                                <TextBox Text="{Binding Deadband, ValidatesOnNotifyDataErrors=True}"
-                                         VerticalAlignment="Center"
-                                         Margin="10,0,10,10"
-                                         Grid.Column="3"
-                                         Grid.Row="1"/>
                                 <Label Content="Scan Interval (ms)"
-                                       Grid.Column="4"
+                                       Grid.Column="3"
                                        VerticalAlignment="Bottom"
                                        Margin="10,0,10,0"/>
                                 <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
                                          VerticalAlignment="Center"
-                                         Grid.Column="4"
+                                         Grid.Column="3"
                                          Grid.Row="1"
                                          Text="{Binding ReadAddressScanInterval, ValidatesOnNotifyDataErrors=True}"
                                          Margin="10,0,10,10"/>
+                                <Label Content="Deadband"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"
+                                       Grid.Column="4"/>
+                                <TextBox Text="{Binding Deadband, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Margin="10,0,10,10"
+                                         Grid.Column="4"
+                                         Grid.Row="1"/>
                                 <Label Content="History Address"
                                        Grid.Column="0"
                                        Grid.Row="2"
@@ -171,34 +198,91 @@
                                 <TextBox Text="{Binding HistoryAddress, ValidatesOnNotifyDataErrors=True}"
                                          VerticalAlignment="Center"
                                          Grid.Column="0"
-                                         Grid.ColumnSpan="5"
+                                         Grid.ColumnSpan="2"
                                          Grid.Row="3"
                                          Margin="10,0,10,10"/>
+                                <Button Content=" ... "
+                                        Command="{Binding ShowHistoryAddressBrowserCommand}"
+                                        ToolTip="Address Browser"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2"
+                                        Grid.Row="3"
+                                        Margin="10,0,10,10"/>
+                                <Label Content="Scan Interval (ms)"
+                                       Grid.Column="3"
+                                       Grid.Row="2"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding HistoryAddressScanInterval, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="3"
+                                         Grid.ColumnSpan="1"
+                                         Grid.Row="3"
+                                         Margin="10,0,10,10"/>
+                                <Label Content="Write Address"
+                                       Grid.Column="0"
+                                       Grid.Row="4"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding WriteAddress, ValidatesOnNotifyDataErrors=True}"
+                                         VerticalAlignment="Center"
+                                         Grid.Row="5"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="2"
+                                         Margin="10,0,10,10"/>
+                                <Button Content=" ... "
+                                        Command="{Binding ShowWriteAddressBrowserCommand}"
+                                        ToolTip="Address Browser"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2"
+                                        Grid.Row="5"
+                                        Margin="10,0,10,10"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Write Settings"
-                                  Grid.Column="0"
-                                  Grid.Row="3"
-                                  Padding="6"
-                                  Margin="10">
+
+                        <GroupBox Grid.Column="0"
+                                  Grid.Row="2"
+                                  HorizontalAlignment="Center"
+                                  Header="Data">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="160"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Address"
-                                       Grid.Column="0"
-                                       Margin="10,0,10,0"/>
-                                <TextBox Text="{Binding WriteAddress, ValidatesOnNotifyDataErrors=True}"
+
+                                <Label Content="Quality"
+                                 Grid.Column="0"
+                                 VerticalAlignment="Bottom"
+                                 Margin="10,0,10,0"/>
+
+                                <Border Style="{StaticResource DataQualityBorderStyle}"
+                                        Grid.Column="0"
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        BorderBrush="Black"
+                                        BorderThickness="1"
+                                        Margin="10,0,10,10">
+                                    <TextBlock Style="{StaticResource DataQualityTextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                </Border>
+                                <Label Content="Manual Data"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Bottom"
+                                 Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding ManualData, ValidatesOnNotifyDataErrors=True, Converter={StaticResource NullableDoubleConverter}}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
                                          VerticalAlignment="Center"
+                                         Grid.Column="1"
                                          Grid.Row="1"
-                                         Grid.Column="0"
                                          Margin="10,0,10,10"/>
                             </Grid>
                         </GroupBox>
+                        
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -698,7 +782,7 @@
             <TabItem HeaderTemplate="{StaticResource DisplayTabHeaderDataTemplate}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
-                    <Grid>
+                    <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -709,14 +793,20 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid Grid.Column="0"
+                              Grid.Row="0"
+                              Margin="10,10,10,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <GroupBox Grid.Column="0"
+                            <GroupBox Grid.Column="1"
                                       Grid.Row="0"
                                       Margin="10"
+                                      Width="192"
+                                      HorizontalAlignment="Center"
                                       Header="Display Order">
                                 <usercontrols:NumericUpDownControl VerticalAlignment="Center"
                                                                    Value="{Binding DisplayOrder}"
@@ -724,9 +814,11 @@
                                                                    Margin="10"
                                                                    Width="64"/>
                             </GroupBox>
-                            <GroupBox Grid.Column="1"
+                            <GroupBox Grid.Column="2"
                                       Grid.Row="0"
                                       Margin="10"
+                                      Width="192"
+                                      HorizontalAlignment="Center"
                                       Header="Number Of Digits After Decimal">
                                 <usercontrols:NumericUpDownControl VerticalAlignment="Center"
                                                                    Value="{Binding NumberOfDigitsAfterDecimal, Mode=TwoWay}"
@@ -737,7 +829,8 @@
                         </Grid>
                         <GroupBox Grid.Column="0"
                                   Grid.Row="1"
-                                  Margin="10">
+                                  HorizontalAlignment="Center"
+                                  Margin="17,5,10,10">
                             <GroupBox.Header>
                                 <CheckBox x:Name="EnableUnitsOfMeasureCheckBox"
                                           IsChecked="{Binding EnableUnitsOfMeasure}"
@@ -745,8 +838,8 @@
                             </GroupBox.Header>
                             <Grid IsEnabled="{Binding ElementName=EnableUnitsOfMeasureCheckBox, Path=IsChecked}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="320"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -773,6 +866,7 @@
                         </GroupBox>
                         <GroupBox Grid.Column="0"
                                   Grid.Row="2"
+                                  HorizontalAlignment="Center"
                                   Margin="10">
                             <GroupBox.Header>
                                 <CheckBox x:Name="UseDefaultTrendStyleCheckBox"
@@ -803,7 +897,7 @@
                                 <Label Grid.Column="1"
                                        Grid.Row="0"
                                        VerticalAlignment="Center"
-                                       Content="Line Style"/>
+                                       Content="Line Style" Margin="0,0,64,0"/>
                                 <usercontrols:NumericUpDownControl VerticalAlignment="Center"
                                                                    HorizontalAlignment="Left"
                                                                    Grid.Column="0"

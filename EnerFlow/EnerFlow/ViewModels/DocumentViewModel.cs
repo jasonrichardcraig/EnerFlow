@@ -7,7 +7,7 @@ namespace EnerFlow.ViewModels
         private readonly Document _document = null!;
         public DocumentViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _document = hierarchy.Documents.First();
+            _document = hierarchy.Document!;
         }
 
         public DocumentViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Document document) : base(parentHierarchyViewModel, hierarchy)

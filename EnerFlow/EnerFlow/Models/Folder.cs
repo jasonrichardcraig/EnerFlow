@@ -5,9 +5,11 @@ namespace EnerFlow.Models;
 
 public partial class Folder
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
+
+    public bool IsHidden { get; set; }
+
+    public bool IsReadOnly { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
 

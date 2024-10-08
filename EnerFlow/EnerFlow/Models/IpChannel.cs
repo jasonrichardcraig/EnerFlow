@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class IpChannel
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public bool? IsUdp { get; set; }

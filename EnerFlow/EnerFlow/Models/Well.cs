@@ -5,8 +5,6 @@ namespace EnerFlow.Models;
 
 public partial class Well
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
 
     public string? FormattedUwi { get; set; }

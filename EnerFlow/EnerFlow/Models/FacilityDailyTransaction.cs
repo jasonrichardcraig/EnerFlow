@@ -31,6 +31,50 @@ public partial class FacilityDailyTransaction
 
     public decimal? OilWellMeasuredVolume { get; set; }
 
+    public decimal? BitumenWellMeasuredVolume { get; set; }
+
+    public decimal? BitumenClosingVolume { get; set; }
+
+    public decimal? BitumenTransloadedOutVolume { get; set; }
+
+    public decimal? BitumenLoadInjection { get; set; }
+
+    public decimal? BitumenOpeningVolume { get; set; }
+
+    public decimal? BitumenTransloadedInVolume { get; set; }
+
+    public decimal? BitumenRecoveredVolume { get; set; }
+
+    public decimal? BitumenAdjustedVolume { get; set; }
+
+    public decimal? BitumenNetProductionVolume { get; set; }
+
+    public decimal? BitumenProrationFactor { get; set; }
+
+    public decimal? BitumenWellEstimatedVolume { get; set; }
+
+    public decimal? DiluentClosingVolume { get; set; }
+
+    public decimal? DiluentTransloadedOutVolume { get; set; }
+
+    public decimal? DiluentLoadInjectionVolume { get; set; }
+
+    public decimal? DiluentOpeningVolume { get; set; }
+
+    public decimal? DiluentTransloadedInVolume { get; set; }
+
+    public decimal? DiluentRecoveredVolume { get; set; }
+
+    public decimal? DiluentAdjustedVolume { get; set; }
+
+    public decimal? DiluentNetProductionVolume { get; set; }
+
+    public decimal? DiluentProrationFactor { get; set; }
+
+    public decimal? CondensateWellEstimatedVolume1 { get; set; }
+
+    public decimal? CondensateWellMeasuredVolume1 { get; set; }
+
     public decimal? CondensateClosingVolume { get; set; }
 
     public decimal? CondensateTransloadedOutVolume { get; set; }

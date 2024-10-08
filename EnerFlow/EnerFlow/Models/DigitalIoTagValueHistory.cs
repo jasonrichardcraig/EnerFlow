@@ -11,7 +11,5 @@ public partial class DigitalIoTagValueHistory
 
     public bool Value { get; set; }
 
-    public DateTime DateTimeCreated { get; set; }
-
     public virtual DigitalIoTag DigitalIoTag { get; set; } = null!;
 }

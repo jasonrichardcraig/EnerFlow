@@ -7,7 +7,7 @@ namespace EnerFlow.ViewModels
         private readonly MeterRun _meterRun = null!;
         public MeterRunViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _meterRun = hierarchy.MeterRuns.First();
+            _meterRun = hierarchy.MeterRun!;
         }
 
         public MeterRunViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, MeterRun metetRun) : base(parentHierarchyViewModel, hierarchy)

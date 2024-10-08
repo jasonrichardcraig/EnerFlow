@@ -5,9 +5,9 @@ namespace EnerFlow.Models;
 
 public partial class MeterRun
 {
-    public int Id { get; set; }
-
     public int HierarchyId { get; set; }
+
+    public int? MeterId { get; set; }
 
     public string? MeterTag { get; set; }
 
@@ -57,7 +57,7 @@ public partial class MeterRun
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 
-    public virtual MeterExportType? MeterExportType { get; set; }
+    public virtual Meter? Meter { get; set; }
 
-    public virtual ICollection<Meter> Meters { get; set; } = new List<Meter>();
+    public virtual MeterExportType? MeterExportType { get; set; }
 }

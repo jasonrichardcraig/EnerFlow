@@ -18,4 +18,6 @@ public partial class AlarmPriority
     public virtual ICollection<AnalogIoTag> AnalogIoTagLowAlarmPriorities { get; set; } = new List<AnalogIoTag>();
 
     public virtual ICollection<AnalogIoTag> AnalogIoTagLowLowAlarmPriorities { get; set; } = new List<AnalogIoTag>();
+
+    public virtual ICollection<DigitalIoTag> DigitalIoTags { get; set; } = new List<DigitalIoTag>();
 }

@@ -16,6 +16,7 @@
                     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
                     <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
                     <converters:EnumToIntegerConverter x:Key="EnumToIntegerConverter"/>
+                    <converters:NullableDoubleConverter x:Key="NullableDoubleConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml"/>
                 <ResourceDictionary Source="Resources/ApplicationStyles.xaml"/>

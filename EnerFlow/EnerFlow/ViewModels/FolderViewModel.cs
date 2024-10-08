@@ -7,7 +7,7 @@ namespace EnerFlow.ViewModels
         private readonly Folder _folder = null!;
         public FolderViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
-            _folder = hierarchy.Folders.First();
+            _folder = hierarchy.Folder!;
         }
 
         public FolderViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, Folder folder) : base(parentHierarchyViewModel, hierarchy)
