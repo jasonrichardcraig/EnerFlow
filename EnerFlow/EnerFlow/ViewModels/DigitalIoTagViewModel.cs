@@ -170,7 +170,7 @@ namespace EnerFlow.ViewModels
 
         public bool? IsCalculated
         {
-            get => _digitalIoTag.IsCalculated ?? false;
+            get => _digitalIoTag.IsCalculated;
             set
             {
                 if (_digitalIoTag.IsCalculated != value)
@@ -528,6 +528,7 @@ namespace EnerFlow.ViewModels
             AlarmPriority = Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.FirstOrDefault()!;
             ReadAddressScanInterval = 1000;
             HistoryAddressScanInterval = 60000;
+            IsCalculated = false;
             InvertState = false;
             AlarmDelay = 0;
             UseDefaultTrendStyle = true;

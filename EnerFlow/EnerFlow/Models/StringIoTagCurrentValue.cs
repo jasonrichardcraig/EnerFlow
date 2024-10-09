@@ -7,7 +7,7 @@ public partial class StringIoTagCurrentValue
 {
     public int StringIoTagId { get; set; }
 
-    public double Value { get; set; }
+    public string Value { get; set; } = null!;
 
     public bool IsBadQuality { get; set; }
 

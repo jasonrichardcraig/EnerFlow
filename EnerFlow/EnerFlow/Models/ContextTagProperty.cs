@@ -5,6 +5,8 @@ namespace EnerFlow.Models;
 
 public partial class ContextTagProperty
 {
+    public int Id { get; set; }
+
     public int ContextTagId { get; set; }
 
     public string Name { get; set; } = null!;

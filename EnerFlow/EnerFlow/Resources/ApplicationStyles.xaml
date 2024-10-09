@@ -248,6 +248,42 @@
         </StackPanel>
     </DataTemplate>
 
+    <!-- DataTemplate for the String Dictionary tab header -->
+    <DataTemplate x:Key="StringDictionaryTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Dictionary_24x24.png"/>
+            <TextBlock Text="String Dictionaries"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Value Enumerations tab header -->
+    <DataTemplate x:Key="ValueEnumerationsTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Enum_24x24.png"/>
+            <TextBlock Text="Value Enumerations"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Properties tab header -->
+    <DataTemplate x:Key="PropertiesTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Properties.png"/>
+            <TextBlock Text="Properties"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- DataTemplate for the Scaling tab header -->
     <DataTemplate x:Key="ScalingTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">

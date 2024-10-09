@@ -232,7 +232,11 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<StringIoTagCurrentValue> StringIoTagCurrentValues { get; set; }
 
-    public virtual DbSet<StringTagValueHistory> StringTagValueHistories { get; set; }
+    public virtual DbSet<StringIoTagTrendValueDictionary> StringIoTagTrendValueDictionaries { get; set; }
+
+    public virtual DbSet<StringIoTagTrendValueDictionaryItem> StringIoTagTrendValueDictionaryItems { get; set; }
+
+    public virtual DbSet<StringIoTagValueHistory> StringIoTagValueHistories { get; set; }
 
     public virtual DbSet<TagValueEnumeration> TagValueEnumerations { get; set; }
 
@@ -770,16 +774,17 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<ContextTagProperty>(entity =>
         {
-            entity.HasKey(e => new { e.ContextTagId, e.Name });
+            entity.HasIndex(e => new { e.ContextTagId, e.Name }, "IX_ContextTagProperties").IsUnique();
 
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ContextTagId).HasColumnName("ContextTagID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Value).HasColumnType("sql_variant");
@@ -3342,9 +3347,7 @@ public partial class EnerFlowContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Script).IsUnicode(false);
-            entity.Property(e => e.TrendDataDictionary)
-                .HasMaxLength(1024)
-                .IsUnicode(false);
+            entity.Property(e => e.StringIoTagTrendValueDictionaryId).HasColumnName("StringIoTagTrendValueDictionaryID");
             entity.Property(e => e.WriteAddress)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -3353,6 +3356,10 @@ public partial class EnerFlowContext : DbContext
                 .HasForeignKey<StringIoTag>(d => d.HierarchyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_StringIoTags_Hierarchy");
+
+            entity.HasOne(d => d.StringIoTagTrendValueDictionary).WithMany(p => p.StringIoTags)
+                .HasForeignKey(d => d.StringIoTagTrendValueDictionaryId)
+                .HasConstraintName("FK_StringIoTags_StringIoTagTrendValueDictionaries");
         });
 
         modelBuilder.Entity<StringIoTagCurrentValue>(entity =>
@@ -3361,6 +3368,9 @@ public partial class EnerFlowContext : DbContext
 
             entity.Property(e => e.StringIoTagId).ValueGeneratedNever();
             entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.Value)
+                .HasMaxLength(255)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.StringIoTag).WithOne(p => p.StringIoTagCurrentValue)
                 .HasForeignKey<StringIoTagCurrentValue>(d => d.StringIoTagId)
@@ -3368,13 +3378,39 @@ public partial class EnerFlowContext : DbContext
                 .HasConstraintName("FK_StringIoTagCurrentValues_StringIoTags");
         });
 
-        modelBuilder.Entity<StringTagValueHistory>(entity =>
+        modelBuilder.Entity<StringIoTagTrendValueDictionary>(entity =>
         {
-            entity.HasKey(e => new { e.StringTagId, e.TimeStamp });
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .IsUnicode(false);
+        });
 
-            entity.ToTable("StringTagValueHistory");
+        modelBuilder.Entity<StringIoTagTrendValueDictionaryItem>(entity =>
+        {
+            entity.HasKey(e => new { e.StringIoTagTrendValueDictionariesId, e.ItemKey });
 
-            entity.Property(e => e.StringTagId).HasColumnName("StringTagID");
+            entity.Property(e => e.StringIoTagTrendValueDictionariesId).HasColumnName("StringIoTagTrendValueDictionariesID");
+            entity.Property(e => e.ItemValue)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.StringIoTagTrendValueDictionaries).WithMany(p => p.StringIoTagTrendValueDictionaryItems)
+                .HasForeignKey(d => d.StringIoTagTrendValueDictionariesId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StringIoTagTrendValueDictionaryItems_StringIoTagTrendValueDictionaries");
+        });
+
+        modelBuilder.Entity<StringIoTagValueHistory>(entity =>
+        {
+            entity.HasKey(e => new { e.StringIoTagId, e.TimeStamp });
+
+            entity.ToTable("StringIoTagValueHistory");
+
+            entity.Property(e => e.StringIoTagId).HasColumnName("StringIoTagID");
             entity.Property(e => e.TimeStamp).HasColumnType("datetime");
             entity.Property(e => e.DateTimeCreated)
                 .HasDefaultValueSql("(getdate())")
@@ -3383,10 +3419,10 @@ public partial class EnerFlowContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.StringTag).WithMany(p => p.StringTagValueHistories)
-                .HasForeignKey(d => d.StringTagId)
+            entity.HasOne(d => d.StringIoTag).WithMany(p => p.StringIoTagValueHistories)
+                .HasForeignKey(d => d.StringIoTagId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StringTagValueHistory_StringIoTags");
+                .HasConstraintName("FK_StringIoTagValueHistory_StringIoTags");
         });
 
         modelBuilder.Entity<TagValueEnumeration>(entity =>

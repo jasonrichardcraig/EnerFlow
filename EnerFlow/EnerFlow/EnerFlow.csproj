@@ -60,6 +60,8 @@
     <None Remove="Images\Device_24x24.png" />
     <None Remove="Images\Diagram_16x16.png" />
     <None Remove="Images\Diagram_24x24.png" />
+    <None Remove="Images\Dictionary_16x16.png" />
+    <None Remove="Images\Dictionary_24x24.png" />
     <None Remove="Images\DigitalIoTag_16x16.png" />
     <None Remove="Images\DigitalIoTag_24x24.png" />
     <None Remove="Images\Disconnect_16x16.png" />
@@ -73,6 +75,8 @@
     <None Remove="Images\Document_24x24.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
+    <None Remove="Images\Enum_16x16.png" />
+    <None Remove="Images\Enum_24x24.png" />
     <None Remove="Images\Equipment_16x16.png" />
     <None Remove="Images\Equipment_24x24.png" />
     <None Remove="Images\Events_16x16.png" />
@@ -261,6 +265,8 @@
     <Resource Include="Images\Device_24x24.png" />
     <Resource Include="Images\Diagram_16x16.png" />
     <Resource Include="Images\Diagram_24x24.png" />
+    <Resource Include="Images\Dictionary_16x16.png" />
+    <Resource Include="Images\Dictionary_24x24.png" />
     <Resource Include="Images\DigitalIoTag_16x16.png" />
     <Resource Include="Images\DigitalIoTag_24x24.png" />
     <Resource Include="Images\Disconnect_16x16.png" />
@@ -286,6 +292,8 @@
     <Resource Include="Images\Data Transfer_16x16.png" />
     <Resource Include="Images\Data Transfer_24x24.png" />
     <Resource Include="Images\EF_Icon.png" />
+    <Resource Include="Images\Enum_16x16.png" />
+    <Resource Include="Images\Enum_24x24.png" />
     <Resource Include="Images\Equipment_16x16.png" />
     <Resource Include="Images\Equipment_24x24.png" />
     <Resource Include="Images\Exceptions.png" />

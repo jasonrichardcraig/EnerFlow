@@ -21,6 +21,8 @@ public partial class StringIoTag
 
     public string? Script { get; set; }
 
+    public int? DisplayOrder { get; set; }
+
     public bool? UseDefaultTrendStyle { get; set; }
 
     public string? LineStyle { get; set; }
@@ -29,9 +31,7 @@ public partial class StringIoTag
 
     public string? LineColor { get; set; }
 
-    public string? TrendDataDictionary { get; set; }
-
-    public bool? IsBadQuality { get; set; }
+    public int? StringIoTagTrendValueDictionaryId { get; set; }
 
     public double? ManualData { get; set; }
 
@@ -41,5 +41,7 @@ public partial class StringIoTag
 
     public virtual StringIoTagCurrentValue? StringIoTagCurrentValue { get; set; }
 
-    public virtual ICollection<StringTagValueHistory> StringTagValueHistories { get; set; } = new List<StringTagValueHistory>();
+    public virtual StringIoTagTrendValueDictionary? StringIoTagTrendValueDictionary { get; set; }
+
+    public virtual ICollection<StringIoTagValueHistory> StringIoTagValueHistories { get; set; } = new List<StringIoTagValueHistory>();
 }

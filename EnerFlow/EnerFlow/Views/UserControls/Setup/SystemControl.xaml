@@ -69,6 +69,12 @@
             <TabItem HeaderTemplate="{StaticResource UnitsTabHeaderDataTemplate}">
 
             </TabItem>
+            <TabItem HeaderTemplate="{StaticResource ValueEnumerationsTabHeaderDataTemplate}">
+                
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource StringDictionaryTabHeaderDataTemplate}">
+
+            </TabItem>
             <TabItem HeaderTemplate="{StaticResource SecurityTabHeaderDataTemplate}">
                 
             </TabItem>

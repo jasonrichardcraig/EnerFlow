@@ -112,6 +112,8 @@ namespace EnerFlow.Views
                     dataService.Context.TagValueEnumerations.Load();
                     dataService.Context.TagValueEnumerationConstants.Load();
                     dataService.Context.AlarmPriorities.Load();
+                    dataService.Context.StringIoTagTrendValueDictionaries.Load();
+                    dataService.Context.StringIoTagTrendValueDictionaryItems.Load();
                     dataService.Context.UnitClasses.Load();
                     dataService.Context.Units.Load();
 

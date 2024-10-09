@@ -281,9 +281,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Required(ErrorMessage = "Is Calculated is required.")]
-        public bool IsCalculated
+        public bool? IsCalculated
         {
-            get => _analogIoTag.IsCalculated ?? false;
+            get => _analogIoTag.IsCalculated;
             set
             {
                 if (_analogIoTag.IsCalculated != value)
@@ -1258,6 +1258,7 @@ namespace EnerFlow.ViewModels
             ReadAddressScanInterval = 1000;
             Deadband = 0;
             HistoryAddressScanInterval = 60000;
+            IsCalculated = false;
             UnscaledMinimum = 0;
             UnscaledMaximum = 100;
             ScaledMinimum = 0;

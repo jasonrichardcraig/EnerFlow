@@ -79,7 +79,7 @@ namespace EnerFlow.Services
                 companyHierarchyViewModel.DisableAutoSave = false;
                 dataService.AddHierarchyNode(mainViewModel.SystemHierarchyViewModel.Hierarchy, companyHierarchyViewModel.Hierarchy, Enums.NodeType.Company);
                 mainViewModel.SystemHierarchyViewModel.Children.Add(companyHierarchyViewModel);
-                companyHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(mainViewModel.SystemHierarchyViewModel, companyHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -113,7 +113,7 @@ namespace EnerFlow.Services
                 districtHierarchyViewModel.DisableAutoSave = false;
                 dataService.AddHierarchyNode(companyHierarchyViewModel.Hierarchy, districtHierarchyViewModel.Hierarchy, Enums.NodeType.District);
                 companyHierarchyViewModel.Children.Add(districtHierarchyViewModel);
-                districtHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(companyHierarchyViewModel, districtHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -147,7 +147,7 @@ namespace EnerFlow.Services
                 areaHierarchyViewModel.DisableAutoSave = false;
                 dataService.AddHierarchyNode(districtHierarchyViewModel.Hierarchy, areaHierarchyViewModel.Hierarchy, Enums.NodeType.Area);
                 districtHierarchyViewModel.Children.Add(areaHierarchyViewModel);
-                districtHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(districtHierarchyViewModel, areaHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -181,7 +181,7 @@ namespace EnerFlow.Services
                 fieldHierarchyViewModel.DisableAutoSave = false;
                 dataService.AddHierarchyNode(areaHierarchyViewModel.Hierarchy, fieldHierarchyViewModel.Hierarchy, Enums.NodeType.Field);
                 areaHierarchyViewModel.Children.Add(fieldHierarchyViewModel);
-                fieldHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(areaHierarchyViewModel, fieldHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -217,7 +217,7 @@ namespace EnerFlow.Services
                 dataService.Context.Facilities.Add(facility);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, facilityHierarchyViewModel.Hierarchy, Enums.NodeType.Facility);
                 parentHierarchyViewModel.Children.Add(facilityHierarchyViewModel);
-                facilityHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, facilityHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -252,7 +252,7 @@ namespace EnerFlow.Services
                 dataService.Context.Wells.Add(well);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, wellHierarchyViewModel.Hierarchy, Enums.NodeType.Well);
                 parentHierarchyViewModel.Children.Add(wellHierarchyViewModel);
-                wellHierarchyViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, wellHierarchyViewModel.Hierarchy.Node);
             }
         }
 
@@ -287,7 +287,7 @@ namespace EnerFlow.Services
                 dataService.Context.RunSheets.Add(runSheet);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, runSheetViewModel.Hierarchy, Enums.NodeType.RunSheet);
                 parentHierarchyViewModel.Children.Add(runSheetViewModel);
-                runSheetViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, runSheetViewModel.Hierarchy.Node);
             }
         }
 
@@ -322,7 +322,7 @@ namespace EnerFlow.Services
                 dataService.Context.ContextTags.Add(contextTag);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, contextTagViewModel.Hierarchy, Enums.NodeType.ContextTag);
                 parentHierarchyViewModel.Children.Add(contextTagViewModel);
-                contextTagViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, contextTagViewModel.Hierarchy.Node);
             }
         }
 
@@ -357,7 +357,7 @@ namespace EnerFlow.Services
                 dataService.Context.SerialPortChannels.Add(serialPortChannel);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, serialPortChannelViewModel.Hierarchy, Enums.NodeType.SerialPortChannel);
                 parentHierarchyViewModel.Children.Add(serialPortChannelViewModel);
-                serialPortChannelViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, serialPortChannelViewModel.Hierarchy.Node);
             }
         }
 
@@ -392,7 +392,7 @@ namespace EnerFlow.Services
                 dataService.Context.IpChannels.Add(ipChannel);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, ipChannelViewModel.Hierarchy, Enums.NodeType.IpChannel);
                 parentHierarchyViewModel.Children.Add(ipChannelViewModel);
-                ipChannelViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, ipChannelViewModel.Hierarchy.Node);
             }
         }
 
@@ -427,7 +427,7 @@ namespace EnerFlow.Services
                 dataService.Context.Devices.Add(device);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, deviceViewModel.Hierarchy, Enums.NodeType.Device);
                 parentHierarchyViewModel.Children.Add(deviceViewModel);
-                deviceViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, deviceViewModel.Hierarchy.Node);
             }
         }
 
@@ -465,7 +465,7 @@ namespace EnerFlow.Services
                 dataService.Context.DigitalIoTagCurrentValues.Add(digitalIoTagCurrentValue);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, digitalIoTagViewModel.Hierarchy, Enums.NodeType.DigitalIoTag);
                 parentHierarchyViewModel.Children.Add(digitalIoTagViewModel);
-                digitalIoTagViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, digitalIoTagViewModel.Hierarchy.Node);
             }
         }
 
@@ -503,7 +503,7 @@ namespace EnerFlow.Services
                 dataService.Context.AnalogIoTagCurrentValues.Add(analogIoTagCurrentValue);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, analogIoTagViewModel.Hierarchy, Enums.NodeType.AnalogIoTag);
                 parentHierarchyViewModel.Children.Add(analogIoTagViewModel);
-                analogIoTagViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, analogIoTagViewModel.Hierarchy.Node);
             }
         }
 
@@ -517,7 +517,7 @@ namespace EnerFlow.Services
                 return;
             }
 
-            var stringIoTagCurrentValue = new StringIoTagCurrentValue() { TimeStamp = DateTime.Now };
+            var stringIoTagCurrentValue = new StringIoTagCurrentValue() { TimeStamp = DateTime.Now, Value = string.Empty };
             var stringIoTag = new StringIoTag() { StringIoTagCurrentValue = stringIoTagCurrentValue };
             var stringIoTagViewModel = new StringIoTagViewModel(parentHierarchyViewModel, new Hierarchy(), stringIoTag)
             {
@@ -540,7 +540,7 @@ namespace EnerFlow.Services
                 dataService.Context.StringIoTagCurrentValues.Add(stringIoTagCurrentValue);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, stringIoTagViewModel.Hierarchy, Enums.NodeType.StringIoTag);
                 parentHierarchyViewModel.Children.Add(stringIoTagViewModel);
-                stringIoTagViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, stringIoTagViewModel.Hierarchy.Node);
             }
         }
 
@@ -575,7 +575,7 @@ namespace EnerFlow.Services
                 dataService.Context.MeterRuns.Add(meterRun);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, meterRunViewModel.Hierarchy, Enums.NodeType.MeterRun);
                 parentHierarchyViewModel.Children.Add(meterRunViewModel);
-                meterRunViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, meterRunViewModel.Hierarchy.Node);
             }
         }
 
@@ -610,7 +610,7 @@ namespace EnerFlow.Services
                 dataService.Context.Screens.Add(screen);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, screenViewModel.Hierarchy, Enums.NodeType.Screen);
                 parentHierarchyViewModel.Children.Add(screenViewModel);
-                screenViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, screenViewModel.Hierarchy.Node);
             }
         }
 
@@ -645,7 +645,7 @@ namespace EnerFlow.Services
                 dataService.Context.Diagrams.Add(diagram);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, diagramViewModel.Hierarchy, Enums.NodeType.Diagram);
                 parentHierarchyViewModel.Children.Add(diagramViewModel);
-                diagramViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, diagramViewModel.Hierarchy.Node);
             }
         }
 
@@ -680,7 +680,7 @@ namespace EnerFlow.Services
                 dataService.Context.Documents.Add(document);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, documentViewModel.Hierarchy, Enums.NodeType.Document);
                 parentHierarchyViewModel.Children.Add(documentViewModel);
-                documentViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, documentViewModel.Hierarchy.Node);
             }
         }
 
@@ -715,7 +715,7 @@ namespace EnerFlow.Services
                 dataService.Context.Folders.Add(folder);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, folderViewModel.Hierarchy, Enums.NodeType.Folder);
                 parentHierarchyViewModel.Children.Add(folderViewModel);
-                folderViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, folderViewModel.Hierarchy.Node);
             }
         }
 
@@ -750,7 +750,7 @@ namespace EnerFlow.Services
                 dataService.Context.Meters.Add(meter);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, meterViewModel.Hierarchy, Enums.NodeType.Meter);
                 parentHierarchyViewModel.Children.Add(meterViewModel);
-                meterViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, meterViewModel.Hierarchy.Node);
             }
         }
 
@@ -785,7 +785,7 @@ namespace EnerFlow.Services
                 dataService.Context.Pumps.Add(pump);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, pumpViewModel.Hierarchy, Enums.NodeType.Pump);
                 parentHierarchyViewModel.Children.Add(pumpViewModel);
-                pumpViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, pumpViewModel.Hierarchy.Node);
             }
         }
 
@@ -820,7 +820,7 @@ namespace EnerFlow.Services
                 dataService.Context.Tanks.Add(tank);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, tankViewModel.Hierarchy, Enums.NodeType.Tank);
                 parentHierarchyViewModel.Children.Add(tankViewModel);
-                tankViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, tankViewModel.Hierarchy.Node);
             }
         }
 
@@ -855,7 +855,7 @@ namespace EnerFlow.Services
                 dataService.Context.Vessels.Add(vessel);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, vesselViewModel.Hierarchy, Enums.NodeType.Vessel);
                 parentHierarchyViewModel.Children.Add(vesselViewModel);
-                vesselViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, vesselViewModel.Hierarchy.Node);
             }
         }
         public void ShowNewEquipmentDialog(HierarchyViewModel parentHierarchyViewModel)
@@ -889,7 +889,7 @@ namespace EnerFlow.Services
                 dataService.Context.Equipment.Add(equipment);
                 dataService.AddHierarchyNode(parentHierarchyViewModel.Hierarchy, equipmentViewModel.Hierarchy, Enums.NodeType.Equipment);
                 parentHierarchyViewModel.Children.Add(equipmentViewModel);
-                equipmentViewModel.IsSelected = true;
+                MainViewModel.SelectAndExpandNode(parentHierarchyViewModel, equipmentViewModel.Hierarchy.Node);
             }
         }
         public void DeleteHierarchyNode(HierarchyViewModel hierarchyViewModel)

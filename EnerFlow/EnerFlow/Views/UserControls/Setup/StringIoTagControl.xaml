@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:usercontrols="clr-namespace:EnerFlow.Views.UserControls"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -45,6 +47,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0"
@@ -67,7 +70,311 @@
                              AcceptsReturn="True"
                              TextWrapping="Wrap"
                              Margin="10,10,10,20" />
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Content="Is Calculated:"
+                           Margin="10" />
+                    <CheckBox x:Name="IsCalculatedCheckBox"
+                              Grid.Row="2"
+                              Grid.Column="1"
+                              Margin="10"
+                              IsChecked="{Binding IsCalculated}"
+                              VerticalAlignment="Center" />
                 </Grid>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource AddressTabHeaderDataTemplate}"
+                     Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="IO Settings"
+                                  Grid.Column="0"
+                                  Grid.Row="0"
+                                  Padding="6"
+                                  Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MinWidth="128" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="160" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Read Address"
+                                       Grid.Column="0"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding ReadAddress, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="2"
+                                         Margin="10,0,10,10"/>
+                                <Button Content=" ... "
+                                        Command="{Binding ShowReadAddressBrowserCommand}"
+                                        ToolTip="Address Browser"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2"
+                                        Grid.Row="1"
+                                        Margin="10,0,10,10"/>
+                                <Label Content="Scan Interval (ms)"
+                                       Grid.Column="3"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="3"
+                                         Grid.Row="1"
+                                         Text="{Binding ReadAddressScanInterval, ValidatesOnNotifyDataErrors=True}"
+                                         Margin="10,0,10,10"/>
+                                <Label Content="Write Address"
+                                       Grid.Column="0"
+                                       Grid.Row="2"
+                                       Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding WriteAddress, ValidatesOnNotifyDataErrors=True}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Grid.Row="3"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="2"
+                                         Margin="10,0,10,10"/>
+                                <Button Content=" ... "
+                                        Command="{Binding ShowWriteAddressBrowserCommand}"
+                                        ToolTip="Address Browser"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2"
+                                        Grid.Row="3"
+                                        Margin="10,0,10,10"/>
+                                <GroupBox Grid.Row="4"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="4"
+                                          HorizontalAlignment="Center"
+                                          Header="String Handling">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="Padding Character"
+                                               Grid.Column="0"
+                                               VerticalAlignment="Bottom"
+                                               Margin="10,0,10,0"/>
+                                        <TextBox Text="{Binding PaddingCharacter, ValidatesOnNotifyDataErrors=True}"
+                                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                                 VerticalAlignment="Center"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Margin="10,0,10,10"/>
+                                        <Label Content="Length"
+                                               Grid.Column="2"
+                                               VerticalAlignment="Bottom"
+                                               Margin="10,0,10,0"/>
+                                        <usercontrols:NumericUpDownControl Value="{Binding Length, ValidatesOnNotifyDataErrors=True}"
+                                                 VerticalAlignment="Center"
+                                                 Grid.Row="1"
+                                                 Grid.Column="2"
+                                                 Margin="10,0,10,10"/>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Column="0"
+                                  Grid.Row="2"
+                                  HorizontalAlignment="Center"
+                                  Header="Data">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="160"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Content="Quality"
+                                 Grid.Column="0"
+                                 VerticalAlignment="Bottom"
+                                 Margin="10,0,10,0"/>
+
+                                <Border Style="{StaticResource DataQualityBorderStyle}"
+                                        Grid.Column="0"
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        BorderBrush="Black"
+                                        BorderThickness="1"
+                                        Margin="10,0,10,10">
+                                    <TextBlock Style="{StaticResource DataQualityTextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                </Border>
+                                <Label Content="Manual Data"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Bottom"
+                                 Margin="10,0,10,0"/>
+                                <TextBox Text="{Binding ManualData, ValidatesOnNotifyDataErrors=True, Converter={StaticResource NullableDoubleConverter}}"
+                                         Style="{StaticResource ValidatedTextBoxStyle}"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="1"
+                                         Grid.Row="1"
+                                         Margin="10,0,10,10"/>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource ScriptTabHeaderDataTemplate}"
+                     Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <wv2:WebView2 x:Name="ScriptEditorWebView"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Initialized="ScriptEditorWebView_Initialized"
+                                      NavigationCompleted="ScriptEditorWebView_NavigationCompleted"
+                                      WebMessageReceived="ScriptEditorWebView_WebMessageReceived"/>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource DisplayTabHeaderDataTemplate}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0"
+                              Grid.Row="0"
+                              Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Grid.Column="1"
+                                      Grid.Row="0"
+                                      Margin="10,10,10,5"
+                                      Width="192"
+                                      HorizontalAlignment="Center"
+                                      Header="Display Order">
+                                <usercontrols:NumericUpDownControl VerticalAlignment="Center"
+                                                                   Value="{Binding DisplayOrder}"
+                                                                   Maximum="16"
+                                                                   Margin="10"
+                                                                   Width="64"/>
+                            </GroupBox>
+                        </Grid>
+                        <GroupBox Grid.Column="0"
+                                  Grid.Row="1"
+                                  HorizontalAlignment="Center"
+                                  Margin="10,5,10,10">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="UseDefaultTrendStyleCheckBox"
+                                            IsChecked="{Binding UseDefaultTrendStyle}"
+                                            Content="Use Default Trend Style"/>
+                            </GroupBox.Header>
+                            <Grid IsEnabled="{Binding ElementName=UseDefaultTrendStyleCheckBox, Path=IsChecked, Converter={StaticResource InvertedBooleanConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="128" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          Grid.Row="0"
+                                          Margin="10"
+                                          ItemsSource="{StaticResource LineStyles}"
+                                          SelectedValuePath="Name"
+                                          SelectedValue="{Binding LineStyle}"
+                                          HorizontalAlignment="Stretch"
+                                          ItemTemplate="{StaticResource LineStyleComboBoxItemTemplate}"
+                                          VerticalAlignment="Center"/>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       VerticalAlignment="Center"
+                                       Content="Line Style" Margin="0,0,64,0"/>
+                                <usercontrols:NumericUpDownControl VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Left"
+                                                                   Grid.Column="0"
+                                                                   Grid.Row="1"
+                                                                   Value="{Binding LineWidth, Mode=TwoWay}"
+                                                                   Minimum="1"
+                                                                   Maximum="32"
+                                                                   Margin="10"
+                                                                   Width="64"/>
+                                <Label Grid.Column="1" Grid.Row="1" Content="Line Width" VerticalAlignment="Center"/>
+
+                                <ComboBox x:Name="ColorComboBox"
+                                          Grid.Column="3"
+                                          Grid.Row="0"
+                                          VerticalAlignment="Center"
+                                          SelectedValuePath="Name"
+                                          SelectedValue="{Binding LineColor}"
+                                          ItemsSource="{StaticResource AvailableColors}"
+                                          SelectedIndex="7"
+                                          Margin="0,0,0,0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle Width="16" Height="16" Fill="{Binding Color}" Margin="0,0,4,0"/>
+                                                <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                                <Border x:Name="ColorPreview"
+                                        Grid.Column="4"
+                                        Grid.Row="0"
+                                        Width="100"
+                                        BorderBrush="Black"
+                                        BorderThickness="1"
+                                        Background="{Binding SelectedItem.Color, ElementName=ColorComboBox}"
+                                        Margin="10">
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Preview" />
+                                </Border>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Column="0"
+                                  Grid.Row="2"
+                                  Width="240"
+                                  HorizontalAlignment="Center"
+                                  Header="Trend Value Dictionary">
+                            <ComboBox x:Name="TrendValueDictionaryComboBox"
+                                      ItemsSource="{Binding StringIoTagTrendValueDictionaries}"
+                                      SelectedValuePath="Name"
+                                      SelectedValue="{Binding StringIoTagTrendValueDictionary}"
+                                      DisplayMemberPath="Name"
+                                      Margin="10"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Stretch"/>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>

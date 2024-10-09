@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using System.ComponentModel.DataAnnotations;
@@ -12,13 +13,28 @@ namespace EnerFlow.ViewModels
         public StringIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _stringIoTag = hierarchy.StringIoTag!;
+
+            ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
+            ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
+
         }
 
         public StringIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, StringIoTag stringIoTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _stringIoTag = stringIoTag;
             stringIoTag.Hierarchy = hierarchy;
+
+            ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
+            ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
+
+            SetDefaultValues();
         }
+
+        public IEnumerable<StringIoTagTrendValueDictionary> StringIoTagTrendValueDictionaries => [.. Ioc.Default.GetService<IDataService>()?.Context.StringIoTagTrendValueDictionaries];
+
+        public RelayCommand ShowReadAddressBrowserCommand { get; set; }
+        public RelayCommand ShowWriteAddressBrowserCommand { get; set; }
+
 
         public string ReadAddress
         {
@@ -66,10 +82,54 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Length must be greater than or equal to 0.")]
-        public int? Length
+       public bool? IsCalculated
         {
-            get => _stringIoTag.Length;
+            get => _stringIoTag.IsCalculated;
+            set
+            {
+                if (_stringIoTag.IsCalculated != value)
+                {
+                    ValidateProperty(value, nameof(IsCalculated));
+                    var errors = GetErrors(nameof(IsCalculated));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _stringIoTag.IsCalculated = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public string Script
+        {
+            get => _stringIoTag.Script ?? string.Empty;
+            set
+            {
+                if (_stringIoTag.Script != value)
+                {
+                    ValidateProperty(value, nameof(Script));
+                    var errors = GetErrors(nameof(Script));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _stringIoTag.Script = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Length must be greater than or equal to 0.")]
+        public int Length
+        {
+            get => _stringIoTag.Length ?? 0;
             set
             {
                 if (_stringIoTag.Length != value)
@@ -123,6 +183,29 @@ namespace EnerFlow.ViewModels
                     if (errors == null || !errors.Cast<object>().Any())
                     {
                         _stringIoTag.WriteAddress = value;
+                        if (!DisableAutoSave)
+                        {
+                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        }
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Display Order must be greater than or equal to 0.")]
+        public int DisplayOrder
+        {
+            get => _stringIoTag.DisplayOrder ?? 0;
+            set
+            {
+                if (_stringIoTag.DisplayOrder != value)
+                {
+                    ValidateProperty(value, nameof(DisplayOrder));
+                    var errors = GetErrors(nameof(DisplayOrder));
+                    if (errors == null || !errors.Cast<object>().Any())
+                    {
+                        _stringIoTag.DisplayOrder = value;
                         if (!DisableAutoSave)
                         {
                             Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
@@ -220,18 +303,18 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public string TrendDataDictionary
+        public StringIoTagTrendValueDictionary StringIoTagTrendValueDictionary
         {
-            get => _stringIoTag.TrendDataDictionary ?? string.Empty;
+            get => _stringIoTag.StringIoTagTrendValueDictionary!;
             set
             {
-                if (_stringIoTag.TrendDataDictionary != value)
+                if (_stringIoTag.StringIoTagTrendValueDictionary != value)
                 {
-                    ValidateProperty(value, nameof(TrendDataDictionary));
-                    var errors = GetErrors(nameof(TrendDataDictionary));
+                    ValidateProperty(value, nameof(StringIoTagTrendValueDictionary));
+                    var errors = GetErrors(nameof(StringIoTagTrendValueDictionary));
                     if (errors == null || !errors.Cast<object>().Any())
                     {
-                        _stringIoTag.TrendDataDictionary = value;
+                        _stringIoTag.StringIoTagTrendValueDictionary = value;
                         if (!DisableAutoSave)
                         {
                             Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
@@ -242,9 +325,10 @@ namespace EnerFlow.ViewModels
             }
         }
 
+
         public bool? IsBadQuality
         {
-            get => _stringIoTag.IsBadQuality;
+            get => _stringIoTag.StringIoTagCurrentValue?.IsBadQuality;
         }
 
         public double? ManualData
@@ -267,6 +351,39 @@ namespace EnerFlow.ViewModels
                     }
                 }
             }
+        }
+
+        private void ShowReadAddressBrowser()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");
+        }
+
+        private bool CanShowReadAddressBrowser()
+        {
+            return true;
+        }
+
+        private void ShowWriteAddressBrowser()
+        {
+            Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");
+        }
+
+        private bool CanShowWriteAddressBrowser()
+        {
+            return true;
+        }
+
+        private void SetDefaultValues()
+        {
+            ReadAddressScanInterval = 1000;
+            IsCalculated = false;
+            DisplayOrder = 0;
+            PaddingCharacter = " ";
+            Length = 0;
+            UseDefaultTrendStyle = true;
+            LineColor = "Black";
+            LineStyle = "Solid";
+            LineWidth = 1;
         }
     }
 }

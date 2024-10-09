@@ -29,7 +29,7 @@ namespace EnerFlow.Services
                 .Include(h => h.Facility)
                 .Include(h => h.Well)
                 .Include(h => h.RunSheet)
-                .Include(h => h.ContextTag)
+                .Include(h => h.ContextTag!).ThenInclude(c => c.ContextTagProperties)
                 .Include(h => h.SerialPortChannel)
                 .Include(h => h.IpChannel)
                 .Include(h => h.Device)
@@ -124,6 +124,7 @@ namespace EnerFlow.Services
                         Context.RunSheets.Remove(Context.RunSheets.First(r => r.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.ContextTag:
+                        Context.ContextTagProperties.RemoveRange(Context.ContextTagProperties.Where(c => c.ContextTagId == hierarchyId));
                         Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.SerialPortChannel:
@@ -146,6 +147,8 @@ namespace EnerFlow.Services
                         Context.DigitalIoTags.Remove(hierarchy.DigitalIoTag!);
                         break;
                     case Enums.NodeType.StringIoTag:
+                        Context.Database.ExecuteSqlRaw("DELETE FROM StringIoTagValueHistory WHERE StringIoTagID = {0}", hierarchyId);
+                        Context.StringIoTagCurrentValues.Remove(hierarchy.StringIoTag!.StringIoTagCurrentValue!);
                         Context.StringIoTags.Remove(Context.StringIoTags.First(s => s.HierarchyId == hierarchyId));
                         break;
                     case Enums.NodeType.MeterRun:
