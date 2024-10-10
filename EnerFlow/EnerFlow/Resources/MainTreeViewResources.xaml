@@ -7,6 +7,11 @@
     <converters:SystemTreeViewItemSourceConverter x:Key="SystemTreeViewItemSourceConverter"/>
     <converters:FacilityTypeConverter x:Key="FacilityTypeConverter"/>
 
+    <Style x:Key="TreeViewItemStyle" TargetType="TreeViewItem">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+    </Style>
+    
     <Style x:Key="DisabledTextStyle" TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsDisabled}" Value="True">

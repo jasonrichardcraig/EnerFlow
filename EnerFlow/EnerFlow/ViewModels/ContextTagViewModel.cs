@@ -15,14 +15,12 @@ namespace EnerFlow.ViewModels
         public ContextTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _contextTag = hierarchy.ContextTag!;
-            _contextTagPropertyViewModels.CollectionChanged += _contextTagPropertyViewModels_CollectionChanged;
         }
 
         public ContextTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, ContextTag contextTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _contextTag = contextTag;
             contextTag.Hierarchy = hierarchy;
-            _contextTagPropertyViewModels.CollectionChanged += _contextTagPropertyViewModels_CollectionChanged;
         }
 
         public ObservableCollection<ContextTagPropertyViewModel> ContextTagPropertyViewModels
@@ -33,8 +31,15 @@ namespace EnerFlow.ViewModels
                 {
                     foreach (var contextTagProperty in _contextTag.ContextTagProperties)
                     {
-                        _contextTagPropertyViewModels.Add(new ContextTagPropertyViewModel());
+                        _contextTagPropertyViewModels.Add(new ContextTagPropertyViewModel()
+                        {
+                            ContextTagViewModel = this,
+                            ContextTagProperty = contextTagProperty
+                        });
                     }
+
+                    _contextTagPropertyViewModels.CollectionChanged += _contextTagPropertyViewModels_CollectionChanged;
+
                     loaded = true;
                 }
                 return _contextTagPropertyViewModels;
@@ -52,15 +57,18 @@ namespace EnerFlow.ViewModels
                     {
                         foreach (ContextTagPropertyViewModel contextTagPropertyViewModel in e.NewItems)
                         {
-                            contextTagPropertyViewModel.ContextTagProperty = new ContextTagProperty() 
+                            contextTagPropertyViewModel.ContextTagViewModel = this;
+                            contextTagPropertyViewModel.ContextTagProperty = new ContextTagProperty()
                             {
                                 ContextTag = _contextTag,
-                                Name = string.Empty,
+                                Name = "New Property",
                                 Description = string.Empty,
                                 Value = string.Empty,
-                                DateTimeCreated = DateTime.Now 
+                                DateTimeCreated = DateTime.Now
                             };
-                            contextTagPropertyViewModel.ContextTagViewModel = this;
+
+                            //_contextTag.ContextTagProperties.Add(contextTagPropertyViewModel.ContextTagProperty);
+
                             dataService.Context.ContextTagProperties.Add(contextTagPropertyViewModel.ContextTagProperty);
                         }
                     }
@@ -70,15 +78,16 @@ namespace EnerFlow.ViewModels
                     {
                         foreach (ContextTagPropertyViewModel contextTagPropertyViewModel in e.OldItems)
                         {
-                            dataService.Context.ContextTagProperties.Remove(contextTagPropertyViewModel.ContextTagProperty);
+                           // _contextTag.ContextTagProperties.Remove(contextTagPropertyViewModel.ContextTagProperty);
+                           dataService.Context.ContextTagProperties.Remove(contextTagPropertyViewModel.ContextTagProperty);
                         }
                     }
                     break;
             }
-            if (!DisableAutoSave)
-            {
-                dataService.Context.SaveChanges();
-            }
+            //if (!DisableAutoSave)
+            //{
+            //    dataService.Context.SaveChanges();
+            //}
         }
 
     }

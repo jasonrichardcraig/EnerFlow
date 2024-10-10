@@ -1,10 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using EnerFlow.Data;
 using EnerFlow.Enums;
+using EnerFlow.Messages;
 using EnerFlow.Services;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Web.WebView2.Core;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
@@ -12,6 +19,7 @@ namespace EnerFlow.ViewModels
     public class MainViewModel : ObservableObject
     {
         private bool _isBusy;
+        private Uri _webViewSource;
         private HierarchyViewModel? _systemHierarchyViewModel;
         private UserViewModel? _userViewModel;
         private HierarchyViewModel? _selectedHierarchyViewModel;
@@ -22,9 +30,113 @@ namespace EnerFlow.ViewModels
         private string _server = string.Empty;
         private string _database = string.Empty;
 
-        public MainViewModel()
+        public MainViewModel(IDataService dataService)
         {
+            IsBusy = true;
+
+            dataService.Context = new EnerFlowContext();
+
+            // Event subscriptions
+            dataService.Context.SavingChanges += OnSavingChanges!;
+            dataService.Context.SavedChanges += OnSavedChanges!;
+            dataService.Context.SaveChangesFailed += OnSaveChangesFailed!;
+
+            AuthenticateUser();
+            LoadStatusBarData();
+            LoadAssociatedData();
+
             SearchCommand = new RelayCommand(Search);
+            CloseCommand = new RelayCommand(CloseWindow);
+            HandleTreeKeyUpCommand = new RelayCommand<KeyEventArgs>(OnTreeKeyUp);
+            HandleWindowKeyDownCommand = new RelayCommand<KeyEventArgs>(OnWindowKeyDown);
+            HandleSelectedTreeItemChanged = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(OnSelectedTreeItemItemChanged);
+            HandleMapWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnMapWebViewNavigationCompleted);
+            HandleMapWebMessageReceivedEventArgs = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnMapWebMessageReceived);
+            _webViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
+            SystemHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetSystemHierarchy());
+            SelectedHierarchyViewModel = SystemHierarchyViewModel;
+            TreeMode = TreeMode.Map;
+
+            IsBusy = false;
+
+        }
+
+        public ICommand CloseCommand { get; }
+        public ICommand HandleTreeKeyUpCommand { get; }
+        public ICommand HandleWindowKeyDownCommand { get; }
+        public ICommand HandleSelectedTreeItemChanged { get; }
+        public ICommand HandleMapWebViewNavigationCompleted { get; }
+        public ICommand HandleMapWebMessageReceivedEventArgs { get; }
+
+        private void AuthenticateUser()
+        {
+            var currentUser = Ioc.Default.GetService<IDataService>()!.Context.Users.FirstOrDefault(u => u.UserName == Environment.UserName) ?? throw new Exception("User does not exist in the database.");
+
+            UserViewModel = new UserViewModel(currentUser);
+
+            // Check if the user has access
+            if (!Security.SecurityChecker.HasAccess(currentUser))
+            {
+                Ioc.Default.GetService<IDialogService>()!.ShowWarningDialog("You do not have access to this application.", "Access Denied");
+                CloseWindow();
+            }
+        }
+
+        private void LoadStatusBarData()
+        {
+            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString);
+            Server = sqlConnectionStringBuilder.DataSource;
+            Database = sqlConnectionStringBuilder.InitialCatalog;
+        }
+
+        public static void LoadAssociatedData()
+        {
+            var dataService = Ioc.Default.GetService<IDataService>()!;
+
+            // Load associated data
+            dataService.Context.FacilityTypes.Load();
+            dataService.Context.FacilitySubTypes.Load();
+            dataService.Context.EnergyDevelopmentCategoryTypes.Load();
+            dataService.Context.WasteLocationTypes.Load();
+            dataService.Context.TagValueEnumerations.Load();
+            dataService.Context.TagValueEnumerationConstants.Load();
+            dataService.Context.AlarmPriorities.Load();
+            dataService.Context.StringIoTagTrendValueDictionaries.Load();
+            dataService.Context.StringIoTagTrendValueDictionaryItems.Load();
+            dataService.Context.UnitClasses.Load();
+            dataService.Context.Units.Load();
+        }
+
+        private void OnSavingChanges(object sender, SavingChangesEventArgs e)
+        {
+            IsBusy = true;
+        }
+
+        private void OnSavedChanges(object sender, SavedChangesEventArgs e)
+        {
+            IsBusy = false;
+        }
+
+        private void OnSaveChangesFailed(object sender, SaveChangesFailedEventArgs e)
+        {
+            if (e.Exception is DbUpdateConcurrencyException dbUpdateConcurrencyException)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(dbUpdateConcurrencyException.Message, "Error Saving Changes");
+            }
+            else if (e.Exception is DbUpdateException dbUpdateException)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(dbUpdateException.Message, "Error Saving Changes");
+            }
+            else if (e.Exception is ValidationException validationException)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(validationException.Message, "Error Saving Changes");
+            }
+            else
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(e.Exception.Message, "Error Saving Changes");
+            }
+
+            IsBusy = false;
         }
 
         public HierarchyViewModel? SelectedHierarchyViewModel
@@ -52,6 +164,16 @@ namespace EnerFlow.ViewModels
                     OnTreeModeChanged();
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        public Uri WebViewSource
+        {
+            get => _webViewSource;
+            set
+            {
+                _webViewSource = value;
+                OnPropertyChanged(); // Notify the view about the property change
             }
         }
 
@@ -193,21 +315,54 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        private void OnSelectedTreeItemItemChanged(RoutedPropertyChangedEventArgs<object>? e)
+        {
+            if (e?.NewValue is HierarchyViewModel hierarchyViewModel)
+            {
+                SelectedHierarchyViewModel = hierarchyViewModel;
+            }
+        }
+
+        private void OnMapWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
+        {
+            
+        }
+
+        private void OnMapWebViewNavigationCompleted(CoreWebView2NavigationCompletedEventArgs? e)
+        {
+
+        }
+
         private void Search()
         {
-            var dialogService = Ioc.Default.GetService<IDialogService>();
-
-            if (dialogService == null)
-            {
-                return;
-            }
-
+            var dialogService = Ioc.Default.GetService<IDialogService>()!;
             dialogService.ShowSearchDialog();
+        }
+
+        private void OnTreeKeyUp(KeyEventArgs? e)
+        {
+            if (e?.Key == Key.Delete)
+            {
+                SelectedHierarchyViewModel?.DeleteCommand?.Execute(null);
+            }
+        }
+
+        private void OnWindowKeyDown(KeyEventArgs? e)
+        {
+            if (e?.Key == Key.F3)
+            {
+                Search();
+            }
         }
 
         public void SetExecuteMapScriptAction(Func<string, Task<string>> executeMapScriptAction)
         {
             _executeMapScriptAction = executeMapScriptAction;
+        }
+
+        private void CloseWindow()
+        {
+            WeakReferenceMessenger.Default.Send(new CloseWindowMessage());
         }
 
         public static bool SelectAndExpandNode(HierarchyViewModel hierarchyViewModel, HierarchyId targetNode)

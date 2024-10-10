@@ -21,6 +21,11 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        public void ValidateAll()
+        {
+            ValidateAllProperties();
+        }
+
         public ContextTagProperty ContextTagProperty
         {
             get => _contextTagProperty;
@@ -30,6 +35,8 @@ namespace EnerFlow.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        [Required(ErrorMessage = "Name is required.", AllowEmptyStrings = false)]
         [CustomValidation(typeof(ContextTagPropertyViewModel), nameof(ValidateName))]
         public string Name
         {
@@ -87,6 +94,45 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        public string Type
+        {
+            get
+            {
+                if (_contextTagProperty.Value == null)
+                {
+                    return "String";
+                }
+
+                switch (_contextTagProperty.Value.GetType().Name)
+                {
+                    case "Boolean":
+                        return "Boolean";
+                    case "Double":
+                        return "Float";
+                    default:
+                        return "String";
+                }
+            }
+            set
+            {
+                if (Type != value)
+                {
+                    switch (value)
+                    {
+                        case "Boolean":
+                            _contextTagProperty.Value = false;
+                            break;
+                        case "Float":
+                            _contextTagProperty.Value = 0.0;
+                            break;
+                        default:
+                            _contextTagProperty.Value = string.Empty;
+                            break;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
         public static ValidationResult ValidateName(string name, ValidationContext context)
         {
             var dataService = Ioc.Default.GetService<IDataService>();

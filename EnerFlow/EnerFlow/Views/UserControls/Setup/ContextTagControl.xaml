@@ -94,18 +94,35 @@
                               SelectionMode="Single"
                               SelectionUnit="FullRow"
                               VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto"
-                              RowEditEnding="PropertiesDataGrid_RowEditEnding">
+
+                              HorizontalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
-                                                Binding="{Binding Name, Mode=TwoWay}"
+                                                Binding="{Binding Name, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
                                                 Width="2*" />
                             <DataGridTextColumn Header="Description"
                                                 Binding="{Binding Description, Mode=TwoWay}"
                                                 Width="3*" />
-                            <DataGridTextColumn Header="Value"
+                            <DataGridComboBoxColumn Header="Type"
+                                                    ItemsSource="{StaticResource DataTypes}"
+                                                    SelectedValueBinding="{Binding Type, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                                    DisplayMemberPath="Name"
+                                                    SelectedValuePath="Name"
+                                                    Width="1*" />
+                            <!--<DataGridTextColumn Header="Value"
                                                 Binding="{Binding Value, Mode=TwoWay}"
-                                                Width="1*" />
+                                                Width="1*" />-->
+
+                            <!--<DataGridTemplateColumn Header="Value"
+                                                CellEditingTemplateSelector="{StaticResource DataTypeTemplateSelector}"
+                                                Width="1*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Value, Mode=OneWay}" IsEnabled="False" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

@@ -1,6 +1,8 @@
-﻿using EnerFlow.Data;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using EnerFlow.Data;
 using EnerFlow.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 
 

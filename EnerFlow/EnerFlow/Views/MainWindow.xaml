@@ -3,18 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:b="clr-namespace:EnerFlow.Behaviors"
         xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:EnerFlow"
         xmlns:viewmodels="clr-namespace:EnerFlow.ViewModels"
+        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Height="450"
         Width="800"
         Title="EnerFlow"
-        Icon="\Images\EF_Icon.png"
-        KeyDown="Window_KeyDown"
-        Loaded="Window_Loaded">
+        Icon="\Images\EF_Icon.png">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="KeyUp">
+            <b:EventArgsCommandBehavior Command="{Binding HandleWindowKeyDownCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <busyIndicator:BusyMask x:Name="BusyIndicator"
                         IsBusy="{Binding IsBusy}" 
                         IndicatorType="Grid" 
@@ -80,16 +86,17 @@
                 <TreeView x:Name="NavigationTreeView"
                           Grid.Row="1"
                           Grid.Column="0"
-                          KeyUp="NavigationTreeView_KeyUp"
-                          SelectedItemChanged="NavigationTreeView_SelectedItemChanged"
+                          ItemContainerStyle="{StaticResource TreeViewItemStyle}"
                           ItemsSource="{Binding SystemHierarchyViewModel, Converter={StaticResource SystemTreeViewItemSourceConverter}}"
                           ItemTemplateSelector="{StaticResource HierarchyTreeViewItemTemplateSelector}">
-                    <TreeView.Resources>
-                        <Style TargetType="TreeViewItem">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                        </Style>
-                    </TreeView.Resources>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyUp">
+                            <b:EventArgsCommandBehavior Command="{Binding HandleTreeKeyUpCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SelectedItemChanged">
+                            <b:EventArgsCommandBehavior Command="{Binding HandleSelectedTreeItemChanged}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </TreeView>
                 <GridSplitter Grid.Row="1"
                               Grid.Column="0"
@@ -103,9 +110,17 @@
                             SelectedIndex="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}}">
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
                         <wv2:WebView2 x:Name="MapWebView"
-                                      NavigationCompleted="MapWebView_NavigationCompleted"
-                                      WebMessageReceived="MapWebView_WebMessageReceived"
-                                      Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+                                      Source="{Binding WebViewSource}"
+                                      Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="WebMessageReceived">
+                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebMessageReceivedEventArgs}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="NavigationCompleted">
+                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebViewNavigationCompleted}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </wv2:WebView2>
                     </TabItem>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Measurment}"/>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=FieldDataCapture}"/>

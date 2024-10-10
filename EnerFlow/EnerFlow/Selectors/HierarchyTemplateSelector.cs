@@ -1,7 +1,5 @@
 ﻿using EnerFlow.Enums;
 using EnerFlow.ViewModels;
-using Microsoft.Identity.Client.NativeInterop;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -185,3 +183,4 @@ namespace EnerFlow.Selectors
         }
     }
 }
+
