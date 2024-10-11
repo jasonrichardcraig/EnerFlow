@@ -115,7 +115,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.IsDisabled = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                         OnIsDisabledChanged();
@@ -141,7 +141,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Name = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -164,7 +164,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Description = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -187,7 +187,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Longitude = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -210,7 +210,7 @@ namespace EnerFlow.ViewModels
                         _hierarchy.Latitude = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -236,7 +236,7 @@ namespace EnerFlow.ViewModels
                             _hierarchy.DefaultZoomLevel = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                             OnPropertyChanged();
                         }

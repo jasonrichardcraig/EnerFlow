@@ -7,6 +7,7 @@ namespace EnerFlow.Services
     public interface IDataService
     {
         EnerFlowContext Context { get; set; }
+        void SaveChanges();
         bool IsNameUniqueWithinHierarchy(string name, HierarchyId parentId);
         HierarchyId GetSibling(HierarchyId hierarchyId);
         void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.NodeType hierarchyNodeType);

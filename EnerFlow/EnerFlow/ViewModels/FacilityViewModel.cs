@@ -63,7 +63,7 @@ namespace EnerFlow.ViewModels
                         _facility.FacilitySubType = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -85,7 +85,7 @@ namespace EnerFlow.ViewModels
                         _facility.EnergyDevelopmentCategoryType = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -110,7 +110,7 @@ namespace EnerFlow.ViewModels
                             _facility.UniqueFacilityIdentifier = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                             OnPropertyChanged();
                         }
@@ -134,7 +134,7 @@ namespace EnerFlow.ViewModels
                         _facility.LocationName = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -157,7 +157,7 @@ namespace EnerFlow.ViewModels
                         _facility.OperatorCode = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -180,7 +180,7 @@ namespace EnerFlow.ViewModels
                         _facility.OperatorName = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -203,7 +203,7 @@ namespace EnerFlow.ViewModels
                         _facility.LicenceNumber = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -226,7 +226,7 @@ namespace EnerFlow.ViewModels
                         _facility.LicenseeCode = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -251,7 +251,7 @@ namespace EnerFlow.ViewModels
                         _facility.WasteLocationType = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }

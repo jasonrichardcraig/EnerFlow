@@ -2013,7 +2013,7 @@
                    Height="16"
                    Width="16"
                    Margin="0,0,4,0"
-                   Source="/Images/Tank_16x16.png"/>
+                   Source="/Images/Tanks_16x16.png"/>
             <TextBlock Style="{StaticResource DisabledTextStyle}"
                        Text="{Binding Name}"
                        VerticalAlignment="Center"/>

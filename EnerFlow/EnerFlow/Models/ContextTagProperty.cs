@@ -13,7 +13,7 @@ public partial class ContextTagProperty
 
     public string? Description { get; set; }
 
-    public object? Value { get; set; }
+    public string? Value { get; set; }
 
     public DateTime DateTimeCreated { get; set; }
 

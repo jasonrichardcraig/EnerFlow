@@ -110,11 +110,11 @@
                             SelectedIndex="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}}">
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
                         <wv2:WebView2 x:Name="MapWebView"
-                                      Source="{Binding WebViewSource}"
+                                      Source="{Binding MapWebViewSource}"
                                       Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="WebMessageReceived">
-                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebMessageReceivedEventArgs}" />
+                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebViewWebMessageReceived}" />
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="NavigationCompleted">
                                     <b:EventArgsCommandBehavior Command="{Binding HandleMapWebViewNavigationCompleted}" />

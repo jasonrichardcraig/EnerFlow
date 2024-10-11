@@ -413,30 +413,6 @@
         </StackPanel>
     </DataTemplate>
 
-    <x:Array x:Key="DataTypes" Type="{x:Type helpers:DataType}">
-        <helpers:DataType Name="Boolean" Description="Represents two possible values: true or false"/>
-        <helpers:DataType Name="Float" Description="Represents numbers with fractional or decimal parts. "/>
-        <helpers:DataType Name="String" Description="Represents a sequence of characters."/>
-    </x:Array>
-
-    <DataTemplate x:Key="BooleanDataTypeTemplate">
-        <CheckBox IsChecked="{Binding Value}"
-                  HorizontalAlignment="Center"/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="FloatDataTypeTemplate">
-        <TextBox Text="{Binding Value}"/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="StringDataTypeTemplate">
-        <TextBox Text="{Binding Value}"/>
-    </DataTemplate>
-
-    <selectors:DataTypeTemplateSelector x:Key="DataTypeTemplateSelector"
-                                        BooleanTemplate="{StaticResource BooleanDataTypeTemplate}"
-                                        FloatTemplate="{StaticResource FloatDataTypeTemplate}"
-                                        StringTemplate="{StaticResource StringDataTypeTemplate}"/>
-
     <x:Array x:Key="LineStyles" Type="{x:Type helpers:LineStyle}">
         <helpers:LineStyle Name="Solid">
             <helpers:LineStyle.DashStyle>

@@ -21,11 +21,6 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public void ValidateAll()
-        {
-            ValidateAllProperties();
-        }
-
         public ContextTagProperty ContextTagProperty
         {
             get => _contextTagProperty;
@@ -52,7 +47,7 @@ namespace EnerFlow.ViewModels
                         _contextTagProperty.Name = value;
                         if (!_contextTagViewModel.DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -70,16 +65,16 @@ namespace EnerFlow.ViewModels
                     _contextTagProperty.Description = value;
                     if (!_contextTagViewModel.DisableAutoSave)
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        Ioc.Default.GetService<IDataService>()?.SaveChanges();
                     }
                     OnPropertyChanged();
                 }
             }
         }
 
-        public object Value
+        public string Value
         {
-            get => _contextTagProperty.Value ?? 0;
+            get => _contextTagProperty.Value ?? string.Empty;
             set
             {
                 if (_contextTagProperty.Value != value)
@@ -87,69 +82,20 @@ namespace EnerFlow.ViewModels
                     _contextTagProperty.Value = value;
                     if (!_contextTagViewModel.DisableAutoSave)
                     {
-                        Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                        Ioc.Default.GetService<IDataService>()?.SaveChanges();
                     }
                     OnPropertyChanged();
                 }
             }
         }
 
-        public string Type
+        public static ValidationResult ValidateName(string name)
         {
-            get
-            {
-                if (_contextTagProperty.Value == null)
-                {
-                    return "String";
-                }
-
-                switch (_contextTagProperty.Value.GetType().Name)
-                {
-                    case "Boolean":
-                        return "Boolean";
-                    case "Double":
-                        return "Float";
-                    default:
-                        return "String";
-                }
-            }
-            set
-            {
-                if (Type != value)
-                {
-                    switch (value)
-                    {
-                        case "Boolean":
-                            _contextTagProperty.Value = false;
-                            break;
-                        case "Float":
-                            _contextTagProperty.Value = 0.0;
-                            break;
-                        default:
-                            _contextTagProperty.Value = string.Empty;
-                            break;
-                    }
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public static ValidationResult ValidateName(string name, ValidationContext context)
-        {
-            var dataService = Ioc.Default.GetService<IDataService>();
-
-            if (dataService == null)
-            {
-                return new ValidationResult("Data service not found");
-            }
-
-            // Perform a check against the service/database for uniqueness 
-            bool isUnique = dataService.Context.ContextTagProperties.Count(c => c.Name == name) == 0;
-
+            bool isUnique = !Ioc.Default.GetService<IDataService>()!.Context.ContextTagProperties.Any(c => c.Name == name);
             if (isUnique)
             {
                 return ValidationResult.Success!;
             }
-
             return new ValidationResult("The name must be unique.");
         }
     }

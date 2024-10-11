@@ -37,16 +37,14 @@ namespace EnerFlow.ViewModels
                             ContextTagProperty = contextTagProperty
                         });
                     }
-
-                    _contextTagPropertyViewModels.CollectionChanged += _contextTagPropertyViewModels_CollectionChanged;
-
+                    _contextTagPropertyViewModels.CollectionChanged += ContextTagPropertyViewModels_CollectionChanged;
                     loaded = true;
                 }
                 return _contextTagPropertyViewModels;
             }
         }
 
-        private void _contextTagPropertyViewModels_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void ContextTagPropertyViewModels_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var dataService = Ioc.Default.GetService<IDataService>() ?? null!;
 
@@ -57,18 +55,16 @@ namespace EnerFlow.ViewModels
                     {
                         foreach (ContextTagPropertyViewModel contextTagPropertyViewModel in e.NewItems)
                         {
+                            var newName = GenerateUniqueName("New Property");
                             contextTagPropertyViewModel.ContextTagViewModel = this;
                             contextTagPropertyViewModel.ContextTagProperty = new ContextTagProperty()
                             {
                                 ContextTag = _contextTag,
-                                Name = "New Property",
+                                Name = newName,
                                 Description = string.Empty,
                                 Value = string.Empty,
                                 DateTimeCreated = DateTime.Now
                             };
-
-                            //_contextTag.ContextTagProperties.Add(contextTagPropertyViewModel.ContextTagProperty);
-
                             dataService.Context.ContextTagProperties.Add(contextTagPropertyViewModel.ContextTagProperty);
                         }
                     }
@@ -78,17 +74,30 @@ namespace EnerFlow.ViewModels
                     {
                         foreach (ContextTagPropertyViewModel contextTagPropertyViewModel in e.OldItems)
                         {
-                           // _contextTag.ContextTagProperties.Remove(contextTagPropertyViewModel.ContextTagProperty);
                            dataService.Context.ContextTagProperties.Remove(contextTagPropertyViewModel.ContextTagProperty);
                         }
                     }
                     break;
             }
-            //if (!DisableAutoSave)
-            //{
-            //    dataService.Context.SaveChanges();
-            //}
+            if (!DisableAutoSave)
+            {
+                dataService.SaveChanges();
+            }
         }
-
+        private string GenerateUniqueName(string baseName)
+        {
+            // Get all current names of ContextTagProperties within this ContextTag
+            var existingNames = _contextTag.ContextTagProperties
+                .Select(c => c.Name)
+                .ToList();
+            var newName = baseName;
+            int counter = 1;
+            // Increment the name until it is unique
+            while (existingNames.Contains(newName))
+            {
+                newName = $"{baseName} {counter++}";
+            }
+            return newName;
+        }
     }
 }

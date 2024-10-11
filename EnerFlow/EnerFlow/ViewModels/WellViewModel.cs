@@ -39,7 +39,7 @@ namespace EnerFlow.ViewModels
                             _well.FormattedUwi = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -64,7 +64,7 @@ namespace EnerFlow.ViewModels
                             _well.UnformattedUwi = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -89,7 +89,7 @@ namespace EnerFlow.ViewModels
                             _well.SurfaceLocation = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -114,7 +114,7 @@ namespace EnerFlow.ViewModels
                             _well.DownholeLocation = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -139,7 +139,7 @@ namespace EnerFlow.ViewModels
                             _well.FieldCode = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -164,7 +164,7 @@ namespace EnerFlow.ViewModels
                             _well.PoolCode = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -189,7 +189,7 @@ namespace EnerFlow.ViewModels
                             _well.LicenseNumber = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -214,7 +214,7 @@ namespace EnerFlow.ViewModels
                             _well.LicenseeCode = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -239,7 +239,7 @@ namespace EnerFlow.ViewModels
                             _well.AgentCode = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }
@@ -264,7 +264,7 @@ namespace EnerFlow.ViewModels
                             _well.OperatorCode = value;
                             if (!DisableAutoSave)
                             {
-                                Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                                Ioc.Default.GetService<IDataService>()?.SaveChanges();
                             }
                         }
                     }

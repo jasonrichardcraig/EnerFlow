@@ -19,14 +19,14 @@ namespace EnerFlow.ViewModels
     public class MainViewModel : ObservableObject
     {
         private bool _isBusy;
-        private Uri _webViewSource;
+        private Uri _mapWebViewSource;
         private HierarchyViewModel? _systemHierarchyViewModel;
         private UserViewModel? _userViewModel;
         private HierarchyViewModel? _selectedHierarchyViewModel;
         private DateTime _displayDateEnd = DateTime.Now.Date;
         private DateTime selectedDate = DateTime.Now.Date;
         private TreeMode _treeMode;
-        private Func<string, Task<string>> _executeMapScriptAction = _ => Task.FromResult(string.Empty);
+        private Func<string, Task<string>> _executeMapWebViewScriptAction = _ => Task.FromResult(string.Empty);
         private string _server = string.Empty;
         private string _database = string.Empty;
 
@@ -39,11 +39,12 @@ namespace EnerFlow.ViewModels
             // Event subscriptions
             dataService.Context.SavingChanges += OnSavingChanges!;
             dataService.Context.SavedChanges += OnSavedChanges!;
-            dataService.Context.SaveChangesFailed += OnSaveChangesFailed!;
-
+            dataService.Context.SaveChangesFailed += (sender, e) => IsBusy = false;
             AuthenticateUser();
             LoadStatusBarData();
             LoadAssociatedData();
+
+            _mapWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
 
             SearchCommand = new RelayCommand(Search);
             CloseCommand = new RelayCommand(CloseWindow);
@@ -51,8 +52,7 @@ namespace EnerFlow.ViewModels
             HandleWindowKeyDownCommand = new RelayCommand<KeyEventArgs>(OnWindowKeyDown);
             HandleSelectedTreeItemChanged = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(OnSelectedTreeItemItemChanged);
             HandleMapWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnMapWebViewNavigationCompleted);
-            HandleMapWebMessageReceivedEventArgs = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnMapWebMessageReceived);
-            _webViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
+            HandleMapWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnMapWebViewWebMessageReceived);
             SystemHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetSystemHierarchy());
             SelectedHierarchyViewModel = SystemHierarchyViewModel;
             TreeMode = TreeMode.Map;
@@ -66,7 +66,7 @@ namespace EnerFlow.ViewModels
         public ICommand HandleWindowKeyDownCommand { get; }
         public ICommand HandleSelectedTreeItemChanged { get; }
         public ICommand HandleMapWebViewNavigationCompleted { get; }
-        public ICommand HandleMapWebMessageReceivedEventArgs { get; }
+        public ICommand HandleMapWebViewWebMessageReceived { get; }
 
         private void AuthenticateUser()
         {
@@ -97,12 +97,16 @@ namespace EnerFlow.ViewModels
             dataService.Context.FacilityTypes.Load();
             dataService.Context.FacilitySubTypes.Load();
             dataService.Context.EnergyDevelopmentCategoryTypes.Load();
+            dataService.Context.EquipmentTypes.Load();
+            dataService.Context.EquipmentSubTypes.Load();
+            dataService.Context.EquipmentStatuses.Load();
             dataService.Context.WasteLocationTypes.Load();
             dataService.Context.TagValueEnumerations.Load();
             dataService.Context.TagValueEnumerationConstants.Load();
             dataService.Context.AlarmPriorities.Load();
             dataService.Context.StringIoTagTrendValueDictionaries.Load();
             dataService.Context.StringIoTagTrendValueDictionaryItems.Load();
+            dataService.Context.TagValueEnumerations.Load();
             dataService.Context.UnitClasses.Load();
             dataService.Context.Units.Load();
         }
@@ -114,28 +118,6 @@ namespace EnerFlow.ViewModels
 
         private void OnSavedChanges(object sender, SavedChangesEventArgs e)
         {
-            IsBusy = false;
-        }
-
-        private void OnSaveChangesFailed(object sender, SaveChangesFailedEventArgs e)
-        {
-            if (e.Exception is DbUpdateConcurrencyException dbUpdateConcurrencyException)
-            {
-                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(dbUpdateConcurrencyException.Message, "Error Saving Changes");
-            }
-            else if (e.Exception is DbUpdateException dbUpdateException)
-            {
-                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(dbUpdateException.Message, "Error Saving Changes");
-            }
-            else if (e.Exception is ValidationException validationException)
-            {
-                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(validationException.Message, "Error Saving Changes");
-            }
-            else
-            {
-                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(e.Exception.Message, "Error Saving Changes");
-            }
-
             IsBusy = false;
         }
 
@@ -167,13 +149,13 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public Uri WebViewSource
+        public Uri MapWebViewSource
         {
-            get => _webViewSource;
+            get => _mapWebViewSource;
             set
             {
-                _webViewSource = value;
-                OnPropertyChanged(); // Notify the view about the property change
+                _mapWebViewSource = value;
+                OnPropertyChanged();
             }
         }
 
@@ -296,11 +278,11 @@ namespace EnerFlow.ViewModels
                         case NodeType.District:
                         case NodeType.Area:
                         case NodeType.Field:
-                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            _executeMapWebViewScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
                             break;
                         case NodeType.Facility:
-                            _executeMapScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
-                            _executeMapScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
+                            _executeMapWebViewScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                            _executeMapWebViewScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
                             break;
                     }
                 }
@@ -323,7 +305,7 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        private void OnMapWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
+        private void OnMapWebViewWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
         {
             
         }
@@ -355,9 +337,9 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        public void SetExecuteMapScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        public void SetExecuteMapWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
         {
-            _executeMapScriptAction = executeMapScriptAction;
+            _executeMapWebViewScriptAction = executeMapScriptAction;
         }
 
         private void CloseWindow()

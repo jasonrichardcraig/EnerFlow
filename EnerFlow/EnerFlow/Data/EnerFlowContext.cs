@@ -787,7 +787,9 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Value).HasColumnType("sql_variant");
+            entity.Property(e => e.Value)
+                .HasMaxLength(255)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.ContextTag).WithMany(p => p.ContextTagProperties)
                 .HasForeignKey(d => d.ContextTagId)

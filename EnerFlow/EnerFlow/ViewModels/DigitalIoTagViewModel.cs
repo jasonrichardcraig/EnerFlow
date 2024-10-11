@@ -1,34 +1,48 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using EnerFlow.Helpers;
 using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Web.WebView2.Core;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Text.Json;
+using System.Windows.Input;
 
 
 namespace EnerFlow.ViewModels
 {
     public class DigitalIoTagViewModel : HierarchyViewModel
     {
+        private Uri _scriptEditorWebViewSource;
+        private Func<string, Task<string>> _executeScriptEditorWebViewScriptAction = _ => Task.FromResult(string.Empty);
         private readonly DigitalIoTag _digitalIoTag = null!;
 
         public DigitalIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
 
             _digitalIoTag = hierarchy.DigitalIoTag!;
-
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
+            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
+            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
+            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
         }
 
         public DigitalIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, DigitalIoTag digitalIoTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _digitalIoTag = digitalIoTag;
             digitalIoTag.Hierarchy = hierarchy;
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
+            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
+            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
+            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
 
             SetDefaultValues();
 
@@ -39,6 +53,19 @@ namespace EnerFlow.ViewModels
         public RelayCommand ShowReadAddressBrowserCommand { get; set; }
         public RelayCommand ShowHistoryAddressBrowserCommand { get; set; }
         public RelayCommand ShowWriteAddressBrowserCommand { get; set; }
+        public ICommand HandleScriptEditorWebViewKeyDown { get; set; }
+        public ICommand HandleScriptEditorWebViewNavigationCompleted { get; }
+        public ICommand HandleScriptEditorWebViewWebMessageReceived { get; }
+
+        public Uri ScriptEditorWebViewSource
+        {
+            get => _scriptEditorWebViewSource;
+            set
+            {
+                _scriptEditorWebViewSource = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool UseTextValues
         {
@@ -72,7 +99,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.ReadAddress = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -94,7 +121,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.ReadAddressScanInterval = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -116,7 +143,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.HistoryAddress = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -138,7 +165,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.HistoryAddressScanInterval = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -160,7 +187,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.WriteAddress = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -182,7 +209,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.IsCalculated = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -204,7 +231,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.Script = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -226,7 +253,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.AlarmPriority = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -248,7 +275,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.AlarmDelay = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -270,7 +297,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.AlarmDisabled = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -292,7 +319,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.InvertState = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -314,7 +341,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.TrueValueText = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -336,7 +363,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.FalseValueText = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -345,9 +372,9 @@ namespace EnerFlow.ViewModels
         }
 
         [Range(0, int.MaxValue, ErrorMessage = "Display Order must be greater than or equal to 0.")]
-        public int? DisplayOrder
+        public int DisplayOrder
         {
-            get => _digitalIoTag.DisplayOrder;
+            get => _digitalIoTag.DisplayOrder ?? 0;
             set
             {
                 if (_digitalIoTag.DisplayOrder != value)
@@ -359,7 +386,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.DisplayOrder = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -381,7 +408,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.UseDefaultTrendStyle = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -403,7 +430,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.LineStyle = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -426,7 +453,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.LineWidth = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -448,7 +475,7 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.LineColor = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -475,12 +502,70 @@ namespace EnerFlow.ViewModels
                         _digitalIoTag.ManualData = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
                 }
             }
+        }
+
+        private void OnScriptEditorWebViewKeyDown(KeyEventArgs? args)
+        {
+            if (args?.Key == Key.Home)
+            {
+                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorHome', null);");
+                args.Handled = true;
+            }
+            else if (args?.Key == Key.End)
+            {
+                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorEnd', null);");
+                args.Handled = true;
+            }
+        }
+
+        private void OnScriptEditorWebViewWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
+        {
+            // Get the message as a string
+            string message = args?.WebMessageAsJson!;
+
+            try
+            {
+                using var document = JsonDocument.Parse(message);
+                var rootElement = document.RootElement;
+                var messageType = rootElement.GetProperty("MessageType").GetString()!;
+                switch (messageType)
+                {
+                    case "Code":
+                        string code = rootElement.GetProperty("Code").GetString()!;
+                        Script = code;
+                        break;
+                }
+            }
+            catch (JsonException jsonEx)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog("Error", jsonEx.Message);
+            }
+        }
+
+        private void OnScriptEditorWebViewNavigationCompleted(CoreWebView2NavigationCompletedEventArgs? args)
+        {
+            if (args != null && args.IsSuccess)
+            {
+                SetCodeInScriptEditor(Script);
+            }
+        }
+
+        private void SetCodeInScriptEditor(string code)
+        {
+            // Execute JavaScript to set the code in Monaco Editor
+            string script = $"setCodeInEditor(`{JavaScriptUtilities.EscapeJavaScriptString(code)}`);";
+            _executeScriptEditorWebViewScriptAction?.Invoke(script);
+        }
+
+        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        {
+            _executeScriptEditorWebViewScriptAction = executeMapScriptAction;
         }
 
         private void ShowReadAddressBrowser()

@@ -1,40 +1,63 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using EnerFlow.Helpers;
 using EnerFlow.Models;
 using EnerFlow.Services;
+using Microsoft.Web.WebView2.Core;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Text.Json;
+using System.Windows.Input;
 
 namespace EnerFlow.ViewModels
 {
     public class StringIoTagViewModel : HierarchyViewModel
     {
+        private Uri _scriptEditorWebViewSource;
+        private Func<string, Task<string>> _executeScriptEditorWebViewScriptAction = _ => Task.FromResult(string.Empty);
         private readonly StringIoTag _stringIoTag = null!;
 
         public StringIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _stringIoTag = hierarchy.StringIoTag!;
-
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
-
+            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
+            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
+            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
         }
 
         public StringIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, StringIoTag stringIoTag) : base(parentHierarchyViewModel, hierarchy)
         {
             _stringIoTag = stringIoTag;
             stringIoTag.Hierarchy = hierarchy;
-
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
-
+            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
+            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
+            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
             SetDefaultValues();
         }
 
-        public IEnumerable<StringIoTagTrendValueDictionary> StringIoTagTrendValueDictionaries => [.. Ioc.Default.GetService<IDataService>()?.Context.StringIoTagTrendValueDictionaries];
+        public static IEnumerable<StringIoTagTrendValueDictionary> StringIoTagTrendValueDictionaries => [.. Ioc.Default.GetService<IDataService>()?.Context.StringIoTagTrendValueDictionaries];
 
         public RelayCommand ShowReadAddressBrowserCommand { get; set; }
         public RelayCommand ShowWriteAddressBrowserCommand { get; set; }
+        public ICommand HandleScriptEditorWebViewKeyDown { get; set; }
+        public ICommand HandleScriptEditorWebViewNavigationCompleted { get; }
+        public ICommand HandleScriptEditorWebViewWebMessageReceived { get; }
 
+        public Uri ScriptEditorWebViewSource
+        {
+            get => _scriptEditorWebViewSource;
+            set
+            {
+                _scriptEditorWebViewSource = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string ReadAddress
         {
@@ -50,7 +73,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.ReadAddress = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -74,7 +97,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.ReadAddressScanInterval = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -96,7 +119,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.IsCalculated = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -118,7 +141,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.Script = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -141,7 +164,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.Length = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -163,7 +186,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.PaddingCharacter = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -185,7 +208,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.WriteAddress = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -208,7 +231,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.DisplayOrder = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -230,7 +253,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.UseDefaultTrendStyle = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -251,7 +274,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.LineStyle = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -273,7 +296,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.LineWidth = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -295,11 +318,28 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.LineColor = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
                 }
+            }
+        }
+
+        public bool UseTrendValueDictionary
+        {
+            get => _stringIoTag.StringIoTagTrendValueDictionary != null;
+            set
+            {
+                if (value && _stringIoTag.StringIoTagTrendValueDictionary == null)
+                {
+                    StringIoTagTrendValueDictionary = StringIoTagTrendValueDictionaries.FirstOrDefault()!;
+                }
+                else
+                {
+                    StringIoTagTrendValueDictionary = null!;
+                }
+                OnPropertyChanged();
             }
         }
 
@@ -317,7 +357,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.StringIoTagTrendValueDictionary = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -345,7 +385,7 @@ namespace EnerFlow.ViewModels
                         _stringIoTag.ManualData = value;
                         if (!DisableAutoSave)
                         {
-                            Ioc.Default.GetService<IDataService>()?.Context.SaveChanges();
+                            Ioc.Default.GetService<IDataService>()?.SaveChanges();
                         }
                         OnPropertyChanged();
                     }
@@ -353,6 +393,63 @@ namespace EnerFlow.ViewModels
             }
         }
 
+        private void OnScriptEditorWebViewKeyDown(KeyEventArgs? args)
+        {
+            if (args?.Key == Key.Home)
+            {
+                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorHome', null);");
+                args.Handled = true;
+            }
+            else if (args?.Key == Key.End)
+            {
+                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorEnd', null);");
+                args.Handled = true;
+            }
+        }
+
+        private void OnScriptEditorWebViewWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
+        {
+            // Get the message as a string
+            string message = args?.WebMessageAsJson!;
+
+            try
+            {
+                using var document = JsonDocument.Parse(message);
+                var rootElement = document.RootElement;
+                var messageType = rootElement.GetProperty("MessageType").GetString()!;
+                switch (messageType)
+                {
+                    case "Code":
+                        string code = rootElement.GetProperty("Code").GetString()!;
+                        Script = code;
+                        break;
+                }
+            }
+            catch (JsonException jsonEx)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog("Error", jsonEx.Message);
+            }
+        }
+
+        private void OnScriptEditorWebViewNavigationCompleted(CoreWebView2NavigationCompletedEventArgs? args)
+        {
+            if (args != null && args.IsSuccess)
+            {
+                SetCodeInScriptEditor(Script);
+            }
+        }
+
+        private void SetCodeInScriptEditor(string code)
+        {
+            // Execute JavaScript to set the code in Monaco Editor
+            string script = $"setCodeInEditor(`{JavaScriptUtilities.EscapeJavaScriptString(code)}`);";
+            _executeScriptEditorWebViewScriptAction?.Invoke(script);
+        }
+
+        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        {
+            _executeScriptEditorWebViewScriptAction = executeMapScriptAction;
+        }
         private void ShowReadAddressBrowser()
         {
             Ioc.Default.GetService<IDialogService>()?.ShowWarningDialog("Feature Not Implemented", "Not Implemented");

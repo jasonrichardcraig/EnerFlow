@@ -18,6 +18,18 @@ namespace EnerFlow.Services
         /// </summary>
         public required EnerFlowContext Context { get; set; }
 
+        public void SaveChanges()
+        {
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog(ex.Message, "Error Saving Changes");
+            }
+        }
+
         /// <summary>
         /// Retrieves the children of a hierarchy.
         /// </summary>
