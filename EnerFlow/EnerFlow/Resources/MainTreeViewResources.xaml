@@ -433,6 +433,14 @@
                                                Source="/Images/Wells_16x16.png"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem Header="Equipment"
+                                          Command="{Binding AddNewEquipmentCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Height="16"
+                                               Width="16"
+                                               Source="/Images/Equipment_16x16.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="Serial Port Channel"
                                           Command="{Binding AddNewSerialPortChannelCommand}">
                                     <MenuItem.Icon>

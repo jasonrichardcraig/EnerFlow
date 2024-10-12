@@ -1092,9 +1092,7 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Model)
                 .HasMaxLength(64)
                 .IsUnicode(false);
-            entity.Property(e => e.Notes)
-                .HasMaxLength(512)
-                .IsUnicode(false);
+            entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.SerialNumber)
                 .HasMaxLength(64)
                 .IsUnicode(false);
@@ -1105,7 +1103,6 @@ public partial class EnerFlowContext : DbContext
 
             entity.HasOne(d => d.EquipmentSubType).WithMany(p => p.Equipment)
                 .HasForeignKey(d => d.EquipmentSubTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Equipment_EquipmentSubTypes");
 
             entity.HasOne(d => d.Hierarchy).WithOne(p => p.Equipment)
@@ -1127,6 +1124,8 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<EquipmentSubType>(entity =>
         {
+            entity.HasIndex(e => new { e.EquipmentTypeId, e.Name }, "IX_EquipmentSubTypes");
+
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description)
                 .HasMaxLength(128)
@@ -1144,7 +1143,7 @@ public partial class EnerFlowContext : DbContext
 
         modelBuilder.Entity<EquipmentType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_EquipmentTypes_1");
+            entity.HasIndex(e => e.Name, "IX_EquipmentTypes");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()

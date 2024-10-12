@@ -86,6 +86,7 @@ namespace EnerFlow.ViewModels
                 {
                     _isSelected = value;
                     OnPropertyChanged();
+                    OnIsSelectedChanged();
                 }
             }
         }
@@ -711,6 +712,11 @@ namespace EnerFlow.ViewModels
         private void Delete()
         {
             Ioc.Default.GetService<IDialogService>()?.DeleteHierarchyNode(this);
+        }
+
+        public virtual void OnIsSelectedChanged()
+        {
+            
         }
 
         public void Dispose()

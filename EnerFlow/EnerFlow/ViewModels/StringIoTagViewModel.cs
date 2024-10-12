@@ -20,7 +20,7 @@ namespace EnerFlow.ViewModels
         public StringIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy) : base(parentHierarchyViewModel, hierarchy)
         {
             _stringIoTag = hierarchy.StringIoTag!;
-            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"WebView/ScriptEditor.html?cache_buster={Guid.NewGuid()}"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
             HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
@@ -32,7 +32,7 @@ namespace EnerFlow.ViewModels
         {
             _stringIoTag = stringIoTag;
             stringIoTag.Hierarchy = hierarchy;
-            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"WebView/ScriptEditor.html?cache_buster={Guid.NewGuid()}"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
             HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
@@ -446,9 +446,9 @@ namespace EnerFlow.ViewModels
             _executeScriptEditorWebViewScriptAction?.Invoke(script);
         }
 
-        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeScriptEditorScriptAction)
         {
-            _executeScriptEditorWebViewScriptAction = executeMapScriptAction;
+            _executeScriptEditorWebViewScriptAction = executeScriptEditorScriptAction;
         }
         private void ShowReadAddressBrowser()
         {

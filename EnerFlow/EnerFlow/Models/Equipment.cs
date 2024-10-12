@@ -7,7 +7,7 @@ public partial class Equipment
 {
     public int HierarchyId { get; set; }
 
-    public int EquipmentSubTypeId { get; set; }
+    public int? EquipmentSubTypeId { get; set; }
 
     public string? SerialNumber { get; set; }
 
@@ -27,7 +27,7 @@ public partial class Equipment
 
     public virtual EquipmentStatus? EquipmentStatus { get; set; }
 
-    public virtual EquipmentSubType EquipmentSubType { get; set; } = null!;
+    public virtual EquipmentSubType? EquipmentSubType { get; set; }
 
     public virtual Hierarchy Hierarchy { get; set; } = null!;
 }

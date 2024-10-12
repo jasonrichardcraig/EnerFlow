@@ -56,6 +56,8 @@
     <None Remove="Images\Database_24x24.png" />
     <None Remove="Images\DataServiceAlertIcon.png" />
     <None Remove="Images\Delete.png" />
+    <None Remove="Images\Details_16x16.png" />
+    <None Remove="Images\Details_24x24.png" />
     <None Remove="Images\Device_16x16.png" />
     <None Remove="Images\Device_24x24.png" />
     <None Remove="Images\Diagram_16x16.png" />
@@ -93,6 +95,8 @@
     <None Remove="Images\GenericDocument.png" />
     <None Remove="Images\Group.png" />
     <None Remove="Images\Home.png" />
+    <None Remove="Images\Information_16x16.png" />
+    <None Remove="Images\Information_24x24.png" />
     <None Remove="Images\IpChannel_16x16.png" />
     <None Remove="Images\IpChannel_24x24.png" />
     <None Remove="Images\Key_16x16.png" />
@@ -106,6 +110,8 @@
     <None Remove="Images\Meters_16x16.png" />
     <None Remove="Images\Meters_24x24.png" />
     <None Remove="Images\NotConnected.png" />
+    <None Remove="Images\Notes_16x16.png" />
+    <None Remove="Images\Notes_24x24.png" />
     <None Remove="Images\Notifications_16x16.png" />
     <None Remove="Images\Notifications_24x24.png" />
     <None Remove="Images\OpenFolder.png" />
@@ -153,6 +159,8 @@
     <None Remove="Images\Server_16x16.png" />
     <None Remove="Images\Server_24x24.png" />
     <None Remove="Images\Settings.png" />
+    <None Remove="Images\Status_16x16.png" />
+    <None Remove="Images\Status_24x24.png" />
     <None Remove="Images\StringIoTag_16x16.png" />
     <None Remove="Images\StringIoTag_24x24.png" />
     <None Remove="Images\System.png" />
@@ -185,15 +193,21 @@
     <None Remove="Images\Wells_16x16.png" />
     <None Remove="Images\Wells_24x24.png" />
     <None Remove="WebView\css\Map.css" />
+    <None Remove="WebView\css\RichTextEditor.css" />
     <None Remove="WebView\css\ScriptEditor.css" />
     <None Remove="WebView\js\Map.js" />
+    <None Remove="WebView\js\RichTextEditor.js" />
     <None Remove="WebView\js\ScriptEditor.js" />
     <None Remove="WebView\Map.html" />
+    <None Remove="WebView\RichTextEditor.html" />
     <None Remove="WebView\ScriptEditor.html" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="WebView\css\Map.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\css\RichTextEditor.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebView\css\ScriptEditor.css">
@@ -202,10 +216,16 @@
     <Content Include="WebView\js\Map.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WebView\js\RichTextEditor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WebView\js\ScriptEditor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebView\Map.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WebView\RichTextEditor.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebView\ScriptEditor.html">
@@ -261,6 +281,8 @@
     <Resource Include="Images\Database_24x24.png" />
     <Resource Include="Images\DataServiceAlertIcon.png" />
     <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Details_16x16.png" />
+    <Resource Include="Images\Details_24x24.png" />
     <Resource Include="Images\Device_16x16.png" />
     <Resource Include="Images\Device_24x24.png" />
     <Resource Include="Images\Diagram_16x16.png" />
@@ -304,6 +326,8 @@
     <Resource Include="Images\Folder_24x24.png" />
     <Resource Include="Images\GenericDocument.png" />
     <Resource Include="Images\Group.png" />
+    <Resource Include="Images\Information_16x16.png" />
+    <Resource Include="Images\Information_24x24.png" />
     <Resource Include="Images\IpChannel_16x16.png" />
     <Resource Include="Images\IpChannel_24x24.png" />
     <Resource Include="Images\Key_16x16.png" />
@@ -313,6 +337,8 @@
     <Resource Include="Images\MeterRun_16x16.png" />
     <Resource Include="Images\MeterRun_24x24.png" />
     <Resource Include="Images\NotConnected.png" />
+    <Resource Include="Images\Notes_16x16.png" />
+    <Resource Include="Images\Notes_24x24.png" />
     <Resource Include="Images\OpenFolder.png" />
     <Resource Include="Images\OperationalRange_16x16.png" />
     <Resource Include="Images\OperationalRange_24x24.png" />
@@ -337,6 +363,8 @@
     <Resource Include="Images\Script_24x24.png" />
     <Resource Include="Images\Security_16x16.png" />
     <Resource Include="Images\Security_24x24.png" />
+    <Resource Include="Images\Status_16x16.png" />
+    <Resource Include="Images\Status_24x24.png" />
     <Resource Include="Images\System.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\Screen_16x16.png" />

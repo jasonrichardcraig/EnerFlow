@@ -23,7 +23,7 @@ namespace EnerFlow.ViewModels
         {
 
             _digitalIoTag = hierarchy.DigitalIoTag!;
-            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"WebView/ScriptEditor.html?cache_buster={Guid.NewGuid()}"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
@@ -36,7 +36,7 @@ namespace EnerFlow.ViewModels
         {
             _digitalIoTag = digitalIoTag;
             digitalIoTag.Hierarchy = hierarchy;
-            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
+            _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"WebView/ScriptEditor.html?cache_buster={Guid.NewGuid()}"));
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
@@ -48,7 +48,7 @@ namespace EnerFlow.ViewModels
 
         }
 
-        public List<AlarmPriority> AlarmPriorities => [.. Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.Local.ToList()];
+        public static List<AlarmPriority> AlarmPriorities => [.. Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.Local.ToList()];
 
         public RelayCommand ShowReadAddressBrowserCommand { get; set; }
         public RelayCommand ShowHistoryAddressBrowserCommand { get; set; }
@@ -563,9 +563,9 @@ namespace EnerFlow.ViewModels
             _executeScriptEditorWebViewScriptAction?.Invoke(script);
         }
 
-        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
+        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeScriptEditorScriptAction)
         {
-            _executeScriptEditorWebViewScriptAction = executeMapScriptAction;
+            _executeScriptEditorWebViewScriptAction = executeScriptEditorScriptAction;
         }
 
         private void ShowReadAddressBrowser()

@@ -9,10 +9,6 @@ require(['vs/editor/editor.main'], function () {
 
 });
 
-function onDidChangeModelContent(event) {
-    window.alert(event);
-}
-
 // Function to resize the editor
 function resizeEditor() {
     if (editor) {

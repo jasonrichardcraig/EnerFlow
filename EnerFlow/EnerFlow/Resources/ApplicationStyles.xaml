@@ -352,6 +352,39 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="DetailsTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Details_24x24.png"/>
+            <TextBlock Text="Details"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="StatusTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Status_24x24.png"/>
+            <TextBlock Text="Status"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NotesTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Margin="0,0,4,0"
+                   Source="/Images/Notes_24x24.png"/>
+            <TextBlock Text="Notes"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
     <DataTemplate x:Key="FacilityTypeComboBoxItemDataTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Code}"/>
@@ -380,6 +413,18 @@
             <TextBlock Text=" - "/>
             <TextBlock Text="{Binding Description}"/>
         </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EquipmentTypeListItemDataTemplate">
+        <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EquipmentSubTypeListItemDataTemplate">
+        <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EquipmentStatusListItemDataTemplate">
+        <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}"/>
     </DataTemplate>
 
     <!-- Search Result Data Templates -->
