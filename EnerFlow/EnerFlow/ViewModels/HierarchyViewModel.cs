@@ -4,11 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 using EnerFlow.Enums;
 using EnerFlow.Models;
 using EnerFlow.Services;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 using System.Windows.Input;
 
 namespace EnerFlow.ViewModels

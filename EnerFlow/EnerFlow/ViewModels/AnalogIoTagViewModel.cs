@@ -13,8 +13,6 @@ namespace EnerFlow.ViewModels
 {
     public class AnalogIoTagViewModel : HierarchyViewModel
     {
-        private Uri _scriptEditorWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"WebView/ScriptEditor.html"));
-        private Func<string, Task<string>> _executeScriptEditorWebViewScriptAction = _ => Task.FromResult(string.Empty);
         private UnitClass _selectdUnitClass = null!;
         private readonly AnalogIoTag _analogIoTag = null!;
 
@@ -25,10 +23,6 @@ namespace EnerFlow.ViewModels
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
-            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
-            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
-            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
-
         }
 
         public AnalogIoTagViewModel(HierarchyViewModel parentHierarchyViewModel, Hierarchy hierarchy, AnalogIoTag analogIoTag) : base(parentHierarchyViewModel, hierarchy)
@@ -39,12 +33,7 @@ namespace EnerFlow.ViewModels
             ShowReadAddressBrowserCommand = new RelayCommand(ShowReadAddressBrowser, CanShowReadAddressBrowser);
             ShowHistoryAddressBrowserCommand = new RelayCommand(ShowHistoryAddressBrowser, CanShowHistoryAddressBrowser);
             ShowWriteAddressBrowserCommand = new RelayCommand(ShowWriteAddressBrowser, CanShowWriteAddressBrowser);
-            HandleScriptEditorWebViewKeyDown = new RelayCommand<KeyEventArgs>(OnScriptEditorWebViewKeyDown);
-            HandleScriptEditorWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnScriptEditorWebViewNavigationCompleted);
-            HandleScriptEditorWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnScriptEditorWebViewWebMessageReceived);
-
             SetDefaultValues();
-
         }
 
         public static IEnumerable<AlarmPriority> AlarmPriorities => Ioc.Default.GetService<IDataService>()?.Context.AlarmPriorities.Local.OrderBy(a => a.Id).ToArray()!;
@@ -56,9 +45,6 @@ namespace EnerFlow.ViewModels
         public RelayCommand ShowReadAddressBrowserCommand { get; set; }
         public RelayCommand ShowHistoryAddressBrowserCommand { get; set; }
         public RelayCommand ShowWriteAddressBrowserCommand { get; set; }
-        public ICommand HandleScriptEditorWebViewKeyDown { get; set; }
-        public ICommand HandleScriptEditorWebViewNavigationCompleted { get; }
-        public ICommand HandleScriptEditorWebViewWebMessageReceived { get; }
 
         public UnitClass SelectedUnitClass
         {
@@ -110,16 +96,6 @@ namespace EnerFlow.ViewModels
                 {
                     TagValueEnumeration = null!;
                 }
-            }
-        }
-
-        public Uri ScriptEditorWebViewSource
-        {
-            get => _scriptEditorWebViewSource;
-            set
-            {
-                _scriptEditorWebViewSource = value;
-                OnPropertyChanged();
             }
         }
 
@@ -1241,64 +1217,6 @@ namespace EnerFlow.ViewModels
         public DateTime DateTimeCreated
         {
             get => _analogIoTag.DateTimeCreated;
-        }
-
-        private void OnScriptEditorWebViewKeyDown(KeyEventArgs? args)
-        {
-            if (args?.Key == Key.Home)
-            {
-                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorHome', null);");
-                args.Handled = true;
-            }
-            else if (args?.Key == Key.End)
-            {
-                _executeScriptEditorWebViewScriptAction("editor.trigger('keyboard', 'cursorEnd', null);");
-                args.Handled = true;
-            }
-        }
-
-        private void OnScriptEditorWebViewWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
-        {
-            // Get the message as a string
-            string message = args?.WebMessageAsJson!;
-
-            try
-            {
-                using var document = JsonDocument.Parse(message);
-                var rootElement = document.RootElement;
-                var messageType = rootElement.GetProperty("MessageType").GetString()!;
-                switch (messageType)
-                {
-                    case "Code":
-                        string code = rootElement.GetProperty("Code").GetString()!;
-                        Script = code;
-                        break;
-                }
-            }
-            catch (JsonException jsonEx)
-            {
-                Ioc.Default.GetService<IDialogService>()?.ShowErrorDialog("Error", jsonEx.Message);
-            }
-        }
-
-        private void OnScriptEditorWebViewNavigationCompleted(CoreWebView2NavigationCompletedEventArgs? args)
-        {
-            if (args != null && args.IsSuccess)
-            {
-                SetCodeInScriptEditor(Script);
-            }
-        }
-
-        private void SetCodeInScriptEditor(string code)
-        {
-            // Execute JavaScript to set the code in Monaco Editor
-            string script = $"setCodeInEditor(`{JavaScriptUtilities.EscapeJavaScriptString(code)}`);";
-            _executeScriptEditorWebViewScriptAction?.Invoke(script);
-        }
-
-        public void SetExecuteScriptEditorWebViewScriptAction(Func<string, Task<string>> executeScriptEditorScriptAction)
-        {
-            _executeScriptEditorWebViewScriptAction = executeScriptEditorScriptAction;
         }
 
         private void ShowReadAddressBrowser()

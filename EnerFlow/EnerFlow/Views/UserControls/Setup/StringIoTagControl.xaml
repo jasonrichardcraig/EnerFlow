@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:b="clr-namespace:EnerFlow.Behaviors"
+             xmlns:extensions="clr-namespace:EnerFlow.Extensions"
              xmlns:usercontrols="clr-namespace:EnerFlow.Views.UserControls"
              xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
-             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -247,19 +245,7 @@
             <TabItem HeaderTemplate="{StaticResource ScriptTabHeaderDataTemplate}"
                      Visibility="{Binding ElementName=IsCalculatedCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <wv2:WebView2 x:Name="ScriptEditorWebView"
-                              Source="{Binding ScriptEditorWebViewSource, FallbackValue=about:blank}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="KeyDown">
-                            <b:EventArgsCommandBehavior Command="{Binding HandleScriptEditorWebViewKeyDown}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="WebMessageReceived">
-                            <b:EventArgsCommandBehavior Command="{Binding HandleScriptEditorWebViewWebMessageReceived}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="NavigationCompleted">
-                            <b:EventArgsCommandBehavior Command="{Binding HandleScriptEditorWebViewNavigationCompleted}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </wv2:WebView2>
+                              extensions:WebView2ScriptEditorExtensions.ScriptEditorText="{Binding Script}"/>
             </TabItem>
             <TabItem HeaderTemplate="{StaticResource DisplayTabHeaderDataTemplate}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"

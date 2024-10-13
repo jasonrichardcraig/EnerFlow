@@ -12,21 +12,5 @@ namespace EnerFlow.Views.UserControls.Setup
         {
             InitializeComponent();
         }
-
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (DataContext is StringIoTagViewModel stringIoTagViewModel)
-            {
-                stringIoTagViewModel.SetExecuteScriptEditorWebViewScriptAction(async (script) =>
-                {
-                    var result = string.Empty;
-                    if (ScriptEditorWebView.CoreWebView2 != null)
-                    {
-                        result = await ScriptEditorWebView.CoreWebView2.ExecuteScriptAsync(script);
-                    }
-                    return result;
-                });
-            }
-        }
     }
 }

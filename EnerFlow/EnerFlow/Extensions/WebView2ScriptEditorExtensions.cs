@@ -8,17 +8,17 @@ using System.Windows.Input;
 
 namespace EnerFlow.Extensions
 {
-    public static class WebView2RichTextEditorExtensions
+    public static class WebView2ScriptEditorExtensions
     {
-        public static readonly DependencyProperty RichTextEditorTextProperty =
+        public static readonly DependencyProperty ScriptEditorTextProperty =
             DependencyProperty.RegisterAttached(
-                "RichTextEditorText",
+                "ScriptEditorText",
                 typeof(string),
-                typeof(WebView2RichTextEditorExtensions),
+                typeof(WebView2ScriptEditorExtensions),
                 new FrameworkPropertyMetadata(
                     null,
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    OnRichTextEditorTextChanged));
+                    OnScriptEditorTextChanged));
 
         // Dictionary to keep track of CoreWebView2 instances and their parent WebView2 controls
         private static readonly Dictionary<CoreWebView2, WebView2> _coreWebViewToWebViewMap = [];
@@ -29,17 +29,17 @@ namespace EnerFlow.Extensions
         // ConditionalWeakTable to track initialization state for each WebView2 instance
         private static readonly ConditionalWeakTable<WebView2, WebViewInitializationState> _webViewInitializationStates = [];
 
-        public static string GetRichTextEditorText(DependencyObject obj)
+        public static string GetScriptEditorText(DependencyObject obj)
         {
-            return (string)obj.GetValue(RichTextEditorTextProperty);
+            return (string)obj.GetValue(ScriptEditorTextProperty);
         }
 
-        public static void SetRichTextEditorText(DependencyObject obj, string value)
+        public static void SetScriptEditorText(DependencyObject obj, string value)
         {
-            obj.SetValue(RichTextEditorTextProperty, value);
+            obj.SetValue(ScriptEditorTextProperty, value);
         }
 
-        private static async void OnRichTextEditorTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static async void OnScriptEditorTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is WebView2 webView)
             {
@@ -105,7 +105,7 @@ namespace EnerFlow.Extensions
                     // Map the CoreWebView2 to its parent WebView2 for later reference
                     _coreWebViewToWebViewMap[webView.CoreWebView2] = webView;
 
-                    // Add the WebMessageReceived event handler for the RichTextEditor
+                    // Add the WebMessageReceived event handler for the ScriptEditor
                     webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
 
                     webView.KeyDown += (sender, args) =>
@@ -132,8 +132,8 @@ namespace EnerFlow.Extensions
                         }
                     };
 
-                    // Fetch and apply the current value of RichTextEditorText after initialization
-                    string currentText = GetRichTextEditorText(webView);
+                    // Fetch and apply the current value of ScriptEditorText after initialization
+                    string currentText = GetScriptEditorText(webView);
 
                     // Wait for the page to load and then set the editor's content
                     webView.NavigationCompleted += async (sender, args) =>
@@ -147,7 +147,7 @@ namespace EnerFlow.Extensions
                             await webView.CoreWebView2.ExecuteScriptAsync(scriptContent);
                         }
                     };
-                    webView.Source = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/RichTextEditor.html"));
+                    webView.Source = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/ScriptEditor.html"));
                 }
             }
         }
@@ -165,12 +165,12 @@ namespace EnerFlow.Extensions
                 try
                 {
                     string newText = e.TryGetWebMessageAsString();
-                    string currentText = GetRichTextEditorText(webView);
+                    string currentText = GetScriptEditorText(webView);
 
-                    // Update the attached property with the new text from the RichTextEditor only if it's different
+                    // Update the attached property with the new text from the ScriptEditor only if it's different
                     if (currentText != newText)  // Prevent unnecessary property update
                     {
-                        SetRichTextEditorText(webView, newText);
+                        SetScriptEditorText(webView, newText);
                     }
                 }
                 finally
@@ -192,5 +192,7 @@ namespace EnerFlow.Extensions
             public bool IsInitialized { get; set; }
         }
     }
+
+
 }
 

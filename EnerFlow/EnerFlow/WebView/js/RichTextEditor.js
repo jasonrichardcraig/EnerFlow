@@ -22,8 +22,30 @@
             ['alignment', ['alignleft', 'aligncenter', 'alignright', 'alignjustify']],
 
             // Table operations
-            ['table', ['table']]
-        ],
+            ['table', ['table']],
+            ['custom', ['print']],
+            ],
+        buttons: {
+            print: function () {
+                var ui = $.summernote.ui;
+                // Create the button
+                var button = ui.button({
+                    contents: '<i class="note-icon-print"/> Print',
+                    tooltip: 'Print',
+                    click: function () {
+                        // Logic to print the content
+                        var content = $('#summernote').summernote('code'); // Get the HTML content
+                        var win = window.open('', '', 'width=800,height=600');
+                        win.document.write(content);
+                        win.document.close();
+                        win.focus();
+                        win.print();
+                        win.close();
+                    }
+                });
+                return button.render(); // Return the button as a jQuery object
+            },
+        },
         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
         fontNamesIgnoreCheck: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'] // Ignore browser support check
     });

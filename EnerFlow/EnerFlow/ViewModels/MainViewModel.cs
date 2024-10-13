@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace EnerFlow.ViewModels
 {
@@ -271,6 +272,8 @@ namespace EnerFlow.ViewModels
 
                 if (TreeMode == TreeMode.Map && SelectedHierarchyViewModel.Hierarchy.Latitude != null && SelectedHierarchyViewModel.Hierarchy.Longitude != null && SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel != null)
                 {
+
+
                     switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
                     {
                         case NodeType.System:
@@ -278,6 +281,13 @@ namespace EnerFlow.ViewModels
                         case NodeType.District:
                         case NodeType.Area:
                         case NodeType.Field:
+                            var mapNodeQuery = from h in Ioc.Default.GetService<IDataService>()?.Context.Hierarchies
+                                               where h.Longitude != null && h.Latitude != null
+                                               where !h.IsDisabled
+                                               where h.Node.IsDescendantOf(SelectedHierarchyViewModel.Hierarchy.Node)
+                                               where h.Node != SelectedHierarchyViewModel.Hierarchy.Node
+                                               select h;
+
                             _executeMapWebViewScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
                             break;
                         case NodeType.Facility:
