@@ -12,7 +12,7 @@ namespace EnerFlow.ViewModels
 
         public HierarchyId Node => _searchResult.Node!;
 
-        public Enums.NodeType NodeType => _searchResult.NodeType;
+        public Enums.HierarchyNodeType NodeType => _searchResult.NodeType;
 
         public string Name => _searchResult.Name;
 

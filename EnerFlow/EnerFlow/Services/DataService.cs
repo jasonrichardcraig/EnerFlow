@@ -35,10 +35,10 @@ namespace EnerFlow.Services
         /// </summary>
         /// <param name="hierarchy">The parent hierarchy.</param>
         /// <returns>A list of child hierarchies.</returns>
-        public List<Hierarchy> GetChildren(Hierarchy hierarchy, List<Enums.NodeType> nodeTypes)
+        public List<Hierarchy> GetChildren(Hierarchy hierarchy, List<Enums.HierarchyNodeType> nodeTypes)
         {
             return new List<Hierarchy>(Context.Hierarchies
-                .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel() && nodeTypes.Contains((Enums.NodeType)h.NodeType.Id))
+                .Where(h => h.Node.IsDescendantOf(hierarchy.Node) && h.Node.GetLevel() - 1 == hierarchy.Node.GetLevel() && nodeTypes.Contains((Enums.HierarchyNodeType)h.NodeType.Id))
                 .Include(h => h.NodeType)
                 .Include(h => h.Facility)
                 .Include(h => h.Well)
@@ -97,7 +97,7 @@ namespace EnerFlow.Services
         /// <param name="parentHierarchy">The parent hierarchy.</param>
         /// <param name="newHierarchy">The new hierarchy to add.</param>
         /// <param name="hierarchyNodeType">The node type of the new hierarchy.</param>
-        public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.NodeType hierarchyNodeType)
+        public void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.HierarchyNodeType hierarchyNodeType)
         {
             var lastChild = Context.Hierarchies
                 .Where(n => n.Node.IsDescendantOf(parentHierarchy.Node))
@@ -126,73 +126,73 @@ namespace EnerFlow.Services
             {
                 var hierarchyId = hierarchy.Id;
 
-                switch ((Enums.NodeType)hierarchy.NodeTypeId)
+                switch ((Enums.HierarchyNodeType)hierarchy.NodeTypeId)
                 {
-                    case Enums.NodeType.Facility:
+                    case Enums.HierarchyNodeType.Facility:
                         Context.Facilities.Remove(Context.Facilities.First(f => f.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Well:
+                    case Enums.HierarchyNodeType.Well:
                         Context.Wells.Remove(Context.Wells.First(w => w.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.RunSheet:
+                    case Enums.HierarchyNodeType.RunSheet:
                         Context.RunSheets.Remove(Context.RunSheets.First(r => r.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.ContextTag:
+                    case Enums.HierarchyNodeType.ContextTag:
                         Context.ContextTagProperties.RemoveRange(Context.ContextTagProperties.Where(c => c.ContextTagId == hierarchyId));
                         Context.ContextTags.Remove(Context.ContextTags.First(c => c.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.SerialPortChannel:
+                    case Enums.HierarchyNodeType.SerialPortChannel:
                         Context.SerialPortChannels.Remove(Context.SerialPortChannels.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.IpChannel:
+                    case Enums.HierarchyNodeType.IpChannel:
                         Context.IpChannels.Remove(Context.IpChannels.First(i => i.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Device:
+                    case Enums.HierarchyNodeType.Device:
                         Context.Devices.Remove(Context.Devices.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.AnalogIoTag:
+                    case Enums.HierarchyNodeType.AnalogIoTag:
                         Context.Database.ExecuteSqlRaw("DELETE FROM AnalogIoTagValueHistory WHERE AnalogIoTagID = {0}", hierarchyId);
                         Context.AnalogIoTagCurrentValues.Remove(hierarchy.AnalogIoTag!.AnalogIoTagCurrentValue!);
                         Context.AnalogIoTags.Remove(hierarchy.AnalogIoTag!);
                         break;
-                    case Enums.NodeType.DigitalIoTag:
+                    case Enums.HierarchyNodeType.DigitalIoTag:
                         Context.Database.ExecuteSqlRaw("DELETE FROM DigitalIoTagValueHistory WHERE DigitalIoTagID = {0}", hierarchyId);
                         Context.DigitalIoTagCurrentValues.Remove(hierarchy.DigitalIoTag!.DigitalIoTagCurrentValue!);
                         Context.DigitalIoTags.Remove(hierarchy.DigitalIoTag!);
                         break;
-                    case Enums.NodeType.StringIoTag:
+                    case Enums.HierarchyNodeType.StringIoTag:
                         Context.Database.ExecuteSqlRaw("DELETE FROM StringIoTagValueHistory WHERE StringIoTagID = {0}", hierarchyId);
                         Context.StringIoTagCurrentValues.Remove(hierarchy.StringIoTag!.StringIoTagCurrentValue!);
                         Context.StringIoTags.Remove(Context.StringIoTags.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.MeterRun:
+                    case Enums.HierarchyNodeType.MeterRun:
                         Context.MeterRuns.Remove(Context.MeterRuns.First(m => m.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Screen:
+                    case Enums.HierarchyNodeType.Screen:
                         Context.Screens.Remove(Context.Screens.First(s => s.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Diagram:
+                    case Enums.HierarchyNodeType.Diagram:
                         Context.Diagrams.Remove(Context.Diagrams.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Document:
+                    case Enums.HierarchyNodeType.Document:
                         Context.Documents.Remove(Context.Documents.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Folder:
+                    case Enums.HierarchyNodeType.Folder:
                         Context.Folders.Remove(Context.Folders.First(f => f.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Meter:
+                    case Enums.HierarchyNodeType.Meter:
                         Context.Meters.Remove(Context.Meters.First(d => d.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Pump:
+                    case Enums.HierarchyNodeType.Pump:
                         Context.Pumps.Remove(Context.Pumps.First(p => p.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Tank:
+                    case Enums.HierarchyNodeType.Tank:
                         Context.Tanks.Remove(Context.Tanks.First(t => t.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Vessel:
+                    case Enums.HierarchyNodeType.Vessel:
                         Context.Vessels.Remove(Context.Vessels.First(v => v.HierarchyId == hierarchyId));
                         break;
-                    case Enums.NodeType.Equipment:
+                    case Enums.HierarchyNodeType.Equipment:
                         Context.Equipment.Remove(Context.Equipment.First(e => e.HierarchyId == hierarchyId));
                         break;
                 }
@@ -220,7 +220,7 @@ namespace EnerFlow.Services
                     {
                         Id = h.Id,
                         Node = h.Node,
-                        NodeType = (Enums.NodeType)h.NodeType.Id,
+                        NodeType = (Enums.HierarchyNodeType)h.NodeType.Id,
                         Name = h.Name,
                         Description = h.Description!
                     });

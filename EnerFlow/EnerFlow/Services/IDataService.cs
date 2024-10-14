@@ -10,9 +10,9 @@ namespace EnerFlow.Services
         void SaveChanges();
         bool IsNameUniqueWithinHierarchy(string name, HierarchyId parentId);
         HierarchyId GetSibling(HierarchyId hierarchyId);
-        void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.NodeType hierarchyNodeType);
+        void AddHierarchyNode(Hierarchy parentHierarchy, Hierarchy newHierarchy, Enums.HierarchyNodeType hierarchyNodeType);
         void DeleteHierarchyNode(Hierarchy hierarchy);
-        List<Hierarchy> GetChildren(Hierarchy hierarchy, List<Enums.NodeType> nodeTypes);
+        List<Hierarchy> GetChildren(Hierarchy hierarchy, List<Enums.HierarchyNodeType> nodeTypes);
         Hierarchy GetSystemHierarchy();
         void Search(string searchText, Action<IEnumerable<SearchResult>> searchResultsCallback);
     }

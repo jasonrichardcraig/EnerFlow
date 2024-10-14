@@ -19,17 +19,6 @@ namespace EnerFlow.Views
             {
                 Close();
             });
-
-            Ioc.Default.GetService<MainViewModel>()?.SetExecuteMapWebViewScriptAction(async (script) =>
-            {
-                var result = string.Empty;
-                if (MapWebView.CoreWebView2 != null)
-                {
-                    result = await MapWebView.CoreWebView2.ExecuteScriptAsync(script);
-                }
-                return result;
-            });
-
         }
     }
 }

@@ -5,31 +5,31 @@ using CommunityToolkit.Mvvm.Messaging;
 using EnerFlow.Data;
 using EnerFlow.Enums;
 using EnerFlow.Messages;
+using EnerFlow.Models;
 using EnerFlow.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Web.WebView2.Core;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace EnerFlow.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
         private bool _isBusy;
-        private Uri _mapWebViewSource;
         private HierarchyViewModel? _systemHierarchyViewModel;
         private UserViewModel? _userViewModel;
         private HierarchyViewModel? _selectedHierarchyViewModel;
         private DateTime _displayDateEnd = DateTime.Now.Date;
         private DateTime selectedDate = DateTime.Now.Date;
         private TreeMode _treeMode;
-        private Func<string, Task<string>> _executeMapWebViewScriptAction = _ => Task.FromResult(string.Empty);
         private string _server = string.Empty;
-        private string _database = string.Empty;
+        private string _database = string.Empty; 
+        private MapMarker? _selectedMapMarker;
+        private MapCenter? _mapCenter;
+        private List<MapMarker> mapMarkers = [];
 
         public MainViewModel(IDataService dataService)
         {
@@ -44,16 +44,11 @@ namespace EnerFlow.ViewModels
             AuthenticateUser();
             LoadStatusBarData();
             LoadAssociatedData();
-
-            _mapWebViewSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebView/Map.html"));
-
             SearchCommand = new RelayCommand(Search);
             CloseCommand = new RelayCommand(CloseWindow);
             HandleTreeKeyUpCommand = new RelayCommand<KeyEventArgs>(OnTreeKeyUp);
             HandleWindowKeyDownCommand = new RelayCommand<KeyEventArgs>(OnWindowKeyDown);
-            HandleSelectedTreeItemChanged = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(OnSelectedTreeItemItemChanged);
-            HandleMapWebViewNavigationCompleted = new RelayCommand<CoreWebView2NavigationCompletedEventArgs?>(OnMapWebViewNavigationCompleted);
-            HandleMapWebViewWebMessageReceived = new RelayCommand<CoreWebView2WebMessageReceivedEventArgs?>(OnMapWebViewWebMessageReceived);
+            HandleSelectedTreeItemChanged = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(OnSelectedTreeItemItemChanged);;
             SystemHierarchyViewModel = new HierarchyViewModel(null!, dataService.GetSystemHierarchy());
             SelectedHierarchyViewModel = SystemHierarchyViewModel;
             TreeMode = TreeMode.Map;
@@ -66,8 +61,6 @@ namespace EnerFlow.ViewModels
         public ICommand HandleTreeKeyUpCommand { get; }
         public ICommand HandleWindowKeyDownCommand { get; }
         public ICommand HandleSelectedTreeItemChanged { get; }
-        public ICommand HandleMapWebViewNavigationCompleted { get; }
-        public ICommand HandleMapWebViewWebMessageReceived { get; }
 
         private void AuthenticateUser()
         {
@@ -122,6 +115,45 @@ namespace EnerFlow.ViewModels
             IsBusy = false;
         }
 
+        public MapCenter? MapCenter
+        {
+            get { return _mapCenter; }
+            set
+            {
+                if (_mapCenter != value)
+                {
+                    _mapCenter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public List<MapMarker> MapMarkers
+        {
+            get { return mapMarkers; }
+            set
+            {
+                if (mapMarkers != value)
+                {
+                    mapMarkers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public MapMarker? SelectedMapMarker
+        {
+            get { return _selectedMapMarker; }
+            set
+            {
+                if (_selectedMapMarker != value)
+                {
+                    _selectedMapMarker = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public HierarchyViewModel? SelectedHierarchyViewModel
         {
             get { return _selectedHierarchyViewModel; }
@@ -147,16 +179,6 @@ namespace EnerFlow.ViewModels
                     OnTreeModeChanged();
                     OnPropertyChanged();
                 }
-            }
-        }
-
-        public Uri MapWebViewSource
-        {
-            get => _mapWebViewSource;
-            set
-            {
-                _mapWebViewSource = value;
-                OnPropertyChanged();
             }
         }
 
@@ -265,7 +287,7 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        private void OnSelectedHierarchyViewModelChanged()
+        private async void OnSelectedHierarchyViewModelChanged()
         {
             if (SelectedHierarchyViewModel != null)
             {
@@ -274,35 +296,26 @@ namespace EnerFlow.ViewModels
                 {
 
 
-                    switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
+                    switch ((HierarchyNodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
                     {
-                        case NodeType.System:
-                        case NodeType.Company:
-                        case NodeType.District:
-                        case NodeType.Area:
-                        case NodeType.Field:
-                            var mapNodeQuery = from h in Ioc.Default.GetService<IDataService>()?.Context.Hierarchies
-                                               where h.Longitude != null && h.Latitude != null
-                                               where !h.IsDisabled
-                                               where h.Node.IsDescendantOf(SelectedHierarchyViewModel.Hierarchy.Node)
-                                               where h.Node != SelectedHierarchyViewModel.Hierarchy.Node
-                                               select h;
-
-                            _executeMapWebViewScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
+                        case HierarchyNodeType.System:
+                        case HierarchyNodeType.Company:
+                        case HierarchyNodeType.District:
+                        case HierarchyNodeType.Area:
+                        case HierarchyNodeType.Field:
+                            SelectedMapMarker = new MapMarker
+                            {
+                                Id = SelectedHierarchyViewModel.Hierarchy.Id,
+                                Name = SelectedHierarchyViewModel.Hierarchy.Name,
+                                Description = SelectedHierarchyViewModel.Hierarchy.Description,
+                                Latitude = SelectedHierarchyViewModel.Hierarchy.Latitude!.Value,
+                                Longitude = SelectedHierarchyViewModel.Hierarchy.Longitude!.Value
+                            };
+                            await LoadMarkersForHierarchyAsync(SelectedHierarchyViewModel.Hierarchy.Node);
                             break;
-                        case NodeType.Facility:
-                            _executeMapWebViewScriptAction?.Invoke($"updateMap({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, {SelectedHierarchyViewModel.Hierarchy.DefaultZoomLevel});");
-                            _executeMapWebViewScriptAction?.Invoke($"addMarker({SelectedHierarchyViewModel.Hierarchy.Latitude}, {SelectedHierarchyViewModel.Hierarchy.Longitude}, \"{SelectedHierarchyViewModel.Name}\");");
+                        case HierarchyNodeType.Facility:
                             break;
                     }
-                }
-
-                switch ((NodeType)SelectedHierarchyViewModel.Hierarchy.NodeTypeId)
-                {
-                    case NodeType.System:
-                        break;
-                    case NodeType.Company:
-                        break;
                 }
             }
         }
@@ -315,14 +328,27 @@ namespace EnerFlow.ViewModels
             }
         }
 
-        private void OnMapWebViewWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs? args)
+        private async Task<List<MapMarker>> LoadMarkersForHierarchyAsync(HierarchyId node)
         {
-            
-        }
+            var markers = new List<MapMarker>();
 
-        private void OnMapWebViewNavigationCompleted(CoreWebView2NavigationCompletedEventArgs? e)
-        {
+            var markerData = await Ioc.Default.GetService<IDataService>()!.Context.Hierarchies
+                .Where(h => h.Node.IsDescendantOf(node) && h.Latitude != null && h.Longitude != null)
+                .Select(h => new MapMarker
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    Description = h.Description,
+                    Latitude = h.Latitude!.Value,
+                    Longitude = h.Longitude!.Value
+                }).ToListAsync();
 
+            if (markerData != null)
+            {
+                markers.AddRange(markerData);
+            }
+
+            return markers;
         }
 
         private void Search()
@@ -345,11 +371,6 @@ namespace EnerFlow.ViewModels
             {
                 Search();
             }
-        }
-
-        public void SetExecuteMapWebViewScriptAction(Func<string, Task<string>> executeMapScriptAction)
-        {
-            _executeMapWebViewScriptAction = executeMapScriptAction;
         }
 
         private void CloseWindow()

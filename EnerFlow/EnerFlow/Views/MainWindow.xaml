@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:b="clr-namespace:EnerFlow.Behaviors"
+        xmlns:extensions="clr-namespace:EnerFlow.Extensions"
         xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:EnerFlow"
@@ -82,7 +83,6 @@
                     <MenuItem Header="_Search" Command="{Binding SearchCommand}">
                     </MenuItem>
                 </Menu>
-
                 <TreeView x:Name="NavigationTreeView"
                           Grid.Row="1"
                           Grid.Column="0"
@@ -110,16 +110,10 @@
                             SelectedIndex="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}}">
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Map}">
                         <wv2:WebView2 x:Name="MapWebView"
-                                      Source="{Binding MapWebViewSource}"
+                                      extensions:WebView2MapExtensions.MapCenter="{Binding MapCenter}"
+                                      extensions:WebView2MapExtensions.SelectedMapMarker="{Binding MapCenter}"
+                                      extensions:WebView2MapExtensions.MapMarkers="{Binding MapMarkers}"
                                       Visibility="{Binding IsBusy, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="WebMessageReceived">
-                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebViewWebMessageReceived}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="NavigationCompleted">
-                                    <b:EventArgsCommandBehavior Command="{Binding HandleMapWebViewNavigationCompleted}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
                         </wv2:WebView2>
                     </TabItem>
                     <TabItem Visibility="{Binding TreeMode, Converter={StaticResource EnumToIntegerConverter}, ConverterParameter=Measurment}"/>

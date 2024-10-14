@@ -1,6 +1,6 @@
 ﻿namespace EnerFlow.Enums
 {
-    public enum NodeType : int
+    public enum HierarchyNodeType : int
     {
         System = 1,
         Company = 2,
