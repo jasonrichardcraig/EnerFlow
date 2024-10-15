@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EnerFlow.Views.UserControls.Setup"
              mc:Ignorable="d"
-             d:DesignWidth="800"
+             d:DesignWidth="900"
              d:DesignHeight="600">
     <Grid>
         <Grid.RowDefinitions>
@@ -26,7 +26,8 @@
                        Margin="4,10,10,10" />
         </StackPanel>
         <TabControl Grid.Row="1">
-            <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}">
+            <TabItem HeaderTemplate="{StaticResource GeneralTabHeaderDataTemplate}"
+                     ToolTip="Basic well details such as name, identifier, and description">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
                     <Grid>
@@ -35,6 +36,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -50,9 +53,29 @@
                              Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"/>
                         <Label Grid.Row="1"
                                Grid.Column="0"
-                               Content="Description:"
+                               Content="Well Identifier:"
                                Margin="10" />
                         <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding WellIdentifier, ValidatesOnNotifyDataErrors=True}"/>
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Content="Well Name:"
+                               Margin="10" />
+                        <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="10"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBoxStyle}"
+                             Text="{Binding WellName, ValidatesOnNotifyDataErrors=True}"/>
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               Content="Description:"
+                               Margin="10" />
+                        <TextBox Grid.Row="3"
                                  Grid.Column="1"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
                                  Text="{Binding Description, ValidatesOnNotifyDataErrors=True}"
@@ -63,7 +86,180 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem HeaderTemplate="{StaticResource RegulatoryTabHeaderDataTemplate}">
+            <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}"
+                     ToolTip="Information related to the location and aliases of the well">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="Location:"
+                               Margin="10" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Location,ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Content="Location Alias:"
+                               Margin="10" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding LocationAlias,ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Content="Location Alternate Alias:"
+                               Margin="10" />
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding LocationAlternateAlias,ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               Content="Surface Location:"
+                               Margin="10" />
+                        <TextBox Grid.Row="3"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding SurfaceLocation, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="4"
+                               Grid.Column="0"
+                               Content="Downhole Location:"
+                               Margin="10" />
+                        <TextBox Grid.Row="4"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding DownholeLocation, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="5"
+                               Grid.Column="0"
+                               Content="Formatted UWI:"
+                               Margin="10" />
+                        <TextBox Grid.Row="5"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding FormattedUwi,ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="6"
+                               Grid.Column="0"
+                               Content="Unformatted UWI:"
+                               Margin="10" />
+                        <TextBox Grid.Row="6"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding UnformattedUwi, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="7"
+                               Grid.Column="0"
+                               Content="Latitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="7"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="8"
+                               Grid.Column="0"
+                               Content="Longitude:"
+                               Margin="10" />
+                        <TextBox Grid.Row="8"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="9"
+                               Grid.Column="0"
+                               Content="Default Zoom Level:"
+                               Margin="10" />
+                        <TextBox Grid.Row="9"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource RegulatoryTabHeaderDataTemplate}"
+                     ToolTip="Regulatory details including license number, date, and status">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="License Number:"
+                               Margin="10" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding LicenseNumber, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Content="License Date:"
+                               Margin="10" />
+                        <DatePicker Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding LicenseDate, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Content="License Status:"
+                               Margin="10" />
+                        <TextBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding LicenseStatus, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource OperationalInformationTabHeaderDataTemplate}"
+                     ToolTip="Operational data such as spud date, final drill date, and total depth">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
                     <Grid>
@@ -77,163 +273,206 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0"
                                Grid.Column="0"
-                               Content="Formatted UWI:"
+                               Content="Spud Date:"
                                Margin="10" />
-                        <TextBox Grid.Row="0"
+                        <DatePicker Grid.Row="0"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding FormattedUwi,ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding SpudDate,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                         <Label Grid.Row="1"
                                Grid.Column="0"
-                               Content="Unformatted UWI:"
+                               Content="Final Drill Date:"
                                Margin="10" />
-                        <TextBox Grid.Row="1"
+                        <DatePicker Grid.Row="1"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding UnformattedUwi, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding FinalDrillDate,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                         <Label Grid.Row="2"
                                Grid.Column="0"
-                               Content="Surface Location:"
+                               Content="Well Total Depth:"
                                Margin="10" />
                         <TextBox Grid.Row="2"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding SurfaceLocation, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding WellTotalDepth,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                         <Label Grid.Row="3"
                                Grid.Column="0"
-                               Content="Downhole Location:"
+                               Content="Operator Code:"
                                Margin="10" />
                         <TextBox Grid.Row="3"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding DownholeLocation, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding OperatorCode,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                         <Label Grid.Row="4"
                                Grid.Column="0"
-                               Content="Field Code:"
+                               Content="Operator Name:"
                                Margin="10" />
                         <TextBox Grid.Row="4"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding FieldCode, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="5"
-                               Grid.Column="0"
-                               Content="Pool Code:"
-                               Margin="10" />
-                        <TextBox Grid.Row="5"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding PoolCode, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="6"
-                               Grid.Column="0"
-                               Content="License Number:"
-                               Margin="10" />
-                        <TextBox Grid.Row="6"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding LicenseNumber, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="7"
-                               Grid.Column="0"
-                               Content="Licensee Code:"
-                               Margin="10" />
-                        <TextBox Grid.Row="7"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding LicenseeCode, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="8"
-                               Grid.Column="0"
-                               Content="Agent Code:"
-                               Margin="10" />
-                        <TextBox Grid.Row="8"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding AgentCode, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="9"
-                               Grid.Column="0"
-                               Content="Operator Code:"
-                               Margin="10" />
-                        <TextBox Grid.Row="9"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding OperatorCode, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding OperatorName,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem HeaderTemplate="{StaticResource LocationTabHeaderDataTemplate}">
+            <TabItem HeaderTemplate="{StaticResource LicenseeInformationTabHeaderDataTemplate}"
+                     ToolTip="Licensee and agent information related to the well">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto">
+                              HorizontalScrollBarVisibility="Disabled">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0"
                                Grid.Column="0"
-                               Content="Latitude:"
+                               Content="Licensee Code:"
                                Margin="10" />
                         <TextBox Grid.Row="0"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Latitude, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding LicenseeCode,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                         <Label Grid.Row="1"
                                Grid.Column="0"
-                               Content="Longitude:"
+                               Content="Agent Code:"
                                Margin="10" />
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
                                  VerticalAlignment="Center"
                                  Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding Longitude, ValidatesOnNotifyDataErrors=True}"
-                                 Margin="10" />
-                        <Label Grid.Row="2"
-                               Grid.Column="0"
-                               Content="Default Zoom Level:"
-                               Margin="10" />
-                        <TextBox Grid.Row="2"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 Style="{StaticResource ValidatedTextBoxStyle}"
-                                 Text="{Binding DefaultZoomLevel, ValidatesOnNotifyDataErrors=True}"
+                                 Text="{Binding AgentCode,ValidatesOnNotifyDataErrors=True}"
                                  Margin="10" />
                     </Grid>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource PoolInformationTabHeaderDataTemplate}"
+                     ToolTip="Field and pool codes associated with the well">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="Field Code:"
+                               Margin="10" />
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding FieldCode, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Content="Pool Code:"
+                               Margin="10" />
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource ValidatedTextBoxStyle}"
+                                 Text="{Binding PoolCode, ValidatesOnNotifyDataErrors=True}"
+                                 Margin="10" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource HistoryTabHeaderDataTemplate}"
+                     ToolTip="Historical events and actions related to the well">
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date"
+                                            Width="1.5*"
+                                            Binding="{Binding Date}"/>
+                        <DataGridTextColumn Header="Event"
+                                            Width="4*"
+                                            Binding="{Binding Event}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource DirectionalDrillingTabHeaderDataTemplate}"
+                     ToolTip="Details of directional drilling including start date, depth, and reasons">
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Start Date"
+                                            Width="1.5*"
+                                            Binding="{Binding StartDate}"/>
+                        <DataGridTextColumn Header="Depth"
+                                            Width="2*"
+                                            Binding="{Binding Depth}"/>
+                        <DataGridTextColumn Header="Reason"
+                                            Width="4*"
+                                            Binding="{Binding Reason}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource PerforationTabHeaderDataTemplate}"
+                     ToolTip="Perforation details including dates, types, and intervals">
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Perforation Date"
+                                            Width="1.5*"
+                                            Binding="{Binding PerforationDate}"/>
+                        <DataGridTextColumn Header="Perforation Type"
+                                            Width="2*"
+                                            Binding="{Binding PerforationType}"/>
+                        <DataGridTextColumn Header="Interval Top (m)"
+                                            Width="2*"
+                                            Binding="{Binding PerforationType}"/>
+                        <DataGridTextColumn Header="Interval Base (m)"
+                                            Width="2*"
+                                            Binding="{Binding IntervalBase}"/>
+                        <DataGridTextColumn Header="Number Of Shots"
+                                            Width="2*"
+                                            Binding="{Binding NumberOfShots}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem HeaderTemplate="{StaticResource ProductionDataTabHeaderDataTemplate}"
+                     ToolTip="Production data such as gas, oil, and water quantities over time">
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Period"
+                                            Width="1.5*"
+                                            Binding="{Binding Period}"/>
+                        <DataGridTextColumn Header="Total Production Hours"
+                                            Width="2*"
+                                            Binding="{Binding TotalProductionHours}"/>
+                        <DataGridTextColumn Header="Gas Quantity (m3)"
+                                            Width="2*"
+                                            Binding="{Binding GasQuantity}"/>
+                        <DataGridTextColumn Header="Oil Quantity (m3)"
+                                            Width="2*"
+                                            Binding="{Binding OilQuantity}"/>
+                        <DataGridTextColumn Header="Water Quantity (m3)"
+                                            Width="2*"
+                                            Binding="{Binding WaterQuantity}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
     </Grid>

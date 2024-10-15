@@ -225,6 +225,76 @@
         </StackPanel>
     </DataTemplate>
 
+    <!-- DataTemplate for the Operational Information tab header -->
+    <DataTemplate x:Key="OperationalInformationTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                  Width="24"
+                  Source="/Images/OperationalInformation_24x24.png"/>
+            <TextBlock Text="Operational Info" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Licensee Information tab header -->
+    <DataTemplate x:Key="LicenseeInformationTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                  Width="24"
+                  Source="/Images/License_24x24.png"/>
+            <TextBlock Text="Licensee Info" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Pool Information tab header -->
+    <DataTemplate x:Key="PoolInformationTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                  Width="24"
+                  Source="/Images/Pool_24x24.png"/>
+            <TextBlock Text="Pool Info" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+    
+    <!-- DataTemplate for the Directional Drilling tab header -->
+    <DataTemplate x:Key="DirectionalDrillingTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/Drill_24x24.png"/>
+            <TextBlock Text="Directional Drilling" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Perforations tab header -->
+    <DataTemplate x:Key="PerforationTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/Perforation_24x24.png"/>
+            <TextBlock Text="Perforations" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the Production Data tab header -->
+    <DataTemplate x:Key="ProductionDataTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/Data_24x24.png"/>
+            <TextBlock Text="Production Data" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- DataTemplate for the History tab header -->
+    <DataTemplate x:Key="HistoryTabHeaderDataTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Height="24"
+                   Width="24"
+                   Source="/Images/History_24x24.png"/>
+            <TextBlock Text="History" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!-- DataTemplate for the Units tab header -->
     <DataTemplate x:Key="UnitsTabHeaderDataTemplate">
         <StackPanel Orientation="Horizontal">

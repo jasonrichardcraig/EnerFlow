@@ -55,6 +55,8 @@
     <None Remove="Images\Database_16x16.png" />
     <None Remove="Images\Database_24x24.png" />
     <None Remove="Images\DataServiceAlertIcon.png" />
+    <None Remove="Images\Data_16x16.png" />
+    <None Remove="Images\Data_24x24.png" />
     <None Remove="Images\Delete.png" />
     <None Remove="Images\Details_16x16.png" />
     <None Remove="Images\Details_24x24.png" />
@@ -75,6 +77,8 @@
     <None Remove="Images\District.png" />
     <None Remove="Images\Document_16x16.png" />
     <None Remove="Images\Document_24x24.png" />
+    <None Remove="Images\Drill_16x16.png" />
+    <None Remove="Images\Drill_24x24.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
     <None Remove="Images\Enum_16x16.png" />
@@ -94,6 +98,8 @@
     <None Remove="Images\Forward.png" />
     <None Remove="Images\GenericDocument.png" />
     <None Remove="Images\Group.png" />
+    <None Remove="Images\History_16x16.png" />
+    <None Remove="Images\History_24x24.png" />
     <None Remove="Images\Home.png" />
     <None Remove="Images\Information_16x16.png" />
     <None Remove="Images\Information_24x24.png" />
@@ -101,6 +107,8 @@
     <None Remove="Images\IpChannel_24x24.png" />
     <None Remove="Images\Key_16x16.png" />
     <None Remove="Images\Key_24x24.png" />
+    <None Remove="Images\License_16x16.png" />
+    <None Remove="Images\License_24x24.png" />
     <None Remove="Images\Login_16x16.png" />
     <None Remove="Images\Login_24x24.png" />
     <None Remove="Images\Maps_16x16.png" />
@@ -115,6 +123,8 @@
     <None Remove="Images\Notifications_16x16.png" />
     <None Remove="Images\Notifications_24x24.png" />
     <None Remove="Images\OpenFolder.png" />
+    <None Remove="Images\OperationalInformation_16x16.png" />
+    <None Remove="Images\OperationalInformation_24x24.png" />
     <None Remove="Images\OperationalRange_16x16.png" />
     <None Remove="Images\OperationalRange_24x24.png" />
     <None Remove="Images\OrificeMeter_16x16_White.png" />
@@ -123,8 +133,12 @@
     <None Remove="Images\OrificeMeter_48x48.png" />
     <None Remove="Images\Paste.png" />
     <None Remove="Images\PasteBig.png" />
+    <None Remove="Images\Perforation_16x16.png" />
+    <None Remove="Images\Perforation_24x24.png" />
     <None Remove="Images\Pipeline_16x16.png" />
     <None Remove="Images\Pipeline_24x24.png" />
+    <None Remove="Images\Pool_16x16.png" />
+    <None Remove="Images\Pool_24x24.png" />
     <None Remove="Images\PositiveDisplacementMeter_48x48.png" />
     <None Remove="Images\Print.png" />
     <None Remove="Images\Properties.png" />
@@ -280,6 +294,8 @@
     <Resource Include="Images\Database_16x16.png" />
     <Resource Include="Images\Database_24x24.png" />
     <Resource Include="Images\DataServiceAlertIcon.png" />
+    <Resource Include="Images\Data_16x16.png" />
+    <Resource Include="Images\Data_24x24.png" />
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\Details_16x16.png" />
     <Resource Include="Images\Details_24x24.png" />
@@ -300,6 +316,8 @@
     <Resource Include="Images\District.png" />
     <Resource Include="Images\Document_16x16.png" />
     <Resource Include="Images\Document_24x24.png" />
+    <Resource Include="Images\Drill_16x16.png" />
+    <Resource Include="Images\Drill_24x24.png" />
     <Resource Include="Images\EF_Icon.ico" />
   </ItemGroup>
 
@@ -326,12 +344,16 @@
     <Resource Include="Images\Folder_24x24.png" />
     <Resource Include="Images\GenericDocument.png" />
     <Resource Include="Images\Group.png" />
+    <Resource Include="Images\History_16x16.png" />
+    <Resource Include="Images\History_24x24.png" />
     <Resource Include="Images\Information_16x16.png" />
     <Resource Include="Images\Information_24x24.png" />
     <Resource Include="Images\IpChannel_16x16.png" />
     <Resource Include="Images\IpChannel_24x24.png" />
     <Resource Include="Images\Key_16x16.png" />
     <Resource Include="Images\Key_24x24.png" />
+    <Resource Include="Images\License_16x16.png" />
+    <Resource Include="Images\License_24x24.png" />
     <Resource Include="Images\Login_16x16.png" />
     <Resource Include="Images\Login_24x24.png" />
     <Resource Include="Images\MeterRun_16x16.png" />
@@ -340,6 +362,8 @@
     <Resource Include="Images\Notes_16x16.png" />
     <Resource Include="Images\Notes_24x24.png" />
     <Resource Include="Images\OpenFolder.png" />
+    <Resource Include="Images\OperationalInformation_16x16.png" />
+    <Resource Include="Images\OperationalInformation_24x24.png" />
     <Resource Include="Images\OperationalRange_16x16.png" />
     <Resource Include="Images\OperationalRange_24x24.png" />
     <Resource Include="Images\OrificeMeter_16x16_White.png" />
@@ -348,8 +372,12 @@
     <Resource Include="Images\OrificeMeter_48x48.png" />
     <Resource Include="Images\Paste.png" />
     <Resource Include="Images\PasteBig.png" />
+    <Resource Include="Images\Perforation_16x16.png" />
+    <Resource Include="Images\Perforation_24x24.png" />
     <Resource Include="Images\Pipeline_16x16.png" />
     <Resource Include="Images\Pipeline_24x24.png" />
+    <Resource Include="Images\Pool_16x16.png" />
+    <Resource Include="Images\Pool_24x24.png" />
     <Resource Include="Images\PositiveDisplacementMeter_48x48.png" />
     <Resource Include="Images\Print.png" />
     <Resource Include="Images\Properties.png" />

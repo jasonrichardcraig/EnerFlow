@@ -316,11 +316,19 @@ public partial class EnerFlowContext : DbContext
 
     public virtual DbSet<WellDailyProduction> WellDailyProductions { get; set; }
 
+    public virtual DbSet<WellDirectionalDrilling> WellDirectionalDrillings { get; set; }
+
     public virtual DbSet<WellFluid> WellFluids { get; set; }
+
+    public virtual DbSet<WellHistory> WellHistories { get; set; }
 
     public virtual DbSet<WellMode> WellModes { get; set; }
 
     public virtual DbSet<WellMonthlyProduction> WellMonthlyProductions { get; set; }
+
+    public virtual DbSet<WellPerforationTreatment> WellPerforationTreatments { get; set; }
+
+    public virtual DbSet<WellProductionDatum> WellProductionData { get; set; }
 
     public virtual DbSet<WellStatus> WellStatuses { get; set; }
 
@@ -4398,10 +4406,25 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.LicenseNumber)
                 .HasMaxLength(128)
                 .IsUnicode(false);
+            entity.Property(e => e.LicenseStatus)
+                .HasMaxLength(128)
+                .IsUnicode(false);
             entity.Property(e => e.LicenseeCode)
                 .HasMaxLength(128)
                 .IsUnicode(false);
+            entity.Property(e => e.Location)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.LocationAlias)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.LocationAlternateAlias)
+                .HasMaxLength(128)
+                .IsUnicode(false);
             entity.Property(e => e.OperatorCode)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.OperatorName)
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.PoolCode)
@@ -4411,6 +4434,12 @@ public partial class EnerFlowContext : DbContext
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.UnformattedUwi)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.WellIdentifier)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.WellName)
                 .HasMaxLength(128)
                 .IsUnicode(false);
 
@@ -4494,6 +4523,22 @@ public partial class EnerFlowContext : DbContext
                 .HasConstraintName("FK_DailyWellProduction_WellStatusTypes");
         });
 
+        modelBuilder.Entity<WellDirectionalDrilling>(entity =>
+        {
+            entity.ToTable("WellDirectionalDrilling");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Reason)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.WellId).HasColumnName("WellID");
+
+            entity.HasOne(d => d.Well).WithMany(p => p.WellDirectionalDrillings)
+                .HasForeignKey(d => d.WellId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WellDirectionalDrilling_Wells");
+        });
+
         modelBuilder.Entity<WellFluid>(entity =>
         {
             entity.Property(e => e.Id)
@@ -4505,6 +4550,22 @@ public partial class EnerFlowContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(128)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<WellHistory>(entity =>
+        {
+            entity.ToTable("WellHistory");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Event)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.WellId).HasColumnName("WellID");
+
+            entity.HasOne(d => d.Well).WithMany(p => p.WellHistories)
+                .HasForeignKey(d => d.WellId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WellHistory_Wells");
         });
 
         modelBuilder.Entity<WellMode>(entity =>
@@ -4550,6 +4611,31 @@ public partial class EnerFlowContext : DbContext
                 .HasForeignKey(d => d.WellId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MonthlyWellProduction_Wells");
+        });
+
+        modelBuilder.Entity<WellPerforationTreatment>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.PerforationType)
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.WellId).HasColumnName("WellID");
+
+            entity.HasOne(d => d.Well).WithMany(p => p.WellPerforationTreatments)
+                .HasForeignKey(d => d.WellId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WellPerforationTreatments_Wells");
+        });
+
+        modelBuilder.Entity<WellProductionDatum>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.WellId).HasColumnName("WellID");
+
+            entity.HasOne(d => d.Well).WithMany(p => p.WellProductionData)
+                .HasForeignKey(d => d.WellId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WellProductionData_Wells");
         });
 
         modelBuilder.Entity<WellStatus>(entity =>
