@@ -1,3 +1,4 @@
+![EnerFlow](https://raw.githubusercontent.com/jasonrichardcraig/EnerFlow/main/EnerFlow_Banner.png)
 ![EnerFlow](https://raw.githubusercontent.com/jasonrichardcraig/EnerFlow/main/EnerFlow.png)
 
 
