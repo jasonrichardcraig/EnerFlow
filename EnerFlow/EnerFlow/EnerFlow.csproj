@@ -2,13 +2,24 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Title>EnerWorx</Title>
     <ApplicationIcon>Images\EF_Icon.ico</ApplicationIcon>
     <Description>An all in one SCADA, HMI, Measurement, Field Data Capture &amp; P&amp;ID / Metering Schematic system</Description>
+    <PlatformTarget>x64</PlatformTarget>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -81,6 +92,7 @@
     <None Remove="Images\Drill_24x24.png" />
     <None Remove="Images\EF_Icon.png" />
     <None Remove="Images\EF_Logo.png" />
+    <None Remove="Images\EnerFlow_Splash.png" />
     <None Remove="Images\Enum_16x16.png" />
     <None Remove="Images\Enum_24x24.png" />
     <None Remove="Images\Equipment_16x16.png" />
@@ -218,6 +230,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\EF_Icon.ico" />
     <Content Include="WebView\css\Map.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -318,7 +331,6 @@
     <Resource Include="Images\Document_24x24.png" />
     <Resource Include="Images\Drill_16x16.png" />
     <Resource Include="Images\Drill_24x24.png" />
-    <Resource Include="Images\EF_Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -414,7 +426,6 @@
     <Resource Include="Images\Vessel_24x24.png" />
     <Resource Include="Images\TreeMode_16x16.png" />
     <Resource Include="Images\TreeMode_24x24.png" />
-    <SplashScreen Include="Images\EF_Logo.png" />
     <Resource Include="Images\Events_16x16.png" />
     <Resource Include="Images\Events_24x24.png" />
     <Resource Include="Images\Facilities_16x16.png" />
@@ -462,6 +473,10 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Images\EnerFlow_Splash.png" />
   </ItemGroup>
 
   <ItemGroup>
